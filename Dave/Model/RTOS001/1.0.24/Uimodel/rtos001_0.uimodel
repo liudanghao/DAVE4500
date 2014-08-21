@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.ifx.davex.uimodel:UIDataModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.ifx.davex.uimodel="com.ifx.davex.uimodel">
+  <controls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="DefaultPage" displayName="Thread Configuration" className="IfxGroupBox" controlId="1395302220427">
+    <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group71" displayName="Thread Settings" className="IfxGroupBox" controlId="1397030053858">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_irwtaskcnt" displayName="Number of concurrent running threads" className="IntegerType" paramName="app/rtos001/0/rtos001_irwtaskcnt:Number of concurrent running threads" controlId="1395665977111">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_irwstksize" displayName="Default Thread stack size [bytes]" className="IntegerType" paramName="app/rtos001/0/rtos001_irwstksize:Default Thread stack size [bytes]" controlId="1395665949963">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_irwpricnt" displayName="Number of threads with user-provided stack size" className="IntegerType" paramName="app/rtos001/0/rtos001_irwpricnt:Number of threads with user-provided stack size" controlId="1395665990349">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_irwprivstksize" displayName="Total stack size [bytes] for threads with user-provided stack size" className="IntegerType" paramName="app/rtos001/0/rtos001_irwprivstksize:Total stack size [bytes] for threads with user-provided stack size" controlId="1395665921263">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_erwstkcheck" displayName="" className="EnumerationType" paramName="app/rtos001/0/rtos001_erwstkcheck:Check for stack overflow" controlId="1395665835574">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_erwrunpriv" displayName="Processor mode for thread execution" className="EnumerationType" paramName="app/rtos001/0/rtos001_erwrunpriv:Processor mode for thread execution" controlId="1395665799066">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_erwrprivmode" displayName="Processor mode for thread execution" className="EnumerationType" paramName="app/rtos001/0/rtos001_erwrprivmode:Processor mode for thread execution" controlId="1396515644244">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+  </controls>
+  <controls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Page2" displayName="SysTick Timer Configuration" className="IfxGroupBox" controlId="1395303071311">
+    <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group19" displayName="SysTick Timer Settings" className="IfxGroupBox" controlId="1397030171286">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_erwkerneltimer" displayName="" className="EnumerationType" paramName="app/rtos001/0/rtos001_erwkerneltimer:Use Cortex-M SysTick timer as RTX Kernel Timer" controlId="1395678761065">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_irwclock" displayName="Timer clock value [Hz]" readonly="true" className="IntegerType" paramName="app/rtos001/0/rtos001_irwclock:Timer clock value [Hz]" controlId="1395678746377">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_irwtick" displayName="Timer tick value [us]" className="IntegerType" paramName="app/rtos001/0/rtos001_irwtick:Timer tick value [us]" controlId="1395678753368">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+  </controls>
+  <controls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Page80" displayName="System Configuration" className="IfxGroupBox" controlId="1395303096749">
+    <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group78" displayName="Round-Robin Settings" className="IfxGroupBox" controlId="1396515917110">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_erwrndrobin" displayName="" className="EnumerationType" paramName="app/rtos001/0/rtos001_erwrndrobin:Round-Robin Thread switching" controlId="1395679296411">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_irwrobintout" displayName="Round-Robin Timeout [ticks]" className="IntegerType" constraint="if(CM.getParamValue(&quot;app/rtos001/0/rtos001_erwrndrobin/0&quot;) ==1) {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}else{&#xD;&#xA;&#x9;CM.setEnable(false);&#xD;&#xA;}" paramName="app/rtos001/0/rtos001_irwrobintout:Round-Robin Timeout [ticks]" controlId="1395679319527">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group2" displayName="User Timers Settings" className="IfxGroupBox" controlId="1396515947652">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_erwtimers" displayName="" className="EnumerationType" paramName="app/rtos001/0/rtos001_erwtimers:User Timers" controlId="1395679673288">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_erwtimerprio" displayName="Timer Thread Priority" className="EnumerationType" constraint="if(CM.getParamValue(&quot;app/rtos001/0/rtos001_erwtimers/0&quot;) ==1) {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}else{&#xD;&#xA;&#x9;CM.setEnable(false);&#xD;&#xA;}" paramName="app/rtos001/0/rtos001_erwtimerprio:Timer Thread Priority" controlId="1395679384529">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_irwtimerstksize" displayName="Timer Thread stack size [bytes]" className="IntegerType" constraint="if(CM.getParamValue(&quot;app/rtos001/0/rtos001_erwtimers/0&quot;) ==1) {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}else{&#xD;&#xA;&#x9;CM.setEnable(false);&#xD;&#xA;}" paramName="app/rtos001/0/rtos001_irwtimerstksize:Timer Thread stack size [bytes]" controlId="1395679402063">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_irwtimercbqsize" displayName="Timer Callback Queue size" className="IntegerType" constraint="if(CM.getParamValue(&quot;app/rtos001/0/rtos001_erwtimers/0&quot;) ==1) {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}else{&#xD;&#xA;&#x9;CM.setEnable(false);&#xD;&#xA;}" paramName="app/rtos001/0/rtos001_irwtimercbqsize:Timer Callback Queue size" controlId="1395679415176">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_irwfifosz" displayName="ISR FIFO Queue size" className="EnumerationType" paramName="app/rtos001/0/rtos001_irwfifosz:ISR FIFO Queue size" controlId="1395679475693">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+    </subControls>
+    <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+  </controls>
+  <controls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Page11" displayName="Hooks Configuration" className="IfxGroupBox" controlId="1395678092783">
+    <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group34" displayName="Hooks Settings" className="IfxGroupBox" controlId="1397030233399">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_idledemon" displayName="" className="EnumerationType" paramName="app/rtos001/0/rtos001_idledemon:User defined function for idle demon" controlId="1395678355644">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/rtos001/0/rtos001_oserror" displayName="" className="EnumerationType" paramName="app/rtos001/0/rtos001_oserror:User defined function for error handling" controlId="1395678362543">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+  </controls>
+</com.ifx.davex.uimodel:UIDataModel>

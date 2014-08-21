@@ -1,0 +1,144 @@
+<%@ jet package="CodeGenerator" class="uart002_confc_template"
+imports="java.util.* com.ifx.davex.appjetinteract.App2JetInterface" %>
+<% App2JetInterface app = (App2JetInterface) argument; %>
+<% String AppBaseuri = "app/uart002/";%>
+/*CODE_BLOCK_BEGIN[UART002_Conf.c]*/
+
+/*******************************************************************************
+ Copyright (c) 2013, Infineon Technologies AG                                 **
+ All rights reserved.                                                         **
+                                                                              **
+ Redistribution and use in source and binary forms, with or without           **
+ modification,are permitted provided that the following conditions are met:   **
+                                                                              **
+ *Redistributions of source code must retain the above copyright notice,      **
+ this list of conditions and the following disclaimer.                        **
+ *Redistributions in binary form must reproduce the above copyright notice,   **
+ this list of conditions and the following disclaimer in the documentation    **
+ and/or other materials provided with the distribution.                       **
+ *Neither the name of the copyright holders nor the names of its contributors **
+ may be used to endorse or promote products derived from this software without** 
+ specific prior written permission.                                           **
+                                                                              **
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"  **
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    **
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   **
+ ARE  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   **
+ LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         **
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         **
+ SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    **
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      **
+ CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)       **
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   **
+ POSSIBILITY OF SUCH DAMAGE.                                                  **
+                                                                              **
+ To improve the quality of the software, users are encouraged to share        **
+ modifications, enhancements or bug fixes with Infineon Technologies AG       **
+ dave@infineon.com).                                                          **
+                                                                              **
+********************************************************************************
+**                                                                            **
+**                                                                            **
+** PLATFORM : Infineon XMC4000/XMC1000 Series   			                  **
+**                                                                            **
+** COMPILER : Compiler Independent                                            **
+**                                                                            **
+** AUTHOR   : App Developer                                                   **
+**                                                                            **
+** MAY BE CHANGED BY USER [yes/no]: Yes                                       **
+**                                                                            **
+**                                                                            **
+*******************************************************************************/
+/*
+ * Revision History
+ * 
+ * 17 Apr 2013 v1.0.8   1. Modified the structure UART002_HandleType to add baud
+ *                         parameters for the baud rate.
+ *                      2. DMA mode handling is disabled for XMC1000 devices 
+ *                          as DMA module is not available in XMC1000 devices.     
+ */
+/**
+ * @file   UART002_Conf.c
+ *
+ * @App    Version UART002 <<%= app.getAppVersion(AppBaseuri)%>>
+ * 
+ * @brief  Configuration file generated based on UI settings 
+ *         of UART002 App
+ *
+ */
+/*******************************************************************************
+ ** INCLUDE FILES                                                             **
+ ******************************************************************************/
+#include <DAVE3.h>
+<% int Is1xDevice = -1; %>
+<% Is1xDevice = ((app.getSoftwareId().substring(0,1).compareTo("1")==0)?1:0); %>
+
+<% String Uarturi = "peripheral/usic/"; %>
+<% String MappedUri = null; %>
+<% String MappedUri2 = null; %>
+<% String MappedUri3 = null; %>
+<% String DMAInst1 = null; %>
+<% String DMAInst2 = null; %>
+<% String UnitInst = null; %>
+<% String ChannelInst = null; %>
+<% int mode= 0; %>
+<% String appInst  = null; %>
+
+<% ArrayList<String> appsList = (ArrayList<String>)(app.getApps("app/uart002/"));
+ for (String appIns : appsList ) {
+ appInst = appIns.substring(appIns.lastIndexOf("/")+1);%>
+<% MappedUri = app.getMappedUri(AppBaseuri + appInst + "/channel"); %>
+<% if((MappedUri != null) && (MappedUri != "")) { %>
+<% UnitInst = MappedUri.substring(MappedUri .length()-11,MappedUri.indexOf("/channel/")); %>
+<% ChannelInst = MappedUri.substring(MappedUri.length()-1); %>
+
+UART002_DynamicDataType AppDynamicData<%=appInst%>; 
+const UART002_HandleType UART002_Handle<%=appInst%>  = 
+{
+<% if(Is1xDevice == 0){ %> 
+ <% int DmaMode = app.getIntegerValue(AppBaseuri + appInst +"/uart002_DMAOprModeTemp");%>
+ <%if((DmaMode == 2) || (DmaMode == 3)) {%>
+     <% MappedUri2 = app.getMappedUri(AppBaseuri + appInst + "/DMAapp0"); %>
+     <% DMAInst1 = MappedUri2.substring(MappedUri2.length()-1); %>
+   .TxDMAHandle = &DMA003_Handle<%= DMAInst1 %>,
+ <%}%>
+ <%if((DmaMode == 1) || (DmaMode == 3)) {%> 
+     <% MappedUri3 = app.getMappedUri(AppBaseuri + appInst + "/DMAapp1"); %>
+     <% DMAInst2 = MappedUri3.substring(MappedUri3.length()-1); %>
+   .RxDMAHandle = &DMA003_Handle<%= DMAInst2 %>,
+ <%} %> <%} %>
+   .DynamicData = &AppDynamicData<%=appInst%>,
+   .UartRegs = USIC<%= UnitInst %>_CH<%= ChannelInst %>, /* Usic Channel offset value */
+   .Mode = (UART_ModeType)<%= app.getIntegerValue(AppBaseuri + appInst +"/uart002_OprModeTemp") %>,
+<% if(Is1xDevice == 0){ %>   
+   .DMAMode = (UART002_DMAType)<%= app.getIntegerValue(AppBaseuri + appInst +"/uart002_DMAOprModeTemp") %>,
+   <%} %>
+   .ChConfig = {
+		       (UART_ParityType)<%= app.getIntegerValue(AppBaseuri + appInst +"/channel/ccr/pm") %>,/* Parity */
+		       (UART_StopBitType)<%= app.getIntegerValue(AppBaseuri + appInst +"/channel/pcr/stpb") %>,/* StopBit */
+               <%= app.getIntegerValue(AppBaseuri + appInst +"/uart002_irwbaudrate") %>,/*Baud Rate */
+               <%= app.getIntegerValue(AppBaseuri + appInst +"/channel/sctr/wle") %>/* Word Length */
+   				},
+   .RxFIFOTrigger = <%= app.getIntegerValue(AppBaseuri + appInst +"/channel/rbctr/limit") %>,/* FIFO Tigger Level */
+   .TxFIFOTrigger = <%= app.getIntegerValue(AppBaseuri + appInst +"/channel/tbctr/limit") %>,/* FIFO Tigger Level */
+   .BGR_STEP = (uint16_t)<%= app.getIntegerValue(AppBaseuri + appInst + "/uart002_stepvalue")%>,  /* Baud Rate Generation step value */
+   .BGR_PDIV = (uint16_t)<%= app.getIntegerValue(AppBaseuri + appInst + "/uart002_pdivvalue")%>,   /* Baud Rate Generation  pdiv value */
+   .BGR_DCTQ = (uint16_t)<%= app.getIntegerValue(AppBaseuri + appInst + "/Time_Quanta_dummylevel") %>, /* Baud Rate Generation dctq value */
+<%	double sampling_point = 0.0;
+ 	long sampling_point1 = 0;
+ 	int dctq = (app.getIntegerValue(AppBaseuri + appInst + "/Time_Quanta_dummylevel")); 	    
+   sampling_point = (((1 + dctq) / 2)  +  1);   
+   sampling_point1 = Math.round(sampling_point); 			
+ %>   
+   .BGR_SP = (uint16_t)<%= sampling_point1%>, /* Baud Rate Generation sampling point */
+   .BGR_PCTQ = (uint8_t)0  /* Baud Rate Generation pctq value */   
+};
+<% } %>
+<% else { %>
+/* CHANNEL IS NOT MAPPED */
+<% } %>
+
+<%} %>
+
+/*CODE_BLOCK_END*/
+

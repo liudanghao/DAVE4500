@@ -1,0 +1,1067 @@
+<%@ jet package="CodeGenerator" class="uart002c_template"
+imports="java.util.* com.ifx.davex.appjetinteract.App2JetInterface" %>
+<% App2JetInterface app = (App2JetInterface) argument; %>
+<% String AppBaseuri = "app/uart002/0";%>
+/*CODE_BLOCK_BEGIN[UART002.c]*/
+/*******************************************************************************
+ Copyright (c) 2014, Infineon Technologies AG                                 **
+ All rights reserved.                                                         **
+                                                                              **
+ Redistribution and use in source and binary forms, with or without           **
+ modification,are permitted provided that the following conditions are met:   **
+                                                                              **
+ *Redistributions of source code must retain the above copyright notice,      **
+ this list of conditions and the following disclaimer.                        **
+ *Redistributions in binary form must reproduce the above copyright notice,   **
+ this list of conditions and the following disclaimer in the documentation    **
+ and/or other materials provided with the distribution.                       **
+ *Neither the name of the copyright holders nor the names of its contributors **
+ may be used to endorse or promote products derived from this software without** 
+ specific prior written permission.                                           **
+                                                                              **
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"  **
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    **
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   **
+ ARE  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   **
+ LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         **
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         **
+ SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    **
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      **
+ CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)       **
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   **
+ POSSIBILITY OF SUCH DAMAGE.                                                  **
+                                                                              **
+ To improve the quality of the software, users are encouraged to share        **
+ modifications, enhancements or bug fixes with Infineon Technologies AG       **
+ dave@infineon.com).                                                          **
+                                                                              **
+********************************************************************************
+**                                                                            **
+**                                                                            **
+** PLATFORM : Infineon XMC4000/XMC1000 Series                                 **
+**                                                                            **
+** COMPILER : Compiler Independent                                            **
+**                                                                            **
+** AUTHOR   : App Developer                                                   **
+**                                                                            **
+** MAY BE CHANGED BY USER [yes/no]: Yes                                       **
+**                                                                            **
+** MODIFICATION DATE : Jan 21 , 2014                                          **
+**                                                                            **
+*******************************************************************************/
+/*******************************************************************************
+**                      Author(s) Identity                                    **
+********************************************************************************
+**                                                                            **
+** Initials     Name                                                          **
+** ---------------------------------------------------------------------------**
+** AIK          App Developer                                                 **
+*******************************************************************************/
+/**
+ * @file   UART002.c
+ * 
+ * @brief USIC_UARTOS_UART002 App provides high level Apps with Read and Write APIs which
+ *   can be used from multiple Task context. The APIs uses Semaphores so that the
+ *   same USIC channel can be used by multiple Applications. The App supports both
+ *   Interrupt and DMA mode of operation
+ *   
+ * @App    Version UART002 <<%= app.getAppVersion(AppBaseuri)%>>
+ * 
+ */
+/*
+* Version History : 
+* 25 Jul 2013	 v1.0.8	  1. Replaced "DMA003_H_" Macros with "UART_DMA_ENABLED"
+*                         2. Clock gating is disabled in UART002_Init API for 
+*                         XMC4400 & XMC4200 devices
+*                         3. DBG002 Macros added
+*                         4. Spell corrections & Misra corrections 
+*                         5. Modified for baud calculation during initialization.
+*                         6. The PCTQ value update in BRG register is removed 
+*                         as the value is taken as zero. 
+*                         7. Updated for the baud calculation in UART002_lInit() 
+*                         function.
+*                         8. Updated the UART002_Init() function for disabling 
+*                         the clock gating signal for XMC 1000 devices.
+*                         9. DMA mode handling is disabled for XMC1000 devices 
+*                         as DMA module is not available in XMC1000 devices. 
+*                         10. Modified interrupt event initialization in 
+*                         UART002_Init() for XMC1000 devices.  
+*                         11. Interrupt handler names are replaced with 
+*                         "IRQ_Hdlr_X",where X will be the interrupt node ID.
+*                         12. IOCR & PDR register configurations are added in
+*                         UART002_Init() for Tx & Rx Pin Configurations. 
+*                         13. The function UART002_lConfigureBaudRate is removed 
+*                         as the baud calculations are made in ui model level 
+*                         and the values are generated in handle parameter of the 
+*                         configuration file. 
+*                         14. Removed TBIF bit configuration from UART002_lInit as 
+*                         polling is not used in the UART002 App.
+*                         15. Added open-drain output configuration for Half duplex
+*                         operation mode to allow the wired-AND connection in 
+*                         multiple transmitter communication.
+*                         16. TX pin set logic high (1) before configuring Open 
+*                         Drain mode for Half Duplex operation mode. 
+*  21 Jan 2014 v1.0.12    1. Error codes are added in various functions, that can
+*                         be logged with DBG002 App.
+*                         2. Removed DBG002_FUNCTION_ENTRY & DBG002_FUNCTION_EXIT
+*                         calling from APIs as using these macros is highly 
+*                         discouraged.                                                                                                         
+*/
+/*******************************************************************************
+ ** INCLUDE FILES                                                             **
+ ******************************************************************************/
+
+#include <DAVE3.h>
+
+<% String TempApps = null;
+   String MyAppName = null;
+   ArrayList<String> apps;
+   String TempLowerApps = null; 
+   boolean DBGApp = false;   
+   apps=(ArrayList<String>)(app.getApps());
+        for (int k = 0; k < apps.size(); k++) {
+              TempApps = apps.get(k);
+/*            if(app.isAppInitProvider(apps.get(k)) == true) { */
+              MyAppName = TempApps.substring(TempApps.indexOf("/app/") + 5, TempApps.lastIndexOf("/"));
+              TempLowerApps = MyAppName.toLowerCase();
+              if (TempLowerApps.equalsIgnoreCase("dbg002")) {DBGApp = true;}   
+/*   } */ 
+  } %>
+
+<% if (!DBGApp) { %>  
+/*****************************************************************************
+              DUMMY DEFINTIONS OF DEBUG LOG MACROS
+*****************************************************************************/
+/*These definitions are included here to avoid compilation errors,
+ since the DBG002 app is not part of the project. All the macros are defined
+ as empty*/ 
+#ifndef _DBG002_H_
+
+#define DBG002_MESSAGEID_LITERAL
+#define DBG002_ERROR(groupid,messageid,length,value)
+
+#endif/* End of definitions of dummy Debug Log macros*/
+<% } %>                  
+
+/*******************************************************************************
+**                      Private Macro Definitions                             **
+*******************************************************************************/
+
+<% String Baseuri = "app/uart002/";%>
+<% String Uarturi = "peripheral/usic/"; %>
+<% String MappedUri = null; %>
+<% String UnitInst = null; %>
+<% String appInst  = null; %>
+<% double clockfreq = 0; %>
+
+<% int Is44Device = -1; %>
+<% int Is42Device = -1; %>
+<% int Is45Device = -1; %>
+<% int Is1xDevice = -1; %>
+<% String deviceId = null; %>
+<% deviceId = app.getSoftwareId(); %>
+<% if (deviceId != null)
+{      
+   Is44Device = ((deviceId.substring(0,2).compareTo("44")==0)?1:0);
+   Is42Device = ((deviceId.substring(0,2).compareTo("42")==0)?1:0);
+   Is45Device = ((deviceId.substring(0,2).compareTo("45")==0)?1:0);
+   Is1xDevice = ((deviceId.substring(0,1).compareTo("1")==0)?1:0); 	
+}%>  
+
+
+<% ArrayList<String> appsList7 = (ArrayList<String>)(app.getApps("app/uart002/"));
+ for (String appIns : appsList7 ) {
+ appInst = appIns.substring(appIns.lastIndexOf("/")+1);%>
+<% MappedUri = app.getMappedUri(Baseuri + appInst + "/channel"); %>
+<% if((MappedUri != null) && (MappedUri != "")) { 
+ UnitInst = MappedUri.substring(MappedUri .length()-11,MappedUri.indexOf("/channel/")); 
+ int Unit = Integer.parseInt(UnitInst); %>
+ <% if(Is1xDevice == 1){
+   clockfreq = app.getDoubleValue (Baseuri + appInst + "/clockapp2/clk002_irMCLK" );
+   }
+   else if ((Is45Device==1)||(Is44Device==1)||(Is42Device==1)){
+   clockfreq = app.getDoubleValue (Baseuri + appInst + "/clockapp/clk001_iroActualFreqPB" );
+   }
+   else{}
+   %> 
+ /* System Core clock frequency in MHz */ 
+#define UART002_CLOCK  <%= clockfreq%>F 
+<%break;%>
+<% } %>
+<% else { %>
+/* CHANNEL IS NOT MAPPED */
+<% } %>
+<%} %>
+
+#define APP_GID DBG002_GID_UART002
+
+
+/*******************************************************************************
+**                      Private Type Definitions                              **
+*******************************************************************************/
+
+
+/*******************************************************************************
+**                 Private Function Declarations:
+*******************************************************************************/
+/**
+ * @ingroup UART002_PrivateFunctions
+ * @{
+ */
+<% if(Is1xDevice == 0){ %>
+#ifdef UART_DMA_ENABLED 
+/**
+ * Dma receive listener function
+ *          
+ * param[in]   dev dw_device
+ * param[in]   eCode Interrupt type
+ * @return     None
+ *
+ * <b>Reentrant: YES </b><BR>
+ *
+ */
+void UARTDmaRxListener(DMA_IRQType IRQType, uint32_t CbArg);
+
+
+/**
+ * Dma transmit listener function
+ *          
+ * param[in]   dev dw_device
+ * param[in]   eCode Interrupt type
+ * @return     None
+ *
+ * <b>Reentrant: YES </b><BR>
+ *
+ */
+void UARTDmaTxListener(DMA_IRQType IRQType, uint32_t CbArg);
+#endif
+<%}%>
+
+/**
+ * Function to initialise UART channel
+ *          
+ * param[in]   Handle Uart channel configuration
+ * @return     None
+ *
+ * <b>Reentrant: YES </b><BR>
+ *
+ */
+void  UART002_lInit(const UART002_HandleType* Handle);
+/**
+ *@}
+ */
+/*******************************************************************************
+**                      Global Constant Definitions                           **
+*******************************************************************************/
+
+/*******************************************************************************
+**                      Global Variable Definitions                           **
+*******************************************************************************/
+
+<% ArrayList<String> appsList6 = (ArrayList<String>)(app.getApps("app/uart002/"));
+ for (String appIns : appsList6 ) {
+ appInst = appIns.substring(appIns.lastIndexOf("/")+1);%>
+<% MappedUri = app.getMappedUri(Baseuri + appInst + "/channel"); %>
+<% if((MappedUri != null) && (MappedUri != "")) { 
+ UnitInst = MappedUri.substring(MappedUri .length()-11,MappedUri.indexOf("/channel/")); 
+ int Unit = Integer.parseInt(UnitInst); %>
+
+osSemaphoreDef(UART002_ChannelSemHandle<%=appInst%>);
+<% } %>
+<% else { %>
+/* CHANNEL IS NOT MAPPED */
+<% } %>
+<%} %>
+/*******************************************************************************
+**                      Private Constant Definitions                          **
+*******************************************************************************/
+
+/*******************************************************************************
+**                 Function like macro definitions                            **
+*******************************************************************************/
+/*******************************************************************************
+**                      Private Function Definitions                          **
+*******************************************************************************/
+
+<% if(Is1xDevice == 0){ %>
+#ifdef UART_DMA_ENABLED
+/* Dma receive listener function */
+void UARTDmaRxListener(DMA_IRQType IRQType, uint32_t CbArg)
+{
+  /* <<<DD_UART002_non_API_1>>>*/
+  UART002_LocalStructType* Config = (UART002_LocalStructType*)CbArg;	
+  UART002_HandleType* Handle = (UART002_HandleType*)Config->AppInstanceHandle;
+  if(IRQType == DMA_IRQ_ERR)
+  {
+    /* Disable standard transmit interrupt */
+    Handle->UartRegs->RBCTR &= \
+                      ~(((uint32_t)USIC_CH_RBCTR_SRBIEN_Msk));
+    USIC_FlushRxFIFO(Handle->UartRegs);
+    Config->Status = UART002_TRANSFER_FAILED;
+    /* Transfer failed. Release the channel */
+    /* Signal the task that Job is completed */
+	osSignalSet(Config->ThreadID,Config->SignalId);
+    /* Release channel semaphore */
+	osSemaphoreRelease(Handle->DynamicData->ChannelSemId);
+  }
+  
+  if(IRQType == DMA_IRQ_TFR) 
+  {
+    /* Disable standard receive and error event interrupt */
+    Handle->UartRegs->RBCTR &= \
+                      ~(((uint32_t)USIC_CH_RBCTR_SRBIEN_Msk));
+    USIC_FlushRxFIFO(Handle->UartRegs);
+
+    Config->Status = UART002_TRANSFER_SUCCESS;
+    /* Transfer success. Release the channel */
+    /* Signal the task that Job is complete */
+	osSignalSet(Config->ThreadID,Config->SignalId);
+    /* Release channel semaphore */
+	osSemaphoreRelease(Handle->DynamicData->ChannelSemId);
+  }
+}
+
+
+/* Dma transmit listener function */
+void UARTDmaTxListener(DMA_IRQType IRQType, uint32_t CbArg)
+{
+	  /* <<<DD_UART002_non_API_2>>>*/
+   UART002_LocalStructType* Config = (UART002_LocalStructType*)CbArg;
+   UART002_HandleType* Handle = (UART002_HandleType*)Config->AppInstanceHandle;
+   if(IRQType == DMA_IRQ_ERR)
+   {
+    /* DMA error interrupt occured */
+   
+      /* Disable standard transmit and error event interrupt */
+      Handle->UartRegs->TBCTR &= \
+                          ~(((uint32_t)USIC_CH_TBCTR_STBIEN_Msk));
+      USIC_FlushTxFIFO(Handle->UartRegs);
+      Config->Status = UART002_TRANSFER_FAILED;
+      /* Transfer failed. Release the channel */
+      /* Signal the task that Job is complete */
+		  osSignalSet(Config->ThreadID,Config->SignalId);
+      /* Release channel semaphore */
+		  osSemaphoreRelease(Handle->DynamicData->ChannelSemId);
+    }
+	if(IRQType == DMA_IRQ_TFR) 
+    {
+    /*DMA transfer completed */
+      /* Disable standard transmit and error event interrupt */
+    Handle->UartRegs->TBCTR &= \
+                          ~(((uint32_t)USIC_CH_TBCTR_STBIEN_Msk));
+    Config->Status = UART002_TRANSFER_SUCCESS;
+     /* Transfer success. Release the channel */
+      /* Signal the task that Job is complete */
+		osSignalSet(Config->ThreadID,Config->SignalId);
+    /* Release channel semaphore */
+		osSemaphoreRelease(Handle->DynamicData->ChannelSemId);
+	}
+}
+#endif<%} %>
+
+/* Initialises the App based on User provide configuration. */
+ 
+void  UART002_lInit(const UART002_HandleType* Handle)
+{ 
+  USIC_CH_TypeDef* UartRegs = Handle->UartRegs;
+  
+ /* <<<DD_UART002_API_1>>>*/
+
+  /** UART initialisation  */
+  /* Disable UART mode before configuring all USIC registers to avoid unintended edges */ 
+  UartRegs->CCR &= ~( ((uint32_t)(UART_MODE  & USIC_CH_CCR_MODE_Msk)));    
+ 
+  /* Enable the USIC Channel */
+  UartRegs->KSCFG |= (uint32_t)(((USIC_CH_KSCFG_MODEN_Msk)) | \
+                     ((0x01UL   << USIC_CH_KSCFG_BPMODEN_Pos) \
+                                          &  USIC_CH_KSCFG_BPMODEN_Msk));
+
+  /* Configuration of USIC Channel Fractional Divider */
+  
+  /* Fractional divider mode selected */
+  UartRegs->FDR |= (uint32_t)(( 2UL << USIC_CH_FDR_DM_Pos) \
+                    & USIC_CH_FDR_DM_Msk);
+ 
+  /* Set the step value */
+  UartRegs->FDR &= (uint32_t)~(USIC_CH_FDR_STEP_Msk);
+  UartRegs->FDR |= (uint32_t)( (Handle->BGR_STEP) & USIC_CH_FDR_STEP_Msk);
+		
+  UartRegs->BRG |= (uint32_t)((( (Handle->BGR_PCTQ)  << USIC_CH_BRG_PCTQ_Pos) & \
+    USIC_CH_BRG_PCTQ_Msk  ) | \
+    (((Handle->BGR_DCTQ)  << USIC_CH_BRG_DCTQ_Pos) &  USIC_CH_BRG_DCTQ_Msk));
+
+  UartRegs->BRG &= (uint32_t)~(USIC_CH_BRG_PDIV_Msk);
+  UartRegs->BRG |= (uint32_t)(((Handle->BGR_PDIV)  << USIC_CH_BRG_PDIV_Pos) \
+		                           &  USIC_CH_BRG_PDIV_Msk);
+
+  /* Configuration of USIC Shift Control */
+  /* Transmit/Receive LSB first is selected  */
+  /* Transmission Mode (TRM) = 1  */
+  /* Passive Data Level (PDL) = 1 */
+  UartRegs->SCTR |= (uint32_t)(((0x01UL  << USIC_CH_SCTR_PDL_Pos) & \
+                      USIC_CH_SCTR_PDL_Msk ) | \
+                     ((0x01UL  << USIC_CH_SCTR_TRM_Pos) &  \
+                      USIC_CH_SCTR_TRM_Msk));
+  
+  /* Configure Word length and frame length */
+  UartRegs->SCTR |= (uint32_t)(((uint32_t)(Handle->ChConfig.DataBits  << (uint32_t)USIC_CH_SCTR_FLE_Pos) & \
+  USIC_CH_SCTR_FLE_Msk ) | \
+  (((uint32_t)Handle->ChConfig.DataBits  << USIC_CH_SCTR_WLE_Pos) &  USIC_CH_SCTR_WLE_Msk));
+  
+  /* Configuration of Protocol Control Register */ 
+  /* Sample Mode (SMD) = 1 */
+  /* Sample Point (SP) = 8 */
+  /* Pulse Length (PL) = 0 */
+  UartRegs->PCR_ASCMode &= (uint32_t)~USIC_CH_PCR_ASCMode_STPB_Msk;
+  UartRegs->PCR_ASCMode |= (uint32_t)(((0x01UL  & USIC_CH_PCR_ASCMode_SMD_Msk)) | \
+    ((uint32_t)((uint32_t)Handle->ChConfig.StopBit  << (uint32_t)USIC_CH_PCR_ASCMode_STPB_Pos) & \
+    USIC_CH_PCR_ASCMode_STPB_Msk) | \
+    ((uint32_t)((Handle->BGR_SP)  << (uint32_t)USIC_CH_PCR_ASCMode_SP_Pos) & \
+    USIC_CH_PCR_ASCMode_SP_Msk));
+      
+
+  
+  /* Configuration of USIC Transmit Control/Status Register */ 
+  /* TBUF Data Enable (TDEN) = 1 */
+  /* TBUF Data Single Shot Mode (TDSSM) = 1 */     
+  UartRegs->TCSR |= (uint32_t)(((0x01UL  << USIC_CH_TCSR_TDEN_Pos) & \
+                        USIC_CH_TCSR_TDEN_Msk ) | \
+                        ((uint32_t)(0x01UL  << USIC_CH_TCSR_TDSSM_Pos) & \
+                        USIC_CH_TCSR_TDSSM_Msk));
+    
+  /* Configuration of Protocol Status Register */ 
+  /* TBIF is set to simplify polling*/
+  UartRegs->PSR_ASCMode |= (uint32_t)\
+                     ((0x01UL  << USIC_CH_PSR_ASCMode_TBIF_Pos) & \
+                      USIC_CH_PSR_ASCMode_TBIF_Msk);
+  /* Receive fifo buffer configuration */
+  UartRegs->RBCTR |= (uint32_t)((((0x01UL   << USIC_CH_RBCTR_LOF_Pos) & \
+                        USIC_CH_RBCTR_LOF_Msk)));
+   /* Fifo trigger level configuration as per user selected mode */
+<% if(Is1xDevice == 0){ %>
+  if((Handle->DMAMode == UART002_DMA_NONE) || \
+                              (Handle->DMAMode == UART002_RX_DMA) )
+  {
+    UartRegs->TBCTR |= (uint32_t)(((uint32_t)Handle->TxFIFOTrigger  << \
+                 USIC_CH_TBCTR_LIMIT_Pos ) & USIC_CH_TBCTR_LIMIT_Msk);
+  }
+  else <%}%>
+  {
+     UartRegs->TBCTR |= \
+    		 (uint32_t)(((0x1UL)  << \
+                 USIC_CH_TBCTR_LIMIT_Pos ) & USIC_CH_TBCTR_LIMIT_Msk);
+  }
+  
+  /* Configure Parity*/
+  UartRegs->CCR &= ~((uint32_t)USIC_CH_CCR_PM_Msk);
+  UartRegs->CCR |= (uint32_t)( ((UART_MODE  & USIC_CH_CCR_MODE_Msk)) | \
+  (((uint32_t)(Handle->ChConfig.Parity)  << USIC_CH_CCR_PM_Pos) & \
+  USIC_CH_CCR_PM_Msk));
+    
+}
+
+<% if(Is1xDevice == 0){ %>
+#ifdef UART_DMA_ENABLED
+static void UART002_lFindMSize
+(
+ UART002_HandleType* Handle,
+ DMA003_ChannelConfigType* Config,
+ uint16_t BlockSize
+)
+{
+	if(BlockSize < 4)
+	{
+		Config->SrcMSize      =  DMA_MSIZE_1;
+		Config->DstMSize      =  DMA_MSIZE_1;
+    Handle->DynamicData->Msize = 1;
+	}
+	else if(BlockSize < 8)
+	{
+		Config->SrcMSize      =  DMA_MSIZE_4;
+		Config->DstMSize      =  DMA_MSIZE_4;
+    Handle->DynamicData->Msize = 4;
+	}
+	else
+	{
+		Config->SrcMSize      =  DMA_MSIZE_8;
+		Config->DstMSize      =  DMA_MSIZE_8;
+    Handle->DynamicData->Msize = 8;
+	}
+}
+#endif<%}%>
+
+/*******************************************************************************
+**                      Public Function Definitions                           **
+*******************************************************************************/
+void UART002_Init(void)
+{
+<% String MappedUri2 = null; %>
+<% String MappedUri3 = null; %>
+<% String nvicInst1 = null; %>
+<% String nvicInst2 = null; %>
+<% ArrayList<String> appsList = (ArrayList<String>)(app.getApps("app/uart002/"));
+ for (String appIns : appsList ) {
+ appInst = appIns.substring(appIns.lastIndexOf("/")+1);%>
+<% MappedUri = app.getMappedUri(Baseuri + appInst + "/channel"); %>
+<% MappedUri2 = app.getMappedUri(Baseuri + appInst + "/nvicstbinode"); %>
+<% MappedUri3 = app.getMappedUri(Baseuri + appInst + "/nvicsrbinode"); %>
+<% nvicInst1 = MappedUri2.substring(MappedUri2.indexOf("/interrupt/")+11,MappedUri2.length()); %>
+<% nvicInst2 = MappedUri3.substring(MappedUri3.indexOf("/interrupt/")+11,MappedUri3.length()); %>
+<% int Offset1 = Integer.parseInt(nvicInst1);%>
+<% int Offset2 = Integer.parseInt(nvicInst2);%>
+<% int Prioritystbi =0; %>
+<% int SubPrioritystbi =0; %>
+<% int Prioritysrbi =0; %>
+<% int SubPrioritysrbi = 0; %>
+<% if(Is1xDevice==1) {
+  Prioritystbi = app.getIntegerValue(Baseuri + appInst +"/uart002_TIMMirwstInterruptPriority");
+  Prioritysrbi = app.getIntegerValue(Baseuri + appInst +"/uart002_TIMMirwsrInterruptPriority");
+} else {
+  Prioritystbi = app.getIntegerValue(Baseuri + appInst +"/uart002_irwstbiInterruptPriority");
+  SubPrioritystbi = app.getIntegerValue(Baseuri + appInst +"/uart002_irwstbiInterruptSubPriority");
+  Prioritysrbi = app.getIntegerValue(Baseuri + appInst +"/uart002_irwsrbiInterruptPriority");
+  SubPrioritysrbi = app.getIntegerValue(Baseuri + appInst +"/uart002_irwsrbiInterruptSubPriority");
+}%>
+<% if((MappedUri != null) && (MappedUri != "")) { 
+ UnitInst = MappedUri.substring(MappedUri .length()-11,MappedUri.indexOf("/channel/")); 
+ int Unit = Integer.parseInt(UnitInst); %>
+<% if(Unit == 0)  { %>
+<%if ((Is44Device==1)||(Is42Device==1)||(Is1xDevice==1))
+  {%>
+ /* Disable the USIC0 clock gating */
+ /* 
+  * The disabling of the clock gating is applicable only for
+  * XMC4400, XMC4200 and XMC1000 devices.
+  */
+  <%if ((Is1xDevice==1))  {%>
+  SCU_GENERAL->PASSWD = 0x000000C0UL;
+  WR_REG(SCU_CLK->CLKCR, SCU_CLK_CLKCR_CNTADJ_Msk, \
+                               SCU_CLK_CLKCR_CNTADJ_Pos,CLK002_DELAYCNT);<%}%>
+  SET_BIT(SCU_CLK->CGATCLR0, SCU_CLK_CGATCLR0_USIC0_Pos);
+  <%if ((Is1xDevice==1))    {%>
+  while ((SCU_CLK->CLKCR)&(SCU_CLK_CLKCR_VDDC2LOW_Msk))
+  {
+     ;
+  }
+  SCU_GENERAL->PASSWD = 0x000000C3UL;   <%}%> 
+  <%}%> 
+  <%if ((Is45Device==1)||(Is44Device==1)||(Is42Device==1))
+  {%>
+  /* Reset the Peripheral*/
+  RESET001_DeassertReset(PER0_USIC<%=UnitInst%>); <%}%>
+  <% } else { %>  
+  <%if ((Is44Device==1)||(Is42Device==1)||(Is1xDevice==1))
+  {%>
+ /* Disable the USIC1 clock gating */
+ /* 
+  * The disabling of the clock gating is applicable only for
+  * XMC4400, XMC4200 and XMC1000 devices.
+  */
+<%if ((Is1xDevice==1))  {%>
+  SCU_GENERAL->PASSWD = 0x000000C0UL;
+  WR_REG(SCU_CLK->CLKCR, SCU_CLK_CLKCR_CNTADJ_Msk, \
+                                SCU_CLK_CLKCR_CNTADJ_Pos,CLK002_DELAYCNT);<%}%>
+  SET_BIT(SCU_CLK->CGATCLR1, SCU_CLK_CGATCLR1_USIC1_Pos);
+  <%if ((Is1xDevice==1)) {%>
+  while ((SCU_CLK->CLKCR)&(SCU_CLK_CLKCR_VDDC2LOW_Msk))
+  {
+	  ;
+  }
+  SCU_GENERAL->PASSWD = 0x000000C3UL;     <%}%>
+<%}%>
+  <%if ((Is45Device==1)||(Is44Device==1)||(Is42Device==1))
+{%>
+  /* Reset the Peripheral*/
+  RESET001_DeassertReset(PER1_USIC<%=UnitInst%>); <% } %> 
+  <%}%>
+  
+  UART002_lInit(&UART002_Handle<%=appInst%>); 
+ <% if(Is1xDevice ==1) %>
+ <%{ %>
+  NVIC_SetPriority((IRQn_Type)<%=nvicInst1%>, <%=Prioritystbi%>);
+  NVIC_SetPriority((IRQn_Type)<%=nvicInst2%>, <%=Prioritysrbi%>);
+  <%} %>
+<% else %>
+<%{ %>
+  NVIC_SetPriority((IRQn_Type)<%=nvicInst1%>,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),\
+		                          <%=Prioritystbi%>U,<%=SubPrioritystbi%>U));
+  NVIC_SetPriority((IRQn_Type)<%=nvicInst2%>,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),\
+		                          <%=Prioritysrbi%>U,<%=SubPrioritysrbi%>U));
+  <%} %>  
+  NVIC_EnableIRQ((IRQn_Type)<%=nvicInst1%>);
+  NVIC_EnableIRQ((IRQn_Type)<%=nvicInst2%>);
+  UART002_Handle<%=appInst%>.DynamicData->ChannelSemId = \
+        osSemaphoreCreate(osSemaphore(UART002_ChannelSemHandle<%=appInst%>),1);
+  <% String pinUri = app.getMappedUri(Baseuri + appInst +"/uart_txpin"); %>
+  <% if ((pinUri != null) && (pinUri.trim() != "")) { %>
+    <% String portNo = pinUri.substring(pinUri.indexOf("port/p/")+7,pinUri.indexOf("/pad/")); %>
+    <% String pinNo = pinUri.substring(pinUri.indexOf("/pad/")+5,pinUri.length()); %>   
+    <% int PDR_PD1 = app.getIntegerValue(Baseuri + appInst +"/uart_txpin/pdr_pd"); %>
+    <% int Pin = Integer.parseInt(pinNo);%>   
+    <% int Oper_Mode = app.getIntegerValue(Baseuri + appInst +"/uart002_OprModeTemp"); %>
+  <%if ((Oper_Mode == 1)) {%>
+  /* Configure TX Pin in Open-drain mode to allow the Wired-AND connection */
+  PORT<%=portNo%>->OMR |= ((uint32_t)0x01 << <%=pinNo%>);
+  <%if(Pin < 4) { %>
+  PORT<%=portNo%>->IOCR0 |= (0x18 << <%=(3+(Pin*8))%>);
+  <%}else if (Pin >= 4 && Pin <= 7) {  
+  Pin = Pin - 4; %>
+  PORT<%=portNo%>->IOCR4 |= (0x18 << <%=(3+(Pin*8))%>);
+  <%} else if (Pin >= 8 && Pin <= 11) { 
+  Pin = Pin - 8; %>
+  PORT<%=portNo%>->IOCR8 |= (0x18 << <%=(3+(Pin*8))%>);
+  <%} else if (Pin >= 12 && Pin <= 15) { 
+  Pin = Pin - 12; %>
+  PORT<%=portNo%>->IOCR12 |= (0x18 << <%=(3+(Pin*8))%>);
+  <%}}%>
+    
+    <%if ((Is45Device==1)||(Is44Device==1)||(Is42Device==1))
+  {%>
+  /* Configuration of TX Pin <%=portNo%>.<%=pinNo%> based on User configuration */
+    <% if(Pin < 8) {%>
+  PORT<%=portNo%>->PDR0  &= (~(PORT<%=portNo%>_PDR0_PD<%=Pin%>_Msk));
+  <% if(PDR_PD1 != 0) {%>
+  PORT<%=portNo%>->PDR0  |= (((uint32_t)<%=PDR_PD1%> << PORT<%=portNo%>_PDR0_PD<%=Pin%>_Pos) & \
+                                             PORT<%=portNo%>_PDR0_PD<%=Pin%>_Msk);
+  <% }%>
+  <% } else {%>
+  PORT<%=portNo%>->PDR1 &= (~(PORT<%=portNo%>_PDR1_PD<%=Pin%>_Msk));
+  <% if(PDR_PD1 != 0) {%>
+  PORT<%=portNo%>->PDR1 |= (((uint32_t)<%=PDR_PD1%> << PORT<%=portNo%>_PDR1_PD<%=Pin%>_Pos) & \
+                                        PORT<%=portNo%>_PDR1_PD<%=Pin%>_Msk);    
+  <%}%>
+  <%}%> 
+  <%}} else { %>
+  /* TXPIN instance (no.<%= appInst %>) is not mapped to any port pin. */
+  <%}%>
+  <% String pinUri2 = app.getMappedUri(Baseuri + appInst +"/uart_rxpin"); %>
+  <% if ((pinUri2 != null) && (pinUri2.trim() != "")) { %>
+  <% String portNo2 = pinUri2.substring(pinUri2.indexOf("port/p/")+7,pinUri2.indexOf("/pad/")); %>
+  <% String pinNo2 = pinUri2.substring(pinUri2.indexOf("/pad/")+5,pinUri2.length());%> 
+  /* Configuration of RX Pin <%=portNo2%>.<%=pinNo2%> based on User configuration */
+  <% int Pin2 = Integer.parseInt(pinNo2);%>
+  <% int IOCR_PCR = app.getIntegerValue(Baseuri + appInst +"/uart002_inputchardummy");%>
+
+  <% if(IOCR_PCR != 0) {%> 
+  <% if(Pin2 < 4) { %>
+  PORT<%=portNo2%>->IOCR0 |= ((uint32_t)<%=IOCR_PCR%> << <%=(3+(Pin2*8))%>);
+  <%}else if (Pin2 >= 4 && Pin2 <= 7) {  
+  Pin2 = Pin2 - 4; %>
+  PORT<%=portNo2%>->IOCR4 |= ((uint32_t)<%=IOCR_PCR%> << <%=(3+(Pin2*8))%>);
+  <%} else if (Pin2 >= 8 && Pin2 <= 11) { 
+  Pin2 = Pin2 - 8; %>
+  PORT<%=portNo2%>->IOCR8 |= ((uint32_t)<%=IOCR_PCR%> << <%=(3+(Pin2*8))%>);
+  <%} else if (Pin2 >= 12 && Pin2 <= 15) { 
+  Pin2 = Pin2 - 12; %>
+  PORT<%=portNo2%>->IOCR12 |= ((uint32_t)<%=IOCR_PCR%> << <%=(3+(Pin2*8))%>);
+  <%}} else { %>
+ /* RXPIN instance (no.<%= appInst %>) is not mapped to any port pin. */
+ <%}}} %>
+<% else { %>
+/* CHANNEL IS NOT MAPPED */
+<% } %>
+<%} %>
+}
+
+/* Function will reset the App to default values */
+void UART002_Deinit(const UART002_HandleType* Handle)
+{
+
+  /* <<<DD_UART002_API_2>>>*/
+  /* Place holder function */ 
+}
+
+
+/*
+ *  This function initializes the Local Data structure allocated by
+ *  the Task/App with default values configured through UI. 
+ *   This function also copies the App handle to the local data structure.
+*/
+void UART002_LocalStructureInit
+(
+  const UART002_HandleType* Handle, 
+  UART002_LocalStructType* Config,
+  int32_t SignalId
+)
+{	
+
+  /* <<<DD_UART002_API_3>>>*/
+  /* Copy the App handle to the local data structure App handle parameter */
+  Config->AppInstanceHandle = (uint32_t*)Handle;      
+  Config->pBuffer =  NULL;                
+  Config->DataLen =  0;                  
+  /* Store the signal id passed by Job Task*/
+  Config->SignalId = SignalId;
+  /* Get thread ID */
+  Config->ThreadID = osThreadGetId();
+  
+}
+
+
+/*
+ * This function starts the  UART Reception . The Config structure
+ * has the desired no of bytes to be received from the peer device.
+ * Timeout value is specified.
+*/
+status_t UART002_StartReception(UART002_LocalStructType* Config, time_t Timeout)
+{
+  status_t Status = (status_t)UART002_FAIL;
+  int32_t SemStatus = 0;
+  UART002_HandleType* Handle = (UART002_HandleType*)Config->AppInstanceHandle;
+   /* <<<DD_UART002_API_4>>>*/
+  do
+  {
+     /* Checking for configuration errors */
+    if((Config->pBuffer == NULL) || (Config->DataLen == 0U))
+    {
+      Status = UART002_CONFIG_ERROR;
+      DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+      break;
+    }
+    /* Acquire semaphore of specified channel to start reception */
+    SemStatus = osSemaphoreWait(Handle->DynamicData->ChannelSemId, Timeout);
+    if(SemStatus == 0)                                                       
+    {
+      Status = UART002_TIMEOUT;
+      DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+      break;
+    }
+
+    /*Initialize the UART channel state to IDLE */
+    Config->Status =  UART002_IDLE; 
+    /* Copy pBuffer to App Handle */
+    Handle->DynamicData->pBuffer = Config->pBuffer;
+    /* Copy Datalen to App Handle */
+    Handle->DynamicData->DataLen = Config->DataLen;
+    Handle->DynamicData->CurrentTaskStruct = Config;
+<% if(Is1xDevice == 0){ %>    
+    /* Check if DMA mode for transmission is enabled */
+    if((Handle->DMAMode == UART002_RX_DMA) || \
+              (Handle->DMAMode == UART002_RX_TX_DMA) )
+    {
+#ifdef UART_DMA_ENABLED 
+      Handle->RxDMAHandle->ChConfig.SrcAddress = \
+                                 (uint32_t)&(Handle->UartRegs->OUTR);
+      /* Configure destination address */
+      Handle->RxDMAHandle->ChConfig.DstAddress = (uint32_t)Config->pBuffer;
+      /* Configure block size */
+      Handle->RxDMAHandle->ChConfig.BlockSize = Config->DataLen;
+      UART002_lFindMSize(Handle,&Handle->RxDMAHandle->ChConfig,Config->DataLen);
+      Handle->UartRegs->RBCTR |= (((uint32_t)(Handle->DynamicData->Msize-1) << \
+                   USIC_CH_RBCTR_LIMIT_Pos) & USIC_CH_RBCTR_LIMIT_Msk);
+                   
+      /* Initilialize the DMA channel */
+      Status = \
+       DMA003_SetChannelTransferParams(Handle->RxDMAHandle, \
+                          &(Handle->RxDMAHandle->ChConfig));
+      if(Status != DAVEApp_SUCCESS)
+      {
+        Status = UART002_DMA_ERROR;
+        DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+        break;
+      }
+      DMA003_SetListener((Handle->RxDMAHandle),&UARTDmaRxListener,(uint32_t)Config);
+   	  Status = DMA003_StartTransfer(Handle->RxDMAHandle);
+      if(Status != DAVEApp_SUCCESS)
+      {
+        Status = UART002_DMA_ERROR;
+        DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+        break;
+      }
+#endif      
+    }
+    else <%}%>
+    {
+        Handle->UartRegs->RBCTR &= ~(USIC_CH_RBCTR_LIMIT_Msk);
+        if( Config->DataLen <= Handle->RxFIFOTrigger)
+        {
+       	  Handle->UartRegs->RBCTR |= (uint32_t)(((uint32_t)(Config->DataLen -1U) << \
+                   USIC_CH_RBCTR_LIMIT_Pos) & USIC_CH_RBCTR_LIMIT_Msk);
+        }
+        else
+        {
+    	  Handle->UartRegs->RBCTR |= (uint32_t)(((uint32_t)Handle->RxFIFOTrigger << \
+                   USIC_CH_RBCTR_LIMIT_Pos) & USIC_CH_RBCTR_LIMIT_Msk);
+        }
+    	
+    }
+    Config->Status = UART002_TRANSFER_PENDING;
+    /* Enable standard receive buffer and error event */
+    Handle->UartRegs->RBCTR &= \
+                              (~(((uint32_t)USIC_CH_RBCTR_SRBIEN_Msk) | \
+                              ((uint32_t)USIC_CH_RBCTR_ARBIEN_Msk)));
+    Handle->UartRegs->RBCTR |= \
+    					  (uint32_t)(((0x01UL  << USIC_CH_RBCTR_SRBIEN_Pos) & \
+                                              USIC_CH_RBCTR_SRBIEN_Msk) | \
+                          ((uint32_t)(0x01UL  << USIC_CH_RBCTR_ARBIEN_Pos) & \
+                                              USIC_CH_RBCTR_ARBIEN_Msk));
+    Status = (status_t)DAVEApp_SUCCESS;
+  }while(0);
+  return Status;
+}
+
+/**
+ * This function starts the  UART Transmission. The Config structure
+ * has the desired no of bytes to be transmitted to the peer device.
+ * Timeout value is also specified in case the channel is occupied by
+ * some other task.
+*/
+status_t UART002_StartTransmission
+(
+  UART002_LocalStructType* Config,
+  time_t Timeout
+)
+{
+  status_t Status = (status_t)UART002_FAIL;
+  uint8_t SRno = 0U;
+  int32_t SemStatus = 0;
+  UART002_HandleType* Handle = (UART002_HandleType*)Config->AppInstanceHandle;
+   /* <<<DD_UART002_API_5>>>*/
+  do
+  {
+     /* Checking for configuration errors */
+    if((Config->pBuffer == NULL) || (Config->DataLen == 0U))
+    {
+      Status = (status_t)UART002_CONFIG_ERROR;
+      DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+      break;
+    }
+   /* Acquire semaphore of specified channel to start reception */
+    SemStatus = osSemaphoreWait(Handle->DynamicData->ChannelSemId, Timeout);
+    if(SemStatus == 0)                                                       
+    {
+      Status = (status_t)UART002_TIMEOUT;    
+      DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+      break;
+    }
+   
+    /* Copy pBuffer to App Handle */
+    Handle->DynamicData->pBuffer = Config->pBuffer;
+    /* Copy Datalen to App Handle */
+    Handle->DynamicData->DataLen = Config->DataLen;
+    /* Copy the current task structure to global App handle */
+    Handle->DynamicData->CurrentTaskStruct = Config;
+<% if(Is1xDevice == 0){ %>     
+    /* Check if DMA mode for transmission is enabled */
+    if((Handle->DMAMode == UART002_TX_DMA )|| \
+              (Handle->DMAMode == UART002_RX_TX_DMA ))
+    {
+#ifdef UART_DMA_ENABLED  
+      /* Configure destination address */
+      Handle->TxDMAHandle->ChConfig.SrcAddress = (uint32_t)Config->pBuffer;
+      Handle->TxDMAHandle->ChConfig.DstAddress = \
+                                  (uint32_t)&(Handle->UartRegs->IN[0]); 
+      /* Configure block size */
+      Handle->TxDMAHandle->ChConfig.BlockSize = Config->DataLen;
+      UART002_lFindMSize(Handle,&Handle->TxDMAHandle->ChConfig,Config->DataLen);      
+      /* Initilialize the DMA channel */
+      Status = \
+      DMA003_SetChannelTransferParams(Handle->TxDMAHandle, \
+                         &(Handle->TxDMAHandle->ChConfig));
+      if(Status != DAVEApp_SUCCESS)
+      {
+        Status = UART002_DMA_ERROR;
+        DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+        break;
+      }
+      DMA003_SetListener((Handle->TxDMAHandle),&UARTDmaTxListener,(uint32_t)Config);
+      Status = DMA003_StartTransfer(Handle->TxDMAHandle);
+      if(Status != DAVEApp_SUCCESS)
+      {
+        Status = UART002_DMA_ERROR;
+        DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+        break;
+      }
+#endif
+    } <%}%>
+    /* Enable standard transmit and error event interrupt */
+    Handle->UartRegs->TBCTR &= \
+                                (~(((uint32_t)USIC_CH_TBCTR_STBIEN_Msk) | \
+                                ((uint32_t)USIC_CH_TBCTR_TBERIEN_Msk)));
+    Handle->UartRegs->TBCTR |= \
+    					(uint32_t)(((0x01UL  << USIC_CH_TBCTR_STBIEN_Pos) & \
+                                                USIC_CH_TBCTR_STBIEN_Msk) | \
+                        ((uint32_t)(0x01UL  << USIC_CH_TBCTR_TBERIEN_Pos) & \
+                                                USIC_CH_TBCTR_TBERIEN_Msk));
+    SRno = (uint8_t)((Handle->UartRegs->TBCTR \
+               & USIC_CH_TBCTR_STBINP_Msk) >> (uint32_t)USIC_CH_TBCTR_STBINP_Pos);
+    Config->Status = UART002_TRANSFER_PENDING;
+    /* Trigger standard transmit interrupt by setting FMR.SIOx bit */
+    Handle->UartRegs->FMR |= \
+    					(uint32_t)(0x01UL << ((uint8_t)USIC_CH_FMR_SIO0_Pos + SRno));
+    Status = (status_t)DAVEApp_SUCCESS;
+  }while(0);
+  return Status;
+}
+
+/*  This function waits for transfer completion or till timeout occurs. */
+status_t UART002_WaitForCompletion
+(
+  const UART002_LocalStructType* Config, 
+  time_t Timeout
+)
+{
+  status_t Status = (status_t)UART002_FAIL;
+  osEvent Event;
+  /* <<<DD_UART002_API_6>>>*/
+  /* Block the task till the semaphore is released */
+    /* Wait for completion of do-that */
+   Event = osSignalWait(Config->SignalId, Timeout);
+  
+   if(Event.status == osEventTimeout)
+   {
+     /* Timeout occured */
+     Status = (status_t)UART002_TIMEOUT;
+     DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+   }
+   else
+   {
+     Status = (status_t)DAVEApp_SUCCESS;
+   }
+  return Status;
+}
+
+
+/*
+ * This function gets the result of  the transfer operation which was
+ * scheduled earlier.
+*/
+status_t UART002_GetStatus(const UART002_LocalStructType* Config)
+{
+  /* <<<DD_UART002_API_7>>>*/
+  /* Return channel status */
+  return (status_t)Config->Status;
+}
+
+<% ArrayList<String> appsList3 = (ArrayList<String>)(app.getApps("app/uart002/"));
+ for (String appIns : appsList3 ) {
+ appInst = appIns.substring(appIns.lastIndexOf("/")+1);%>
+<% MappedUri = app.getMappedUri(Baseuri + appInst + "/channel"); %>
+<% MappedUri2 = app.getMappedUri(Baseuri + appInst + "/nvicstbinode"); %>
+<% MappedUri3 = app.getMappedUri(Baseuri + appInst + "/nvicsrbinode"); %>
+<% nvicInst1 = MappedUri2.substring(MappedUri2.indexOf("/interrupt/")+11,MappedUri2.length()); %>
+<% nvicInst2 = MappedUri3.substring(MappedUri3.indexOf("/interrupt/")+11,MappedUri3.length()); %>
+<% int Offset1 = Integer.parseInt(nvicInst1);%>
+<% int Offset2 = Integer.parseInt(nvicInst2);%>
+
+<% if((MappedUri != null) && (MappedUri != "")) { %>
+
+/* Standard transmit buffer event handler */
+void IRQ_Hdlr_<%=Offset1%>(void)
+{
+   UART002_LocalStructType* CurrentLocalStruct = \
+   UART002_Handle<%=appInst%>.DynamicData->CurrentTaskStruct;
+  /* <<<DD_UART002_non_API_3>>>*/
+  /* Clear standard transmit buffer Event bit */
+  UART002_Handle<%=appInst%>.UartRegs->TRBSCR |= (uint32_t)USIC_CH_TRBSCR_CSTBI_Msk;
+  
+<% if(Is1xDevice == 0){ %>  
+  /* If not in DMA mode */
+  if((UART002_Handle<%=appInst%>.DMAMode == UART002_DMA_NONE) || \
+      (UART002_Handle<%=appInst%>.DMAMode == UART002_RX_DMA) ) <%}%>
+  {
+	if(UART002_Handle<%=appInst%>.DynamicData->DataLen == 0U)
+	{
+        /* Transfer Success release the semaphore */
+        CurrentLocalStruct->Status = UART002_TRANSFER_SUCCESS;
+        /* Disable standard transmit and error event interrupt */
+        UART002_Handle<%=appInst%>.UartRegs->TBCTR &= \
+                       ~(((uint32_t)USIC_CH_TBCTR_STBIEN_Msk) | \
+                       ((uint32_t)USIC_CH_TBCTR_TBERIEN_Msk));
+		/* Signal the task that Job is complete */
+		osSignalSet(CurrentLocalStruct->ThreadID,CurrentLocalStruct->SignalId);
+        /* Release channel semaphore */
+		osSemaphoreRelease(UART002_Handle<%=appInst%>.DynamicData->ChannelSemId);
+	}
+    /* Write to FIFO till Fifo is full */
+    while((USIC_IsTxFIFOfull(UART002_Handle<%=appInst%>.UartRegs) != 1U)&& \
+                       (UART002_Handle<%=appInst%>.DynamicData->DataLen != 0U) )
+    {
+      while(USIC_IsTxFIFObusy(UART002_Handle<%=appInst%>.UartRegs))
+      {}
+      UART002_Handle<%=appInst%>.UartRegs->IN[0] = \
+            *(UART002_Handle<%=appInst%>.DynamicData->pBuffer);
+      UART002_Handle<%=appInst%>.DynamicData->pBuffer++;
+      UART002_Handle<%=appInst%>.DynamicData->DataLen--;
+      /* Check if all data is transmitted */
+      if(UART002_Handle<%=appInst%>.DynamicData->DataLen == 0U)
+      {
+    	break;
+      }
+    }
+  }
+      
+}
+
+/* Standard Receive buffer event handler */
+void IRQ_Hdlr_<%=Offset2%>(void)
+{
+  UART002_LocalStructType* CurrentLocalStruct = \
+    UART002_Handle<%=appInst%>.DynamicData->CurrentTaskStruct;
+	  /* <<<DD_UART002_non_API_4>>>*/
+  /* Clear standard receive buffer Event bit */
+  UART002_Handle<%=appInst%>.UartRegs->TRBSCR |= (uint32_t)USIC_CH_TRBSCR_CSRBI_Msk;
+  
+ <% if(Is1xDevice == 0){ %>  
+  if((UART002_Handle<%=appInst%>.DMAMode == UART002_DMA_NONE) || \
+                                (UART002_Handle<%=appInst%>.DMAMode == UART002_TX_DMA) ) <%}%>
+  {
+    while(USIC_ubIsRxFIFOempty(UART002_Handle<%=appInst%>.UartRegs) != 1U)
+    {
+      while(USIC_IsRxFIFObusy(UART002_Handle<%=appInst%>.UartRegs))
+      {}
+      *(UART002_Handle<%=appInst%>.DynamicData->pBuffer) = \
+                           (uint8_t)UART002_Handle<%=appInst%>.UartRegs->OUTR;
+      UART002_Handle<%=appInst%>.DynamicData->pBuffer++;
+      UART002_Handle<%=appInst%>.DynamicData->DataLen--;
+      if(UART002_Handle<%=appInst%>.DynamicData->DataLen == 0U)
+      {
+        /* Transfer Success release the semaphore */
+        CurrentLocalStruct->Status = UART002_TRANSFER_SUCCESS;
+        /* Disable standard receive buffer and error event */
+        UART002_Handle<%=appInst%>.UartRegs->RBCTR &= \
+                ~((uint32_t)(USIC_CH_RBCTR_SRBIEN_Msk) | \
+                 (uint32_t)(USIC_CH_RBCTR_ARBIEN_Msk));
+        USIC_FlushRxFIFO(UART002_Handle<%=appInst%>.UartRegs);
+        /* Signal the task that Job is complete */
+		    osSignalSet(CurrentLocalStruct->ThreadID,CurrentLocalStruct->SignalId);
+        /* Release channel semaphore */
+		    osSemaphoreRelease(UART002_Handle<%=appInst%>.DynamicData->ChannelSemId);
+        break;
+      }
+    }
+    if((UART002_Handle<%=appInst%>.DynamicData->DataLen < \
+    		  (uint16_t)UART002_Handle<%=appInst%>.RxFIFOTrigger) \
+              && (UART002_Handle<%=appInst%>.DynamicData->DataLen > 0U) )
+    {
+      UART002_Handle<%=appInst%>.UartRegs->RBCTR &= (uint32_t)~USIC_CH_RBCTR_LIMIT_Msk;
+      UART002_Handle<%=appInst%>.UartRegs->RBCTR |= 
+    		                    ((((UART002_Handle<%=appInst%>.DynamicData->DataLen) - 1)  << \
+                                            USIC_CH_RBCTR_LIMIT_Pos) & USIC_CH_RBCTR_LIMIT_Msk);
+    }	
+  }
+<% if(Is1xDevice == 0){ %>                                
+  else
+  {
+	  UART002_Handle<%=appInst%>.DynamicData->DataLen = \
+      UART002_Handle<%=appInst%>.DynamicData->DataLen - UART002_Handle<%=appInst%>.DynamicData->Msize;
+	  if((UART002_Handle<%=appInst%>.DynamicData->DataLen < \
+       UART002_Handle<%=appInst%>.DynamicData->Msize) && \
+       (UART002_Handle<%=appInst%>.DynamicData->DataLen > 0U))
+	  {
+		  UART002_Handle<%=appInst%>.UartRegs->RBCTR &= ~((uint32_t)USIC_CH_RBCTR_LIMIT_Msk);
+		  UART002_Handle<%=appInst%>.UartRegs->RBCTR |= \
+		        	            ((((UART002_Handle<%=appInst%>.DynamicData->DataLen)-1UL)  << \
+		        	                        USIC_CH_RBCTR_LIMIT_Pos) & USIC_CH_RBCTR_LIMIT_Msk);
+
+	  }
+  } <%}%>
+}
+<% } %>
+<% else { %>
+/* CHANNEL IS NOT MAPPED */
+<% } %>
+<%} %>
+
+
+/*CODE_BLOCK_END*/

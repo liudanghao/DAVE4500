@@ -1,0 +1,855 @@
+<%@ jet package="CodeGenerator" class="uart002h_template"
+imports="java.util.* com.ifx.davex.appjetinteract.App2JetInterface" %>
+<% App2JetInterface app = (App2JetInterface) argument; %>
+/*CODE_BLOCK_BEGIN[UART002.h]*/
+/*****************************************************************************
+ *
+ * Copyright (C) 2013 Infineon Technologies AG. All rights reserved.
+ *
+ * Infineon Technologies AG (Infineon) is supplying this software for use with 
+ * Infineon's microcontrollers.  
+ * This file can be freely distributed within development tools that are 
+ * supporting such microcontrollers. 
+ *
+ * THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
+ * OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
+ * INFINEON SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL, 
+ * OR CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
+ *
+********************************************************************************
+**                                                                            **
+**                                                                            **
+** PLATFORM : Infineon XMC4000/XMC1000 Series                                 **
+**                                                                            **
+** COMPILER : Compiler Independent                                            **
+**                                                                            **
+** AUTHOR   : App Developer                                                   **
+**                                                                            **
+** MAY BE CHANGED BY USER [yes/No]: Yes                                       **
+**                                                                            **
+** MODIFICATION DATE : Apr 17, 2013                                           **
+**                                                                            **
+*******************************************************************************/
+
+/*******************************************************************************
+**                       Author(s) Identity                                   **
+********************************************************************************
+**                                                                            **
+** Initials     Name                                                          **
+** ---------------------------------------------------------------------------**
+** AIK        App Developer                                                   **
+*******************************************************************************/
+
+/**
+ * @file UART002.h
+ * 
+ * @brief Header file for UART002 App
+ *
+ */
+/* 
+* Version History : 
+* 17 Apr 2013 v1.0.8	1. Replaced "DMA003_H_" Macro with 	"UART_DMA_ENABLED"   
+*                       2. Removed #ifndef DMA004_H_ statement because its 
+*                       unused in the logic                                           
+*                       3. Spell Corrections  
+*                       4. Changed type of desired baudrate parameter from 
+*                       uint16_t to uint32_t to support badrate range upto 2Mbps.
+*                       5. Modified the structure UART002_HandleType to add baud 
+*                       parameters for the baud rate.
+*                       6. DMA mode handling is disabled for XMC1000 devices 
+*                       as DMA module is not available in XMC1000 devices.     
+*                                                     
+*******************************************************************************/
+
+#ifndef UART002_H_
+#define UART002_H_
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+<% String AppBaseuri = "app/uart002/0";%>
+<% String Baseuri = "app/uart002/";%>
+<% String Uarturi = "peripheral/usic/"; %>
+<% String MappedUri = null; %>
+<% String UnitInst = null; %>
+<% String appInst  = null; %>
+
+<% int Is1xDevice = -1; %>
+<% Is1xDevice = ((app.getSoftwareId().substring(0,1).compareTo("1")==0)?1:0); %>
+
+<% ArrayList<String> appsList7 = (ArrayList<String>)(app.getApps("app/uart002/"));
+ for (String appIns : appsList7 ) {
+ appInst = appIns.substring(appIns.lastIndexOf("/")+1);%>
+<% MappedUri = app.getMappedUri(Baseuri + appInst + "/channel"); %>
+<% if((MappedUri != null) && (MappedUri != "")) { 
+ UnitInst = MappedUri.substring(MappedUri .length()-11,MappedUri.indexOf("/channel/")); 
+ int Unit = Integer.parseInt(UnitInst); %>
+ <% if(Is1xDevice == 0){ %>
+ <% int DmaMode = app.getIntegerValue(Baseuri + appInst +"/uart002_DMAOprModeTemp");%>
+  <%if((DmaMode > 0)) {%>
+#define UART_DMA_ENABLED
+   <%break;%>
+ <%}%>  <%}%>
+<% } %>
+<% else { %>
+/* CHANNEL IS NOT MAPPED */
+<% } %>
+<%} %>
+
+/*******************************************************************************
+**                      Include Files                                         **
+*******************************************************************************/
+#include <DAVE3.h>
+/* Inclusion of Platform specific file */
+#include "../../inc/UART002/Usic.h"
+
+#if defined (__GNUC__)
+#include <sys/time.h>
+#elif defined(__TASKING__)
+#include <time.h>
+#endif
+
+<% if(Is1xDevice == 0){ %>
+#ifdef UART_DMA_ENABLED
+#include "../../inc/DMA003/DMA003.h"
+#endif <%}%>
+/*******************************************************************************
+**                      Global Macro Definitions                              **
+*******************************************************************************/
+
+
+
+ /*******************************************************************************
+**                      Global Type Definitions                               **
+*******************************************************************************/
+
+/**
+ * @ingroup UART002_publicparam
+ * @{
+ */
+
+/**
+ * This enum structure list the possible status values returned
+ * by API functions.
+ */
+typedef enum UART002_StatusType
+{
+  /**
+   * Uart channel in Idle state
+   */
+  /*
+	GROUPID  #4
+	MODULENAME = UART002
+  */
+  /*
+	ERRCODESTRING = UART002_IDLE
+	STRCODESTRING = Uart Channel in idle state
+  */
+  UART002_IDLE = 1,
+   /**
+   * Uart transfer pending
+   */
+  /*
+	ERRCODESTRING = UART002_TRANSFER_PENDING
+	STRCODESTRING = Uart transfer pending
+  */
+  UART002_TRANSFER_PENDING,
+  /**
+   * Uart transfer successful
+   */
+  /*
+	ERRCODESTRING = UART002_TRANSFER_SUCCESS
+	STRCODESTRING = Uart transfer successful
+  */
+  UART002_TRANSFER_SUCCESS,
+  /**
+   * Uart transfer failed
+   */
+  /*
+	ERRCODESTRING = UART002_TRANSFER_FAILED
+	STRCODESTRING = Uart transfer failed
+  */
+  UART002_TRANSFER_FAILED,
+  /**
+   * Invalid Input value
+   */
+  /*
+	ERRCODESTRING = UART002_CONFIG_ERROR
+	STRCODESTRING = Uart Input error
+  */
+  UART002_CONFIG_ERROR,
+  /**
+   * Time out occured
+   */
+  /*
+	ERRCODESTRING = UART002_TIMEOUT
+	STRCODESTRING =  Time out occured
+  */
+  UART002_TIMEOUT,
+  /**
+   * Semaphore creation, wait or release failed
+   */
+  /*
+	ERRCODESTRING = UART002_SEMAPHORE_ERROR
+	STRCODESTRING = Semaphore creation, wait or release failed
+  */
+  UART002_SEMAPHORE_ERROR,
+  /**
+   * DMA initialisation error
+   */
+  /*
+	ERRCODESTRING = UART002_DMA_ERROR
+	STRCODESTRING = DMA initialization error
+  */
+  UART002_DMA_ERROR,
+  /**
+   * Unknown Error
+   */
+  /*
+	ERRCODESTRING = UART002_FAIL
+	STRCODESTRING = Unknown Error
+  */
+  UART002_FAIL,
+  /**
+   * Function Entry
+   */
+  /*
+	ERRCODESTRING = UART001_FUN_ENTRY
+	STRCODESTRING = Entered function %s
+  */
+  UART002_FUN_ENTRY,
+  /**
+   *  Function Exit
+   */
+  /*
+	ERRCODESTRING = UART001_FUN_EXIT
+	STRCODESTRING = Exited function %s
+  */
+  UART002_FUN_EXIT
+   /*
+	ERRORCODEEND
+  */
+}UART002_StatusType;
+
+<% if(Is1xDevice == 0){ %>
+/**
+ * This enumerations defines DMA modes which is used by App.
+ */
+typedef enum UART002_DMAType
+{
+  /** Non DMA mode*/
+  UART002_DMA_NONE,
+  /** Uart reception in DMA mode*/
+  UART002_RX_DMA,
+  /** UART Transmission in DMA mode*/
+  UART002_TX_DMA,
+  /** Transmission and reception both in DMA mode*/
+  UART002_RX_TX_DMA,
+} UART002_DMAType;
+<%}%>
+/**
+ * This data structure contains all Uart channel parameters which are configured from the 
+ * Application UI.
+ */
+typedef struct UART002_ChannelConfigType
+{
+  /** Enumerated Parity field*/
+  UART_ParityType Parity;
+  /** Enumerated Stop bit field*/
+  UART_StopBitType StopBit;
+  /** Desired Baud Rate */
+  uint32_t  BaudRate;
+  /** Word Length */
+  uint16_t DataBits;
+}UART002_ChannelConfigType;
+/**
+ * This data structure is used by a Task to specify transfer parameters.
+ * 
+ */
+typedef struct  UART002_LocalStructType
+{
+  /**App Handle*/
+  uint32_t* AppInstanceHandle;
+  /** Length of data to be transmitted or received */
+  uint16_t DataLen;
+  /**Pointer to buffer */
+  uint8_t* pBuffer;
+  /** Data transfer status copied  at the end of transfer*/
+  UART002_StatusType  Status;
+  /** Job Signal ID passed by Job task */
+  int32_t SignalId;
+  /** Job Thread ID */
+  osThreadId ThreadID;
+}UART002_LocalStructType;
+
+
+typedef struct UART002_DynamicDataType
+{
+  /** Reference to Local Task Structure */	
+  UART002_LocalStructType* CurrentTaskStruct;
+  /** Uart channel semaphore ID */
+  osSemaphoreId  ChannelSemId;
+  /** Total Data Length to be received/transmitted*/
+  int16_t DataLen;
+  /** Pointer to buffer */
+  uint8_t* pBuffer;
+  uint8_t Msize;
+}UART002_DynamicDataType;
+/**
+ * This data structure is the App Handle.
+ */
+typedef struct UART002_HandleType
+{
+<% if(Is1xDevice == 0){ %>	
+#ifdef UART_DMA_ENABLED
+  /** Tx DMA Handle        */
+  DMA003_ChannelHandleType* TxDMAHandle;
+  /** Rx DMA Handle         */
+  DMA003_ChannelHandleType* RxDMAHandle;
+#endif <%}%>
+  /** Current task dynamic data */
+  UART002_DynamicDataType* DynamicData;
+  /** Default Channel settings */
+  UART002_ChannelConfigType ChConfig;
+  /** CMSIS defined structure for USIC module */
+  USIC_CH_TypeDef* UartRegs;
+  /** UART mode of operation */
+  UART_ModeType Mode;
+  <% if(Is1xDevice == 0){ %>
+  /** DMA mode of operation */
+  UART002_DMAType DMAMode;
+  <%}%>
+  /** Rx FIFO Trigger level */
+  uint8_t RxFIFOTrigger;
+  /** Rx FIFO Trigger level*/
+  uint8_t TxFIFOTrigger;
+  /** Calculated step value */
+  uint16_t BGR_STEP;
+  /** Calculated pdiv value */
+  uint16_t BGR_PDIV;
+  /** Calculated  dctq value */
+  uint16_t BGR_DCTQ;
+  /** Calculated  sampling point value */
+  /** SP = (((1+dctq)/2)+1) */
+  uint16_t BGR_SP;
+  /** Calculated  pctq value */
+  uint8_t BGR_PCTQ;
+}UART002_HandleType;
+
+/**
+ * @}
+ */
+
+/*******************************************************************************
+**                      Global Constant Declarations                          **
+*******************************************************************************/
+
+
+/*******************************************************************************
+**                      Extern Variables                                      **
+*******************************************************************************/
+
+
+/*******************************************************************************
+** FUNCTION PROTOTYPES                                                        **
+*******************************************************************************/
+
+
+/**
+ * @ingroup UART002_apidoc
+ * @{
+ */
+
+
+/**
+ * Initialises the USIC channel reserved for the App based on
+ * provided configuration.
+ *
+ *
+ * <b>Reentrant: No </b><BR>
+ * 
+ * <BR><P ALIGN="LEFT"><B>Example:</B>
+ * @code
+ * #include <DAVE3.h>
+ * int main(void)
+ * {
+ *   
+ *   DAVE_Init(); // UART002_Init will be called from DAVE_Init()
+ *   while(1)
+ *   {}
+ *   return 0;
+ * }
+ * @endcode<BR> </p>
+ *
+ */
+void UART002_Init(void);
+
+
+/**
+ * Function to reset the App configurable parameters to default values.<br>
+ * Note: Currently this function is a place holder function. 
+ *
+ * @param[in]  Handle  App instance handle object.
+ *
+ *
+ * <b>Reentrant: YES </b><BR>
+ *
+ * <BR><P ALIGN="LEFT"><B>Example:</B>
+ * @code
+ * #include <DAVE3.h>
+ * int main(void)
+ * {
+ *   // ....
+ *   UART002_DeInit(&UART001_Handle0);
+ *   //....
+ *   return 0;
+ * }
+ * @endcode<BR> </p>
+ */
+void UART002_Deinit(const UART002_HandleType* Handle);
+
+
+/**
+ * This function initialises the Local Data structure allocated by
+ *           the Task/App with default values. This function also copies the App
+ *           handle to the local data structure.
+ *
+ * @param[in]  Handle App instance handle.
+ * @param[in]  Config  Local structure object.
+ * @param[in]  SignalId specifies the unique signal flag of the thread.(uint32_t)
+ *             Note: On Transfer completion this signal is set, thus signalling 
+ *             the waiting Task(see UART002_WaitForCompletion() API) of Job completion.
+ * 
+ * <b>Reentrant: YES </b><BR>
+ * 
+ * <BR><P ALIGN="LEFT"><B>Example:</B>
+ * @code
+ * #include <DAVE3.h>
+ *
+ * // Forward reference 
+ * void threadA (void const *argument);
+ *
+ * // Thread IDs
+ * osThreadId threadA_id;
+ *
+ * //Thread definitions 
+ * osThreadDef(threadA, osPriorityNormal, 1, 0);
+ * // HELLO WORLD
+ * uint8_t Data[12] = {0x48,0x45,0x4C,0x4C,0x4F,0x20,0x57,0x4F,0x52,0x4C,0x44,0x20};
+ *  
+ * void threadA(void const *argument)
+ * {
+ *	 status_t Status = UART002_FAIL;
+ *	 UART002_LocalStructType TxChn;
+ *	 // Initialise the local structure with default parameters.
+ *	 UART002_LocalStructureInit(&UART002_Handle0,&TxChn,0x0001);
+ *	 // Change the configuration based on use case.
+ *	 TxChn.DataLen = 12;
+ *	 TxChn.pBuffer = &Data[0];
+ *
+ *   while(1)
+ *   {
+ *	  
+ *		Status = UART002_StartTransmission(&TxChn,1000);
+ *		if(Status == UART002_TIMEOUT)
+ *		{
+ *			Status = UART002_FAIL;
+ *		}
+ *		else
+ *		{
+ *			Status = UART002_WaitForCompletion(&TxChn,10000);
+ *			if(Status != UART002_TIMEOUT)
+ *			{
+ *
+ *				Status = UART002_GetStatus(&TxChn);
+ *				if(Status != UART002_TRANSFER_SUCCESS)
+ *				{
+ *						Status = UART002_FAIL;
+ *				}
+ *			}
+ *		}
+ *   }
+ *
+ *  }
+ *	
+ *  int main (void)
+ *  {
+ *    
+ *    DAVE_Init();
+ *
+ *    // Create thread X 
+ *    threadA_id = osThreadCreate(osThread(threadA), NULL);
+ *
+ *    osKernelStart();
+ *
+ *    while(1)
+ *    {
+ *	    osDelay(1000);
+ *    }
+ *  }
+ * @endcode<BR> </p>
+ */
+void UART002_LocalStructureInit
+(
+  const UART002_HandleType* Handle,
+  UART002_LocalStructType* Config,
+  int32_t SignalId
+);
+
+
+/**
+ * This function starts the  UART Reception . The Config structure
+ *           has the desired no of bytes to be received from the peer device.
+ *           Timeout value is specified.
+ *
+ *
+ * @param[in]  Config  Local structure object.
+ * @param[in]  Timeout Timeout value in msec.
+ *             use <b>osWaitForever</b> for indefinite timeout.
+ *
+ * @return     status_t <BR>
+ *              DAVEApp_SUCCESS 		: if Successful <BR>
+ *              UART002_TIMEOUT 		: Timeout value in case Channel is not available <BR>
+ *              UART002_CONFIG_ERROR 	: if there is a wrong configuration <BR>
+ *              UART002_DMA_ERROR 		: if DMA initialisation fails<BR>
+ *
+ *
+ * <b>Reentrant: YES </b><BR>
+ * <BR><P ALIGN="LEFT"><B>Example:</B>
+ * @code
+ * #include <DAVE3.h>
+ *
+ * // Forward reference 
+ * void threadA (void const *argument);
+ *
+ * // Thread IDs
+ * osThreadId threadA_id;
+ *
+ *
+ * //Thread definitions 
+ * osThreadDef(threadA, osPriorityNormal, 1, 0);
+ *
+ * uint8_t Data[20]; // Buffer to store received data
+ *  
+ *  void threadA(void const *argument)
+ *  {
+ *  	status_t Status = UART002_FAIL;
+ *  	UART002_LocalStructtype RxChn;
+ *  	UART002_LocalStructureInit(&UART002_Handle0,&RxChn,0x0001);
+ *  	RxChn.DataLen = 11;
+ *  	RxChn.pBuffer = &Data[0];
+ *  	 
+ *  	Status = UART002_StartReception(&RxChn,osWaitForever);
+ *  	if(Status == UART002_TIMEOUT)
+ *  	{
+ *  		Status = UART002_FAIL;
+ *  	}
+ *  	else
+ *  	{
+ *  
+ *  		Status = UART002_WaitForCompletion(&RxChn,osWaitForever);
+ *  		if(Status != UART002_TIMEOUT)
+ *  		{
+ *  
+ *  			Status = UART002_GetStatus(&RxChn);
+ *  			if(Status != UART002_TRANSFER_SUCCESS)
+ *  			{
+ *  					Status = UART002_FAIL;
+ *  			}
+ *  		}
+ *  	}
+ *  
+ *  }
+ *  
+ *	
+ *  int main (void)
+ *  {
+ *    
+ *    DAVE_Init();
+ *
+ *    // Create thread X 
+ *    threadA_id = osThreadCreate(osThread(threadA), NULL);
+ *
+ *    osKernelStart();
+ *
+ *    while(1)
+ *    {
+ *	    osDelay(1000);
+ *    }
+ *  }
+ * @endcode<BR> </p>
+ *
+ */
+status_t UART002_StartReception
+(
+  UART002_LocalStructType* Config,
+  time_t Timeout
+);
+
+
+/**
+ * This function starts the  UART Transmission. The Config structure
+ *           has the desired no of bytes to be transmitted to the peer device.
+ *           Timeout value is also specified in case the channel is occupied by
+ *           some other task.
+ *
+ *
+ * @param[in]  Config Local structure object.
+ * @param[in]  Timeout Timeout value in msec.
+ *             use <b>osWaitForever</b> for indefinite timeout.
+ *
+ * @return      status_t <BR>
+ *              DAVEApp_SUCCESS 		: if Successful <BR>
+ *              UART002_TIMEOUT 		: Timeout value in case Channel is not available <BR>
+ *              UART002_CONFIG_ERROR 	: if there is a wrong configuration <BR>
+ *              UART002_DMA_ERROR 		: if DMA initialisation fails <BR>
+ *
+ *
+ * <b>Reentrant: YES </b><BR>
+ * <BR><P ALIGN="LEFT"><B>Example:</B>
+ * @code
+ * #include <DAVE3.h>
+ *
+ * // Forward reference 
+ * void threadA (void const *argument);
+ *
+ * // Thread IDs
+ * osThreadId threadA_id;
+ *
+ *
+ * //Thread definitions 
+ * osThreadDef(threadA, osPriorityNormal, 1, 0);
+ * // HELLO WORLD
+ * uint8_t Data[12] = {0x48,0x45,0x4C,0x4C,0x4F,0x20,0x57,0x4F,0x52,0x4C,0x44,0x20};
+ *  
+ * void threadA(void const *argument)
+ * {
+ *	 status_t Status = UART002_FAIL;
+ *	 UART002_LocalStructType TxChn;
+ *	 UART002_LocalStructureInit(&UART002_Handle0,&TxChn,0x0001);
+ *	 TxChn.DataLen = 12;
+ *	 TxChn.pBuffer = &Data[0];
+ *
+ *	 while(1)
+ *	 {
+ *	  //osDelay(1000);
+ *		Status = UART002_StartTransmission(&TxChn,1000);
+ *		if(Status == UART002_TIMEOUT)
+ *		{
+ *			Status = UART002_FAIL;
+ *		}
+ *		else
+ *		{
+ *			Status = UART002_WaitForCompletion(&TxChn,1000);
+ *			if(Status != UART002_TIMEOUT)
+ *			{
+ *
+ *				Status = UART002_GetStatus(&TxChn);
+ *				if(Status != UART002_TRANSFER_SUCCESS)
+ *				{
+ *						Status = UART002_FAIL;
+ *				}
+ *			}
+ *		}
+ *	 }
+ * }
+ *
+ *
+ *	
+ *  int main (void)
+ *  {
+ *   
+ *   DAVE_Init();
+ *
+ *  // Create thread X 
+ *  threadA_id = osThreadCreate(osThread(threadA), NULL);
+ *
+ *  osKernelStart();
+ *
+ *  while(1)
+ *  {
+ *	  osDelay(1000);
+ *  }
+ *}
+ * @endcode<BR> </p>
+ *
+ */
+status_t UART002_StartTransmission(UART002_LocalStructType* Config, time_t Timeout);
+
+
+/**
+ * This function blocks the task till transfer completion if timeout
+ *             value of 0 specified or till specified  timeout occurs
+ *
+ *
+ * @param[in]  Config  Local structure object.
+ * @param[in]  Timeout Timeout value
+ *
+ * @return     status_t <BR>
+ *              DAVEApp_SUCCESS 		: if Successful <BR>
+ *              UART002_TIMEOUT 		: Timeout happened since transmission or reception
+ *                               	  	  is not completed within timeout value <BR>
+ *              UART002_SEMAPHORE_ERROR	: if release of semaphore fails<BR>
+ *
+ *
+ * <b>Reentrant: YES </b><BR>
+ * @code
+ * #include <DAVE3.h>
+ *
+ * // Forward reference 
+ * void threadA (void const *argument);
+ *
+ * // Thread IDs
+ * osThreadId threadA_id;
+ *
+ *
+ * //Thread definitions 
+ * osThreadDef(threadA, osPriorityNormal, 1, 0);
+ * // HELLO WORLD
+ * uint8_t Data[12] = {0x48,0x45,0x4C,0x4C,0x4F,0x20,0x57,0x4F,0x52,0x4C,0x44,0x20};
+ *  
+ * void threadA(void const *argument)
+ * {
+ *	 status_t Status = UART002_FAIL;
+ *	 UART002_LocalStructType TxChn;
+ *	 UART002_LocalStructureInit(&UART002_Handle0,&TxChn,0x0001);
+ *	 TxChn.DataLen = 12;
+ *	 TxChn.pBuffer = &Data[0];
+ *
+ *	 while(1)
+ *	 {
+ *	  //osDelay(1000);
+ *		Status = UART002_StartTransmission(&TxChn,1000);
+ *		if(Status == UART002_TIMEOUT)
+ *		{
+ *			Status = UART002_FAIL;
+ *		}
+ *		else
+ *		{
+ *			Status = UART002_WaitForCompletion(&TxChn,1000);
+ *			if(Status != UART002_TIMEOUT)
+ *			{
+ *
+ *				Status = UART002_GetStatus(&TxChn);
+ *				if(Status != UART002_TRANSFER_SUCCESS)
+ *				{
+ *						Status = UART002_FAIL;
+ *				}
+ *			}
+ *		}
+ *	 }
+ * }
+ *	
+ *  int main (void)
+ *  {
+ *     
+ *     DAVE_Init();
+ *
+ *    // Create thread X 
+ *    threadA_id = osThreadCreate(osThread(threadA), NULL);
+ *
+ *    osKernelStart();
+ *
+ *    while(1)
+ *    {
+ *	     osDelay(1000);
+ *    }
+ *  }
+ * @endcode<BR> </p>
+ *
+ */
+status_t UART002_WaitForCompletion(const UART002_LocalStructType* Config, time_t Timeout);
+
+
+/**
+ * This function gets the result of  the transfer operation which was
+ *           scheduled earlier.
+ *
+ * @param[in]  Config Local structure object.
+ *
+ * @return     status_t <BR>
+ *             UART002_IDLE  			: if Uart is IDLE<BR>
+ *             UART002_TRANSFER_SUCCESS : Uart transmit or receive is successfull<BR>
+ *             UART002_TRANSFER_FAILED 	: Uart transmit or receive failed<BR>
+ *
+ * <b>Reentrant: YES </b><BR>
+ * @code
+ * #include <DAVE3.h>
+ *
+ * // Forward reference 
+ * void threadA (void const *argument);
+ *
+ * // Thread IDs
+ * osThreadId threadA_id;
+ *
+ *
+ * //Thread definitions 
+ * osThreadDef(threadA, osPriorityNormal, 1, 0);
+ * // HELLO WORLD
+ * uint8_t Data[12] = {0x48,0x45,0x4C,0x4C,0x4F,0x20,0x57,0x4F,0x52,0x4C,0x44,0x20};
+ *  
+ * void threadA(void const *argument)
+ * {
+ *	 status_t Status = UART002_FAIL;
+ *	 UART002_LocalStructType TxChn;
+ *	 UART002_LocalStructureInit(&UART002_Handle0,&TxChn,0x0001);
+ *	 TxChn.DataLen = 12;
+ *	 TxChn.pBuffer = &Data[0];
+ *
+ *	 while(1)
+ *	 {
+ *		Status = UART002_StartTransmission(&TxChn,1000);
+ *		if(Status == UART002_TIMEOUT)
+ *		{
+ *			Status = UART002_FAIL;
+ *		}
+ *		else
+ *		{
+ *			Status = UART002_WaitForCompletion(&TxChn,1000);
+ *			if(Status != UART002_TIMEOUT)
+ *			{
+ *				Status = UART002_GetStatus(&TxChn);
+ *				if(Status != UART002_TRANSFER_SUCCESS)
+ *				{
+ *					Status = UART002_FAIL;
+ *				}
+ *			}
+ *		}
+ *	 }
+ *
+ * }
+ *	
+ * int main (void)
+ * {
+ *   
+ *   DAVE_Init();
+ *
+ *   // Create thread X 
+ *   threadA_id = osThreadCreate(osThread(threadA), NULL);
+ *
+ *   osKernelStart();
+ *
+ *   while(1)
+ *   {
+ *	   osDelay(1000);
+ *   }
+ * }
+ * @endcode<BR> </p>
+ *
+ */
+status_t UART002_GetStatus(const UART002_LocalStructType* Config);
+
+/**
+ * @}
+ */
+ 
+#include "UART002_Conf.h"
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* UART002_H*/
+/*CODE_BLOCK_END*/
