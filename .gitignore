@@ -24,3 +24,5 @@
 
 # Directory
 Dave/Cache/*
+Debug/*
+Release/*
