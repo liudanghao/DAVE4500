@@ -1,0 +1,222 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 4
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"Main.c"
+  16              		.section	.text.threadB,"ax",%progbits
+  17              		.align	1
+  18              		.global	threadB
+  19              		.thumb
+  20              		.thumb_func
+  22              	threadB:
+  23              		@ args = 0, pretend = 0, frame = 24
+  24              		@ frame_needed = 0, uses_anonymous_args = 0
+  25 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+  26 0002 1648     		ldr	r0, .L15
+  27 0004 6946     		mov	r1, sp
+  28 0006 0122     		movs	r2, #1
+  29 0008 FFF7FEFF 		bl	UART002_LocalStructureInit
+  30 000c 1448     		ldr	r0, .L15+4
+  31 000e 0D23     		movs	r3, #13
+  32 0010 0290     		str	r0, [sp, #8]
+  33 0012 4FF4FA70 		mov	r0, #500
+  34 0016 ADF80430 		strh	r3, [sp, #4]	@ movhi
+  35 001a FFF7FEFF 		bl	osDelay
+  36              	.L13:
+  37 001e 1149     		ldr	r1, .L15+8
+  38 0020 4C78     		ldrb	r4, [r1, #1]	@ zero_extendqisi2
+  39 0022 4A68     		ldr	r2, [r1, #4]
+  40 0024 4FF00115 		mov	r5, #65537
+  41 0028 05FA04F6 		lsl	r6, r5, r4
+  42 002c 5660     		str	r6, [r2, #4]
+  43 002e 4FF47A70 		mov	r0, #1000
+  44 0032 FFF7FEFF 		bl	osDelay
+  45 0036 6846     		mov	r0, sp
+  46 0038 42F21071 		movw	r1, #10000
+  47 003c FFF7FEFF 		bl	UART002_StartTransmission
+  48 0040 0628     		cmp	r0, #6
+  49 0042 ECD0     		beq	.L13
+  50 0044 6846     		mov	r0, sp
+  51 0046 42F21071 		movw	r1, #10000
+  52 004a FFF7FEFF 		bl	UART002_WaitForCompletion
+  53 004e 0628     		cmp	r0, #6
+  54 0050 E5D0     		beq	.L13
+  55 0052 6846     		mov	r0, sp
+  56 0054 FFF7FEFF 		bl	UART002_GetStatus
+  57 0058 E1E7     		b	.L13
+  58              	.L16:
+  59 005a 00BF     		.align	2
+  60              	.L15:
+  61 005c 00000000 		.word	UART002_Handle0
+  62 0060 00000000 		.word	.LANCHOR0
+  63 0064 00000000 		.word	IO004_Handle1
+  65              		.section	.text.threadA,"ax",%progbits
+  66              		.align	1
+  67              		.global	threadA
+  68              		.thumb
+  69              		.thumb_func
+  71              	threadA:
+  72              		@ args = 0, pretend = 0, frame = 24
+  73              		@ frame_needed = 0, uses_anonymous_args = 0
+  74 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+  75 0002 1448     		ldr	r0, .L30
+  76 0004 6946     		mov	r1, sp
+  77 0006 0122     		movs	r2, #1
+  78 0008 FFF7FEFF 		bl	UART002_LocalStructureInit
+  79 000c 1248     		ldr	r0, .L30+4
+  80 000e 0D23     		movs	r3, #13
+  81 0010 ADF80430 		strh	r3, [sp, #4]	@ movhi
+  82 0014 0290     		str	r0, [sp, #8]
+  83              	.L29:
+  84 0016 4FF47A70 		mov	r0, #1000
+  85 001a FFF7FEFF 		bl	osDelay
+  86 001e 0F49     		ldr	r1, .L30+8
+  87 0020 4C78     		ldrb	r4, [r1, #1]	@ zero_extendqisi2
+  88 0022 4A68     		ldr	r2, [r1, #4]
+  89 0024 4FF00115 		mov	r5, #65537
+  90 0028 05FA04F6 		lsl	r6, r5, r4
+  91 002c 5660     		str	r6, [r2, #4]
+  92 002e 6846     		mov	r0, sp
+  93 0030 42F21071 		movw	r1, #10000
+  94 0034 FFF7FEFF 		bl	UART002_StartTransmission
+  95 0038 0628     		cmp	r0, #6
+  96 003a ECD0     		beq	.L29
+  97 003c 6846     		mov	r0, sp
+  98 003e 42F21071 		movw	r1, #10000
+  99 0042 FFF7FEFF 		bl	UART002_WaitForCompletion
+ 100 0046 0628     		cmp	r0, #6
+ 101 0048 E5D0     		beq	.L29
+ 102 004a 6846     		mov	r0, sp
+ 103 004c FFF7FEFF 		bl	UART002_GetStatus
+ 104 0050 E1E7     		b	.L29
+ 105              	.L31:
+ 106 0052 00BF     		.align	2
+ 107              	.L30:
+ 108 0054 00000000 		.word	UART002_Handle0
+ 109 0058 0D000000 		.word	.LANCHOR0+13
+ 110 005c 00000000 		.word	IO004_Handle0
+ 112              		.section	.text.startup.main,"ax",%progbits
+ 113              		.align	1
+ 114              		.global	main
+ 115              		.thumb
+ 116              		.thumb_func
+ 118              	main:
+ 119              		@ args = 0, pretend = 0, frame = 0
+ 120              		@ frame_needed = 0, uses_anonymous_args = 0
+ 121 0000 08B5     		push	{r3, lr}
+ 122 0002 FFF7FEFF 		bl	DAVE_Init
+ 123 0006 0021     		movs	r1, #0
+ 124 0008 0848     		ldr	r0, .L34
+ 125 000a FFF7FEFF 		bl	osThreadCreate
+ 126 000e 084B     		ldr	r3, .L34+4
+ 127 0010 0021     		movs	r1, #0
+ 128 0012 1860     		str	r0, [r3, #0]
+ 129 0014 0748     		ldr	r0, .L34+8
+ 130 0016 FFF7FEFF 		bl	osThreadCreate
+ 131 001a 0749     		ldr	r1, .L34+12
+ 132 001c 0860     		str	r0, [r1, #0]
+ 133 001e FFF7FEFF 		bl	osKernelStart
+ 134              	.L33:
+ 135 0022 4FF47A70 		mov	r0, #1000
+ 136 0026 FFF7FEFF 		bl	osDelay
+ 137 002a FAE7     		b	.L33
+ 138              	.L35:
+ 139              		.align	2
+ 140              	.L34:
+ 141 002c 00000000 		.word	.LANCHOR1
+ 142 0030 00000000 		.word	threadA_id
+ 143 0034 10000000 		.word	.LANCHOR1+16
+ 144 0038 00000000 		.word	threadB_id
+ 146              		.global	Data1
+ 147              		.global	Data
+ 148              		.global	os_thread_def_threadB
+ 149              		.comm	threadB_id,4,4
+ 150              		.global	os_thread_def_threadA
+ 151              		.comm	threadA_id,4,4
+ 152              		.section	.rodata
+ 153              		.align	2
+ 154              		.set	.LANCHOR1,. + 0
+ 157              	os_thread_def_threadA:
+ 158 0000 00000000 		.word	threadA
+ 159 0004 0000     		.short	0
+ 160 0006 0000     		.space	2
+ 161 0008 01000000 		.word	1
+ 162 000c 00000000 		.word	0
+ 165              	os_thread_def_threadB:
+ 166 0010 00000000 		.word	threadB
+ 167 0014 0000     		.short	0
+ 168 0016 0000     		.space	2
+ 169 0018 01000000 		.word	1
+ 170 001c 00000000 		.word	0
+ 171              		.data
+ 172              		.set	.LANCHOR0,. + 0
+ 175              	Data:
+ 176 0000 48       		.byte	72
+ 177 0001 45       		.byte	69
+ 178 0002 4C       		.byte	76
+ 179 0003 4C       		.byte	76
+ 180 0004 4F       		.byte	79
+ 181 0005 20       		.byte	32
+ 182 0006 57       		.byte	87
+ 183 0007 4F       		.byte	79
+ 184 0008 52       		.byte	82
+ 185 0009 4C       		.byte	76
+ 186 000a 44       		.byte	68
+ 187 000b 0A       		.byte	10
+ 188 000c 0D       		.byte	13
+ 191              	Data1:
+ 192 000d 68       		.byte	104
+ 193 000e 65       		.byte	101
+ 194 000f 6C       		.byte	108
+ 195 0010 6C       		.byte	108
+ 196 0011 6F       		.byte	111
+ 197 0012 20       		.byte	32
+ 198 0013 77       		.byte	119
+ 199 0014 6F       		.byte	111
+ 200 0015 72       		.byte	114
+ 201 0016 6C       		.byte	108
+ 202 0017 64       		.byte	100
+ 203 0018 0A       		.byte	10
+ 204 0019 0D       		.byte	13
+ 205              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+DEFINED SYMBOLS
+                            *ABS*:00000000 Main.c
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:17     .text.threadB:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:22     .text.threadB:00000000 threadB
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:61     .text.threadB:0000005c $d
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:66     .text.threadA:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:71     .text.threadA:00000000 threadA
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:108    .text.threadA:00000054 $d
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:113    .text.startup.main:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:118    .text.startup.main:00000000 main
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:141    .text.startup.main:0000002c $d
+                            *COM*:00000004 threadA_id
+                            *COM*:00000004 threadB_id
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:191    .data:0000000d Data1
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:175    .data:00000000 Data
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:165    .rodata:00000010 os_thread_def_threadB
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:157    .rodata:00000000 os_thread_def_threadA
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc2zn5Gh.s:153    .rodata:00000000 $d
+
+UNDEFINED SYMBOLS
+UART002_LocalStructureInit
+osDelay
+UART002_StartTransmission
+UART002_WaitForCompletion
+UART002_GetStatus
+UART002_Handle0
+IO004_Handle1
+IO004_Handle0
+DAVE_Init
+osThreadCreate
+osKernelStart

@@ -1,0 +1,1374 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"rt_Mailbox.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.rt_mbx_init,"ax",%progbits
+  20              		.align	2
+  21              		.global	rt_mbx_init
+  22              		.thumb
+  23              		.thumb_func
+  25              	rt_mbx_init:
+  26              	.LFB8:
+  27              		.file 1 "../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c"
+   1:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** /*----------------------------------------------------------------------------
+   2:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *      RL-ARM - RTX
+   3:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *----------------------------------------------------------------------------
+   4:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *      Name:    RT_MAILBOX.C
+   5:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *      Purpose: Implements waits and wake-ups for mailbox messages
+   6:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *      Rev.:    V4.70
+   7:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *----------------------------------------------------------------------------
+   8:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *
+   9:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
+  10:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * All rights reserved.
+  11:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * Redistribution and use in source and binary forms, with or without
+  12:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * modification, are permitted provided that the following conditions are met:
+  13:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *  - Redistributions of source code must retain the above copyright
+  14:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *    notice, this list of conditions and the following disclaimer.
+  15:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *  - Redistributions in binary form must reproduce the above copyright
+  16:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *    notice, this list of conditions and the following disclaimer in the
+  17:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *    documentation and/or other materials provided with the distribution.
+  18:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *  - Neither the name of ARM  nor the names of its contributors may be used 
+  19:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *    to endorse or promote products derived from this software without 
+  20:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *    specific prior written permission.
+  21:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *
+  22:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+  23:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+  24:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  25:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  26:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  27:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+  28:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+  29:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+  30:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  32:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  * POSSIBILITY OF SUCH DAMAGE.
+  33:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *---------------------------------------------------------------------------*/
+  34:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+  35:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #include "rt_TypeDef.h"
+  36:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #include "RTX_Config.h"
+  37:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #include "rt_System.h"
+  38:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #include "rt_List.h"
+  39:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #include "rt_Mailbox.h"
+  40:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #include "rt_MemBox.h"
+  41:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #include "rt_Task.h"
+  42:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #include "rt_HAL_CM.h"
+  43:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+  44:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+  45:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** /*----------------------------------------------------------------------------
+  46:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *      Functions
+  47:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****  *---------------------------------------------------------------------------*/
+  48:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+  49:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+  50:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** /*--------------------------- rt_mbx_init -----------------------------------*/
+  51:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+  52:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** void rt_mbx_init (OS_ID mailbox, U16 mbx_size) {
+  28              		.loc 1 52 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 16
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 85B0     		sub	sp, sp, #20
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 24
+  40 0004 00AF     		add	r7, sp, #0
+  41              	.LCFI2:
+  42              		.cfi_def_cfa_register 7
+  43 0006 7860     		str	r0, [r7, #4]
+  44 0008 0B46     		mov	r3, r1
+  45 000a 7B80     		strh	r3, [r7, #2]	@ movhi
+  53:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* Initialize a mailbox */
+  54:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   P_MCB p_MCB = mailbox;
+  46              		.loc 1 54 0
+  47 000c 7B68     		ldr	r3, [r7, #4]
+  48 000e FB60     		str	r3, [r7, #12]
+  55:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+  56:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   p_MCB->cb_type = MCB;
+  49              		.loc 1 56 0
+  50 0010 FB68     		ldr	r3, [r7, #12]
+  51 0012 4FF00102 		mov	r2, #1
+  52 0016 1A70     		strb	r2, [r3, #0]
+  57:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   p_MCB->state   = 0;
+  53              		.loc 1 57 0
+  54 0018 FB68     		ldr	r3, [r7, #12]
+  55 001a 4FF00002 		mov	r2, #0
+  56 001e 5A70     		strb	r2, [r3, #1]
+  58:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   p_MCB->isr_st  = 0;
+  57              		.loc 1 58 0
+  58 0020 FB68     		ldr	r3, [r7, #12]
+  59 0022 4FF00002 		mov	r2, #0
+  60 0026 9A70     		strb	r2, [r3, #2]
+  59:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   p_MCB->p_lnk   = NULL;
+  61              		.loc 1 59 0
+  62 0028 FB68     		ldr	r3, [r7, #12]
+  63 002a 4FF00002 		mov	r2, #0
+  64 002e 5A60     		str	r2, [r3, #4]
+  60:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   p_MCB->first   = 0;
+  65              		.loc 1 60 0
+  66 0030 FB68     		ldr	r3, [r7, #12]
+  67 0032 4FF00002 		mov	r2, #0
+  68 0036 1A81     		strh	r2, [r3, #8]	@ movhi
+  61:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   p_MCB->last    = 0;
+  69              		.loc 1 61 0
+  70 0038 FB68     		ldr	r3, [r7, #12]
+  71 003a 4FF00002 		mov	r2, #0
+  72 003e 5A81     		strh	r2, [r3, #10]	@ movhi
+  62:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   p_MCB->count   = 0;
+  73              		.loc 1 62 0
+  74 0040 FB68     		ldr	r3, [r7, #12]
+  75 0042 4FF00002 		mov	r2, #0
+  76 0046 9A81     		strh	r2, [r3, #12]	@ movhi
+  63:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   p_MCB->size    = (mbx_size + sizeof(void *) - sizeof(struct OS_MCB)) /
+  77              		.loc 1 63 0
+  78 0048 7B88     		ldrh	r3, [r7, #2]
+  79 004a A3F11003 		sub	r3, r3, #16
+  80 004e 4FEA9303 		lsr	r3, r3, #2
+  81 0052 9AB2     		uxth	r2, r3
+  82 0054 FB68     		ldr	r3, [r7, #12]
+  83 0056 DA81     		strh	r2, [r3, #14]	@ movhi
+  64:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****                                                      (U32)sizeof (void *);
+  65:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** }
+  84              		.loc 1 65 0
+  85 0058 07F11407 		add	r7, r7, #20
+  86 005c BD46     		mov	sp, r7
+  87 005e 80BC     		pop	{r7}
+  88 0060 7047     		bx	lr
+  89              		.cfi_endproc
+  90              	.LFE8:
+  92 0062 00BF     		.section	.text.rt_mbx_send,"ax",%progbits
+  93              		.align	2
+  94              		.global	rt_mbx_send
+  95              		.thumb
+  96              		.thumb_func
+  98              	rt_mbx_send:
+  99              	.LFB9:
+  66:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+  67:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+  68:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** /*--------------------------- rt_mbx_send -----------------------------------*/
+  69:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+  70:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** OS_RESULT rt_mbx_send (OS_ID mailbox, void *p_msg, U16 timeout) {
+ 100              		.loc 1 70 0
+ 101              		.cfi_startproc
+ 102              		@ args = 0, pretend = 0, frame = 32
+ 103              		@ frame_needed = 1, uses_anonymous_args = 0
+ 104 0000 90B5     		push	{r4, r7, lr}
+ 105              	.LCFI3:
+ 106              		.cfi_def_cfa_offset 12
+ 107              		.cfi_offset 4, -12
+ 108              		.cfi_offset 7, -8
+ 109              		.cfi_offset 14, -4
+ 110 0002 89B0     		sub	sp, sp, #36
+ 111              	.LCFI4:
+ 112              		.cfi_def_cfa_offset 48
+ 113 0004 00AF     		add	r7, sp, #0
+ 114              	.LCFI5:
+ 115              		.cfi_def_cfa_register 7
+ 116 0006 F860     		str	r0, [r7, #12]
+ 117 0008 B960     		str	r1, [r7, #8]
+ 118 000a 1346     		mov	r3, r2
+ 119 000c FB80     		strh	r3, [r7, #6]	@ movhi
+  71:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* Send message to a mailbox */
+  72:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   P_MCB p_MCB = mailbox;
+ 120              		.loc 1 72 0
+ 121 000e FB68     		ldr	r3, [r7, #12]
+ 122 0010 FB61     		str	r3, [r7, #28]
+  73:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   P_TCB p_TCB;
+  74:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+  75:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   if ((p_MCB->p_lnk != NULL) && (p_MCB->state == 1)) {
+ 123              		.loc 1 75 0
+ 124 0012 FB69     		ldr	r3, [r7, #28]
+ 125 0014 5B68     		ldr	r3, [r3, #4]
+ 126 0016 002B     		cmp	r3, #0
+ 127 0018 15D0     		beq	.L3
+ 128              		.loc 1 75 0 is_stmt 0 discriminator 1
+ 129 001a FB69     		ldr	r3, [r7, #28]
+ 130 001c 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 131 001e 012B     		cmp	r3, #1
+ 132 0020 11D1     		bne	.L3
+  76:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     /* A task is waiting for message */
+  77:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     p_TCB = rt_get_first ((P_XCB)p_MCB);
+ 133              		.loc 1 77 0 is_stmt 1
+ 134 0022 F869     		ldr	r0, [r7, #28]
+ 135 0024 FFF7FEFF 		bl	rt_get_first
+ 136 0028 B861     		str	r0, [r7, #24]
+  78:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #ifdef __CMSIS_RTOS
+  79:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     rt_ret_val2(p_TCB, 0x10/*osEventMessage*/, (U32)p_msg);
+ 137              		.loc 1 79 0
+ 138 002a BB68     		ldr	r3, [r7, #8]
+ 139 002c B869     		ldr	r0, [r7, #24]
+ 140 002e 4FF01001 		mov	r1, #16
+ 141 0032 1A46     		mov	r2, r3
+ 142 0034 FFF7FEFF 		bl	rt_ret_val2
+  80:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #else
+  81:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     *p_TCB->msg = p_msg;
+  82:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     rt_ret_val (p_TCB, OS_R_MBX);
+  83:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #endif
+  84:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     rt_rmv_dly (p_TCB);
+ 143              		.loc 1 84 0
+ 144 0038 B869     		ldr	r0, [r7, #24]
+ 145 003a FFF7FEFF 		bl	rt_rmv_dly
+  85:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     rt_dispatch (p_TCB);
+ 146              		.loc 1 85 0
+ 147 003e B869     		ldr	r0, [r7, #24]
+ 148 0040 FFF7FEFF 		bl	rt_dispatch
+ 149 0044 69E0     		b	.L4
+ 150              	.L3:
+  86:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   }
+  87:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   else {
+  88:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     /* Store message in mailbox queue */
+  89:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     if (p_MCB->count == p_MCB->size) {
+ 151              		.loc 1 89 0
+ 152 0046 FB69     		ldr	r3, [r7, #28]
+ 153 0048 9A89     		ldrh	r2, [r3, #12]
+ 154 004a FB69     		ldr	r3, [r7, #28]
+ 155 004c DB89     		ldrh	r3, [r3, #14]
+ 156 004e 9A42     		cmp	r2, r3
+ 157 0050 3DD1     		bne	.L5
+  90:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       /* No free message entry, wait for one. If message queue is full, */
+  91:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       /* then no task is waiting for message. The 'p_MCB->p_lnk' list   */
+  92:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       /* pointer can now be reused for send message waits task list.    */
+  93:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       if (timeout == 0) {
+ 158              		.loc 1 93 0
+ 159 0052 FB88     		ldrh	r3, [r7, #6]
+ 160 0054 002B     		cmp	r3, #0
+ 161 0056 02D1     		bne	.L6
+  94:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****         return (OS_R_TMO);
+ 162              		.loc 1 94 0
+ 163 0058 4FF00103 		mov	r3, #1
+ 164 005c 5FE0     		b	.L7
+ 165              	.L6:
+  95:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       }
+  96:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       if (p_MCB->p_lnk != NULL) {
+ 166              		.loc 1 96 0
+ 167 005e FB69     		ldr	r3, [r7, #28]
+ 168 0060 5B68     		ldr	r3, [r3, #4]
+ 169 0062 002B     		cmp	r3, #0
+ 170 0064 09D0     		beq	.L8
+  97:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****         rt_put_prio ((P_XCB)p_MCB, os_tsk.run);
+ 171              		.loc 1 97 0
+ 172 0066 40F20003 		movw	r3, #:lower16:os_tsk
+ 173 006a C0F20003 		movt	r3, #:upper16:os_tsk
+ 174 006e 1B68     		ldr	r3, [r3, #0]
+ 175 0070 F869     		ldr	r0, [r7, #28]
+ 176 0072 1946     		mov	r1, r3
+ 177 0074 FFF7FEFF 		bl	rt_put_prio
+ 178 0078 19E0     		b	.L9
+ 179              	.L8:
+  98:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       }
+  99:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       else {
+ 100:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****         p_MCB->p_lnk = os_tsk.run;
+ 180              		.loc 1 100 0
+ 181 007a 40F20003 		movw	r3, #:lower16:os_tsk
+ 182 007e C0F20003 		movt	r3, #:upper16:os_tsk
+ 183 0082 1A68     		ldr	r2, [r3, #0]
+ 184 0084 FB69     		ldr	r3, [r7, #28]
+ 185 0086 5A60     		str	r2, [r3, #4]
+ 101:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****         os_tsk.run->p_lnk  = NULL;
+ 186              		.loc 1 101 0
+ 187 0088 40F20003 		movw	r3, #:lower16:os_tsk
+ 188 008c C0F20003 		movt	r3, #:upper16:os_tsk
+ 189 0090 1B68     		ldr	r3, [r3, #0]
+ 190 0092 4FF00002 		mov	r2, #0
+ 191 0096 5A60     		str	r2, [r3, #4]
+ 102:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****         os_tsk.run->p_rlnk = (P_TCB)p_MCB;
+ 192              		.loc 1 102 0
+ 193 0098 40F20003 		movw	r3, #:lower16:os_tsk
+ 194 009c C0F20003 		movt	r3, #:upper16:os_tsk
+ 195 00a0 1B68     		ldr	r3, [r3, #0]
+ 196 00a2 FA69     		ldr	r2, [r7, #28]
+ 197 00a4 9A60     		str	r2, [r3, #8]
+ 103:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****         /* Task is waiting to send a message */      
+ 104:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****         p_MCB->state = 2;
+ 198              		.loc 1 104 0
+ 199 00a6 FB69     		ldr	r3, [r7, #28]
+ 200 00a8 4FF00202 		mov	r2, #2
+ 201 00ac 5A70     		strb	r2, [r3, #1]
+ 202              	.L9:
+ 105:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       }
+ 106:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       os_tsk.run->msg = p_msg;
+ 203              		.loc 1 106 0
+ 204 00ae 40F20003 		movw	r3, #:lower16:os_tsk
+ 205 00b2 C0F20003 		movt	r3, #:upper16:os_tsk
+ 206 00b6 1B68     		ldr	r3, [r3, #0]
+ 207 00b8 BA68     		ldr	r2, [r7, #8]
+ 208 00ba DA61     		str	r2, [r3, #28]
+ 107:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_block (timeout, WAIT_MBX);
+ 209              		.loc 1 107 0
+ 210 00bc FB88     		ldrh	r3, [r7, #6]
+ 211 00be 1846     		mov	r0, r3
+ 212 00c0 4FF00801 		mov	r1, #8
+ 213 00c4 FFF7FEFF 		bl	rt_block
+ 108:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       return (OS_R_TMO);
+ 214              		.loc 1 108 0
+ 215 00c8 4FF00103 		mov	r3, #1
+ 216 00cc 27E0     		b	.L7
+ 217              	.L5:
+ 109:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     }
+ 110:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     /* Yes, there is a free entry in a mailbox. */
+ 111:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     p_MCB->msg[p_MCB->first] = p_msg;
+ 218              		.loc 1 111 0
+ 219 00ce FB69     		ldr	r3, [r7, #28]
+ 220 00d0 1B89     		ldrh	r3, [r3, #8]
+ 221 00d2 1A46     		mov	r2, r3
+ 222 00d4 FB69     		ldr	r3, [r7, #28]
+ 223 00d6 02F10402 		add	r2, r2, #4
+ 224 00da B968     		ldr	r1, [r7, #8]
+ 225 00dc 43F82210 		str	r1, [r3, r2, lsl #2]
+ 226              	.LBB22:
+ 227              	.LBB23:
+ 228              		.file 2 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h"
+   1:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** /*----------------------------------------------------------------------------
+   2:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      RL-ARM - RTX
+   3:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *----------------------------------------------------------------------------
+   4:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      Name:    RT_HAL_CM.H
+   5:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      Purpose: Hardware Abstraction Layer for Cortex-M definitions
+   6:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      Rev.:    V4.70
+   7:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *----------------------------------------------------------------------------
+   8:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *
+   9:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
+  10:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * All rights reserved.
+  11:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * Redistribution and use in source and binary forms, with or without
+  12:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * modification, are permitted provided that the following conditions are met:
+  13:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *  - Redistributions of source code must retain the above copyright
+  14:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    notice, this list of conditions and the following disclaimer.
+  15:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *  - Redistributions in binary form must reproduce the above copyright
+  16:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    notice, this list of conditions and the following disclaimer in the
+  17:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    documentation and/or other materials provided with the distribution.
+  18:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *  - Neither the name of ARM  nor the names of its contributors may be used 
+  19:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    to endorse or promote products derived from this software without 
+  20:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    specific prior written permission.
+  21:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *
+  22:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+  23:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+  24:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  25:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  26:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  27:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+  28:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+  29:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+  30:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  32:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * POSSIBILITY OF SUCH DAMAGE.
+  33:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *---------------------------------------------------------------------------*/
+  34:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  35:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** /* Definitions */
+  36:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define INITIAL_xPSR    0x01000000
+  37:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define DEMCR_TRCENA    0x01000000
+  38:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define ITM_ITMENA      0x00000001
+  39:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define MAGIC_WORD      0xE25A2EA5
+  40:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  41:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if defined (__CC_ARM)          /* ARM Compiler */
+  42:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  43:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if ((__TARGET_ARCH_7_M || __TARGET_ARCH_7E_M) && !defined(NO_EXCLUSIVE_ACCESS))
+  44:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  #define __USE_EXCLUSIVE_ACCESS
+  45:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+  46:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  #undef  __USE_EXCLUSIVE_ACCESS
+  47:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+  48:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  49:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #elif defined (__GNUC__)        /* GNU Compiler */
+  50:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  51:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #undef  __USE_EXCLUSIVE_ACCESS
+  52:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  53:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if defined (__CORTEX_M0)
+  54:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_ARCH_6S_M 1
+  55:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+  56:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_ARCH_6S_M 0
+  57:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+  58:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  59:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if defined (__VFP_FP__) && !defined(__SOFTFP__)
+  60:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_FPU_VFP 1
+  61:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+  62:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_FPU_VFP 0
+  63:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+  64:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  65:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __inline inline
+  66:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __weak   __attribute__((weak))
+  67:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  68:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #ifndef __CMSIS_GENERIC
+  69:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  70:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __attribute__((always_inline)) static inline void __enable_irq(void)
+  71:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** {
+  72:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsie i");
+  73:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+  74:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  75:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __attribute__((always_inline)) static inline U32 __disable_irq(void)
+  76:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** {
+  77:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   U32 result;
+  78:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  79:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("mrs %0, primask" : "=r" (result));
+ 229              		.loc 2 79 0
+ 230              	@ 79 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 231 00e0 EFF31084 		mrs r4, primask
+ 232              	@ 0 "" 2
+ 233              		.thumb
+ 234 00e4 7C61     		str	r4, [r7, #20]
+  80:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsid i");
+ 235              		.loc 2 80 0
+ 236              	@ 80 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 237 00e6 72B6     		cpsid i
+ 238              	@ 0 "" 2
+ 239              		.thumb
+ 240              	.LBE23:
+ 241              	.LBE22:
+ 112:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     rt_inc (&p_MCB->count);
+ 242              		.loc 1 112 0
+ 243 00e8 FB69     		ldr	r3, [r7, #28]
+ 244 00ea 9B89     		ldrh	r3, [r3, #12]
+ 245 00ec 03F10103 		add	r3, r3, #1
+ 246 00f0 9AB2     		uxth	r2, r3
+ 247 00f2 FB69     		ldr	r3, [r7, #28]
+ 248 00f4 9A81     		strh	r2, [r3, #12]	@ movhi
+ 249              	.LBB24:
+ 250              	.LBB25:
+  72:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsie i");
+ 251              		.loc 2 72 0
+ 252              	@ 72 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 253 00f6 62B6     		cpsie i
+ 254              	@ 0 "" 2
+ 255              		.thumb
+ 256              	.LBE25:
+ 257              	.LBE24:
+ 113:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     if (++p_MCB->first == p_MCB->size) {
+ 258              		.loc 1 113 0
+ 259 00f8 FB69     		ldr	r3, [r7, #28]
+ 260 00fa 1B89     		ldrh	r3, [r3, #8]
+ 261 00fc 03F10103 		add	r3, r3, #1
+ 262 0100 9AB2     		uxth	r2, r3
+ 263 0102 FB69     		ldr	r3, [r7, #28]
+ 264 0104 1A81     		strh	r2, [r3, #8]	@ movhi
+ 265 0106 FB69     		ldr	r3, [r7, #28]
+ 266 0108 1A89     		ldrh	r2, [r3, #8]
+ 267 010a FB69     		ldr	r3, [r7, #28]
+ 268 010c DB89     		ldrh	r3, [r3, #14]
+ 269 010e 9A42     		cmp	r2, r3
+ 270 0110 03D1     		bne	.L4
+ 114:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_MCB->first = 0;
+ 271              		.loc 1 114 0
+ 272 0112 FB69     		ldr	r3, [r7, #28]
+ 273 0114 4FF00002 		mov	r2, #0
+ 274 0118 1A81     		strh	r2, [r3, #8]	@ movhi
+ 275              	.L4:
+ 115:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     }
+ 116:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   }
+ 117:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   return (OS_R_OK);
+ 276              		.loc 1 117 0
+ 277 011a 4FF00003 		mov	r3, #0
+ 278              	.L7:
+ 118:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** }
+ 279              		.loc 1 118 0
+ 280 011e 1846     		mov	r0, r3
+ 281 0120 07F12407 		add	r7, r7, #36
+ 282 0124 BD46     		mov	sp, r7
+ 283 0126 90BD     		pop	{r4, r7, pc}
+ 284              		.cfi_endproc
+ 285              	.LFE9:
+ 287              		.section	.text.rt_mbx_wait,"ax",%progbits
+ 288              		.align	2
+ 289              		.global	rt_mbx_wait
+ 290              		.thumb
+ 291              		.thumb_func
+ 293              	rt_mbx_wait:
+ 294              	.LFB10:
+ 119:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 120:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 121:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** /*--------------------------- rt_mbx_wait -----------------------------------*/
+ 122:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 123:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** OS_RESULT rt_mbx_wait (OS_ID mailbox, void **message, U16 timeout) {
+ 295              		.loc 1 123 0
+ 296              		.cfi_startproc
+ 297              		@ args = 0, pretend = 0, frame = 32
+ 298              		@ frame_needed = 1, uses_anonymous_args = 0
+ 299 0000 90B5     		push	{r4, r7, lr}
+ 300              	.LCFI6:
+ 301              		.cfi_def_cfa_offset 12
+ 302              		.cfi_offset 4, -12
+ 303              		.cfi_offset 7, -8
+ 304              		.cfi_offset 14, -4
+ 305 0002 89B0     		sub	sp, sp, #36
+ 306              	.LCFI7:
+ 307              		.cfi_def_cfa_offset 48
+ 308 0004 00AF     		add	r7, sp, #0
+ 309              	.LCFI8:
+ 310              		.cfi_def_cfa_register 7
+ 311 0006 F860     		str	r0, [r7, #12]
+ 312 0008 B960     		str	r1, [r7, #8]
+ 313 000a 1346     		mov	r3, r2
+ 314 000c FB80     		strh	r3, [r7, #6]	@ movhi
+ 124:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* Receive a message; possibly wait for it */
+ 125:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   P_MCB p_MCB = mailbox;
+ 315              		.loc 1 125 0
+ 316 000e FB68     		ldr	r3, [r7, #12]
+ 317 0010 FB61     		str	r3, [r7, #28]
+ 126:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   P_TCB p_TCB;
+ 127:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 128:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* If a message is available in the fifo buffer */
+ 129:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* remove it from the fifo buffer and return. */
+ 130:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   if (p_MCB->count) {
+ 318              		.loc 1 130 0
+ 319 0012 FB69     		ldr	r3, [r7, #28]
+ 320 0014 9B89     		ldrh	r3, [r3, #12]
+ 321 0016 002B     		cmp	r3, #0
+ 322 0018 5CD0     		beq	.L12
+ 131:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     *message = p_MCB->msg[p_MCB->last];
+ 323              		.loc 1 131 0
+ 324 001a FB69     		ldr	r3, [r7, #28]
+ 325 001c 5B89     		ldrh	r3, [r3, #10]
+ 326 001e 1A46     		mov	r2, r3
+ 327 0020 FB69     		ldr	r3, [r7, #28]
+ 328 0022 02F10402 		add	r2, r2, #4
+ 329 0026 53F82220 		ldr	r2, [r3, r2, lsl #2]
+ 330 002a BB68     		ldr	r3, [r7, #8]
+ 331 002c 1A60     		str	r2, [r3, #0]
+ 132:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     if (++p_MCB->last == p_MCB->size) {
+ 332              		.loc 1 132 0
+ 333 002e FB69     		ldr	r3, [r7, #28]
+ 334 0030 5B89     		ldrh	r3, [r3, #10]
+ 335 0032 03F10103 		add	r3, r3, #1
+ 336 0036 9AB2     		uxth	r2, r3
+ 337 0038 FB69     		ldr	r3, [r7, #28]
+ 338 003a 5A81     		strh	r2, [r3, #10]	@ movhi
+ 339 003c FB69     		ldr	r3, [r7, #28]
+ 340 003e 5A89     		ldrh	r2, [r3, #10]
+ 341 0040 FB69     		ldr	r3, [r7, #28]
+ 342 0042 DB89     		ldrh	r3, [r3, #14]
+ 343 0044 9A42     		cmp	r2, r3
+ 344 0046 03D1     		bne	.L13
+ 133:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_MCB->last = 0;
+ 345              		.loc 1 133 0
+ 346 0048 FB69     		ldr	r3, [r7, #28]
+ 347 004a 4FF00002 		mov	r2, #0
+ 348 004e 5A81     		strh	r2, [r3, #10]	@ movhi
+ 349              	.L13:
+ 134:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     }
+ 135:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     if ((p_MCB->p_lnk != NULL) && (p_MCB->state == 2)) {
+ 350              		.loc 1 135 0
+ 351 0050 FB69     		ldr	r3, [r7, #28]
+ 352 0052 5B68     		ldr	r3, [r3, #4]
+ 353 0054 002B     		cmp	r3, #0
+ 354 0056 2ED0     		beq	.L14
+ 355              		.loc 1 135 0 is_stmt 0 discriminator 1
+ 356 0058 FB69     		ldr	r3, [r7, #28]
+ 357 005a 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 358 005c 022B     		cmp	r3, #2
+ 359 005e 2AD1     		bne	.L14
+ 136:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       /* A task is waiting to send message */
+ 137:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_TCB = rt_get_first ((P_XCB)p_MCB);
+ 360              		.loc 1 137 0 is_stmt 1
+ 361 0060 F869     		ldr	r0, [r7, #28]
+ 362 0062 FFF7FEFF 		bl	rt_get_first
+ 363 0066 B861     		str	r0, [r7, #24]
+ 138:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #ifdef __CMSIS_RTOS
+ 139:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_ret_val(p_TCB, 0/*osOK*/);
+ 364              		.loc 1 139 0
+ 365 0068 B869     		ldr	r0, [r7, #24]
+ 366 006a 4FF00001 		mov	r1, #0
+ 367 006e FFF7FEFF 		bl	rt_ret_val
+ 140:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #else
+ 141:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_ret_val(p_TCB, OS_R_OK);
+ 142:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #endif
+ 143:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_MCB->msg[p_MCB->first] = p_TCB->msg;
+ 368              		.loc 1 143 0
+ 369 0072 FB69     		ldr	r3, [r7, #28]
+ 370 0074 1B89     		ldrh	r3, [r3, #8]
+ 371 0076 1A46     		mov	r2, r3
+ 372 0078 BB69     		ldr	r3, [r7, #24]
+ 373 007a D969     		ldr	r1, [r3, #28]
+ 374 007c FB69     		ldr	r3, [r7, #28]
+ 375 007e 02F10402 		add	r2, r2, #4
+ 376 0082 43F82210 		str	r1, [r3, r2, lsl #2]
+ 144:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       if (++p_MCB->first == p_MCB->size) {
+ 377              		.loc 1 144 0
+ 378 0086 FB69     		ldr	r3, [r7, #28]
+ 379 0088 1B89     		ldrh	r3, [r3, #8]
+ 380 008a 03F10103 		add	r3, r3, #1
+ 381 008e 9AB2     		uxth	r2, r3
+ 382 0090 FB69     		ldr	r3, [r7, #28]
+ 383 0092 1A81     		strh	r2, [r3, #8]	@ movhi
+ 384 0094 FB69     		ldr	r3, [r7, #28]
+ 385 0096 1A89     		ldrh	r2, [r3, #8]
+ 386 0098 FB69     		ldr	r3, [r7, #28]
+ 387 009a DB89     		ldrh	r3, [r3, #14]
+ 388 009c 9A42     		cmp	r2, r3
+ 389 009e 03D1     		bne	.L15
+ 145:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****         p_MCB->first = 0;
+ 390              		.loc 1 145 0
+ 391 00a0 FB69     		ldr	r3, [r7, #28]
+ 392 00a2 4FF00002 		mov	r2, #0
+ 393 00a6 1A81     		strh	r2, [r3, #8]	@ movhi
+ 394              	.L15:
+ 146:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       }
+ 147:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_rmv_dly (p_TCB);
+ 395              		.loc 1 147 0
+ 396 00a8 B869     		ldr	r0, [r7, #24]
+ 397 00aa FFF7FEFF 		bl	rt_rmv_dly
+ 148:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_dispatch (p_TCB);
+ 398              		.loc 1 148 0
+ 399 00ae B869     		ldr	r0, [r7, #24]
+ 400 00b0 FFF7FEFF 		bl	rt_dispatch
+ 401 00b4 0BE0     		b	.L16
+ 402              	.L14:
+ 403              	.LBB26:
+ 404              	.LBB27:
+  79:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("mrs %0, primask" : "=r" (result));
+ 405              		.loc 2 79 0
+ 406              	@ 79 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 407 00b6 EFF31084 		mrs r4, primask
+ 408              	@ 0 "" 2
+ 409              		.thumb
+ 410 00ba 7C61     		str	r4, [r7, #20]
+ 411              		.loc 2 80 0
+ 412              	@ 80 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 413 00bc 72B6     		cpsid i
+ 414              	@ 0 "" 2
+ 415              		.thumb
+ 416              	.LBE27:
+ 417              	.LBE26:
+ 149:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     }
+ 150:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     else {
+ 151:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_dec (&p_MCB->count);
+ 418              		.loc 1 151 0
+ 419 00be FB69     		ldr	r3, [r7, #28]
+ 420 00c0 9B89     		ldrh	r3, [r3, #12]
+ 421 00c2 03F1FF33 		add	r3, r3, #-1
+ 422 00c6 9AB2     		uxth	r2, r3
+ 423 00c8 FB69     		ldr	r3, [r7, #28]
+ 424 00ca 9A81     		strh	r2, [r3, #12]	@ movhi
+ 425              	.LBB28:
+ 426              	.LBB29:
+  72:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsie i");
+ 427              		.loc 2 72 0
+ 428              	@ 72 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 429 00cc 62B6     		cpsie i
+ 430              	@ 0 "" 2
+ 431              		.thumb
+ 432              	.L16:
+ 433              	.LBE29:
+ 434              	.LBE28:
+ 152:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     }
+ 153:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     return (OS_R_OK);
+ 435              		.loc 1 153 0
+ 436 00ce 4FF00003 		mov	r3, #0
+ 437 00d2 35E0     		b	.L18
+ 438              	.L12:
+ 154:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   }
+ 155:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* No message available: wait for one */
+ 156:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   if (timeout == 0) {
+ 439              		.loc 1 156 0
+ 440 00d4 FB88     		ldrh	r3, [r7, #6]
+ 441 00d6 002B     		cmp	r3, #0
+ 442 00d8 02D1     		bne	.L19
+ 157:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     return (OS_R_TMO);
+ 443              		.loc 1 157 0
+ 444 00da 4FF00103 		mov	r3, #1
+ 445 00de 2FE0     		b	.L18
+ 446              	.L19:
+ 158:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   }
+ 159:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   if (p_MCB->p_lnk != NULL) {
+ 447              		.loc 1 159 0
+ 448 00e0 FB69     		ldr	r3, [r7, #28]
+ 449 00e2 5B68     		ldr	r3, [r3, #4]
+ 450 00e4 002B     		cmp	r3, #0
+ 451 00e6 09D0     		beq	.L20
+ 160:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     rt_put_prio ((P_XCB)p_MCB, os_tsk.run);
+ 452              		.loc 1 160 0
+ 453 00e8 40F20003 		movw	r3, #:lower16:os_tsk
+ 454 00ec C0F20003 		movt	r3, #:upper16:os_tsk
+ 455 00f0 1B68     		ldr	r3, [r3, #0]
+ 456 00f2 F869     		ldr	r0, [r7, #28]
+ 457 00f4 1946     		mov	r1, r3
+ 458 00f6 FFF7FEFF 		bl	rt_put_prio
+ 459 00fa 19E0     		b	.L21
+ 460              	.L20:
+ 161:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   }
+ 162:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   else {
+ 163:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     p_MCB->p_lnk = os_tsk.run;
+ 461              		.loc 1 163 0
+ 462 00fc 40F20003 		movw	r3, #:lower16:os_tsk
+ 463 0100 C0F20003 		movt	r3, #:upper16:os_tsk
+ 464 0104 1A68     		ldr	r2, [r3, #0]
+ 465 0106 FB69     		ldr	r3, [r7, #28]
+ 466 0108 5A60     		str	r2, [r3, #4]
+ 164:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     os_tsk.run->p_lnk = NULL;
+ 467              		.loc 1 164 0
+ 468 010a 40F20003 		movw	r3, #:lower16:os_tsk
+ 469 010e C0F20003 		movt	r3, #:upper16:os_tsk
+ 470 0112 1B68     		ldr	r3, [r3, #0]
+ 471 0114 4FF00002 		mov	r2, #0
+ 472 0118 5A60     		str	r2, [r3, #4]
+ 165:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     os_tsk.run->p_rlnk = (P_TCB)p_MCB;
+ 473              		.loc 1 165 0
+ 474 011a 40F20003 		movw	r3, #:lower16:os_tsk
+ 475 011e C0F20003 		movt	r3, #:upper16:os_tsk
+ 476 0122 1B68     		ldr	r3, [r3, #0]
+ 477 0124 FA69     		ldr	r2, [r7, #28]
+ 478 0126 9A60     		str	r2, [r3, #8]
+ 166:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     /* Task is waiting to receive a message */      
+ 167:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     p_MCB->state = 1;
+ 479              		.loc 1 167 0
+ 480 0128 FB69     		ldr	r3, [r7, #28]
+ 481 012a 4FF00102 		mov	r2, #1
+ 482 012e 5A70     		strb	r2, [r3, #1]
+ 483              	.L21:
+ 168:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   }
+ 169:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   rt_block(timeout, WAIT_MBX);
+ 484              		.loc 1 169 0
+ 485 0130 FB88     		ldrh	r3, [r7, #6]
+ 486 0132 1846     		mov	r0, r3
+ 487 0134 4FF00801 		mov	r1, #8
+ 488 0138 FFF7FEFF 		bl	rt_block
+ 170:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #ifndef __CMSIS_RTOS
+ 171:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   os_tsk.run->msg = message;
+ 172:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #endif
+ 173:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   return (OS_R_TMO);
+ 489              		.loc 1 173 0
+ 490 013c 4FF00103 		mov	r3, #1
+ 491              	.L18:
+ 174:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** }
+ 492              		.loc 1 174 0
+ 493 0140 1846     		mov	r0, r3
+ 494 0142 07F12407 		add	r7, r7, #36
+ 495 0146 BD46     		mov	sp, r7
+ 496 0148 90BD     		pop	{r4, r7, pc}
+ 497              		.cfi_endproc
+ 498              	.LFE10:
+ 500 014a 00BF     		.section	.text.rt_mbx_check,"ax",%progbits
+ 501              		.align	2
+ 502              		.global	rt_mbx_check
+ 503              		.thumb
+ 504              		.thumb_func
+ 506              	rt_mbx_check:
+ 507              	.LFB11:
+ 175:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 176:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 177:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** /*--------------------------- rt_mbx_check ----------------------------------*/
+ 178:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 179:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** OS_RESULT rt_mbx_check (OS_ID mailbox) {
+ 508              		.loc 1 179 0
+ 509              		.cfi_startproc
+ 510              		@ args = 0, pretend = 0, frame = 16
+ 511              		@ frame_needed = 1, uses_anonymous_args = 0
+ 512              		@ link register save eliminated.
+ 513 0000 80B4     		push	{r7}
+ 514              	.LCFI9:
+ 515              		.cfi_def_cfa_offset 4
+ 516              		.cfi_offset 7, -4
+ 517 0002 85B0     		sub	sp, sp, #20
+ 518              	.LCFI10:
+ 519              		.cfi_def_cfa_offset 24
+ 520 0004 00AF     		add	r7, sp, #0
+ 521              	.LCFI11:
+ 522              		.cfi_def_cfa_register 7
+ 523 0006 7860     		str	r0, [r7, #4]
+ 180:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* Check for free space in a mailbox. Returns the number of messages     */
+ 181:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* that can be stored to a mailbox. It returns 0 when mailbox is full.   */
+ 182:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   P_MCB p_MCB = mailbox;
+ 524              		.loc 1 182 0
+ 525 0008 7B68     		ldr	r3, [r7, #4]
+ 526 000a FB60     		str	r3, [r7, #12]
+ 183:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 184:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   return (p_MCB->size - p_MCB->count);
+ 527              		.loc 1 184 0
+ 528 000c FB68     		ldr	r3, [r7, #12]
+ 529 000e DB89     		ldrh	r3, [r3, #14]
+ 530 0010 1A46     		mov	r2, r3
+ 531 0012 FB68     		ldr	r3, [r7, #12]
+ 532 0014 9B89     		ldrh	r3, [r3, #12]
+ 533 0016 D31A     		subs	r3, r2, r3
+ 185:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** }
+ 534              		.loc 1 185 0
+ 535 0018 1846     		mov	r0, r3
+ 536 001a 07F11407 		add	r7, r7, #20
+ 537 001e BD46     		mov	sp, r7
+ 538 0020 80BC     		pop	{r7}
+ 539 0022 7047     		bx	lr
+ 540              		.cfi_endproc
+ 541              	.LFE11:
+ 543              		.section	.text.isr_mbx_send,"ax",%progbits
+ 544              		.align	2
+ 545              		.global	isr_mbx_send
+ 546              		.thumb
+ 547              		.thumb_func
+ 549              	isr_mbx_send:
+ 550              	.LFB12:
+ 186:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 187:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 188:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** /*--------------------------- isr_mbx_send ----------------------------------*/
+ 189:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 190:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** void isr_mbx_send (OS_ID mailbox, void *p_msg) {
+ 551              		.loc 1 190 0
+ 552              		.cfi_startproc
+ 553              		@ args = 0, pretend = 0, frame = 16
+ 554              		@ frame_needed = 1, uses_anonymous_args = 0
+ 555 0000 80B5     		push	{r7, lr}
+ 556              	.LCFI12:
+ 557              		.cfi_def_cfa_offset 8
+ 558              		.cfi_offset 7, -8
+ 559              		.cfi_offset 14, -4
+ 560 0002 84B0     		sub	sp, sp, #16
+ 561              	.LCFI13:
+ 562              		.cfi_def_cfa_offset 24
+ 563 0004 00AF     		add	r7, sp, #0
+ 564              	.LCFI14:
+ 565              		.cfi_def_cfa_register 7
+ 566 0006 7860     		str	r0, [r7, #4]
+ 567 0008 3960     		str	r1, [r7, #0]
+ 191:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* Same function as "os_mbx_send", but to be called by ISRs. */
+ 192:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   P_MCB p_MCB = mailbox;
+ 568              		.loc 1 192 0
+ 569 000a 7B68     		ldr	r3, [r7, #4]
+ 570 000c FB60     		str	r3, [r7, #12]
+ 193:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 194:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   rt_psq_enq (p_MCB, (U32)p_msg);
+ 571              		.loc 1 194 0
+ 572 000e 3B68     		ldr	r3, [r7, #0]
+ 573 0010 F868     		ldr	r0, [r7, #12]
+ 574 0012 1946     		mov	r1, r3
+ 575 0014 FFF7FEFF 		bl	rt_psq_enq
+ 195:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   rt_psh_req ();
+ 576              		.loc 1 195 0
+ 577 0018 FFF7FEFF 		bl	rt_psh_req
+ 196:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** }
+ 578              		.loc 1 196 0
+ 579 001c 07F11007 		add	r7, r7, #16
+ 580 0020 BD46     		mov	sp, r7
+ 581 0022 80BD     		pop	{r7, pc}
+ 582              		.cfi_endproc
+ 583              	.LFE12:
+ 585              		.section	.text.isr_mbx_receive,"ax",%progbits
+ 586              		.align	2
+ 587              		.global	isr_mbx_receive
+ 588              		.thumb
+ 589              		.thumb_func
+ 591              	isr_mbx_receive:
+ 592              	.LFB13:
+ 197:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 198:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 199:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** /*--------------------------- isr_mbx_receive -------------------------------*/
+ 200:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 201:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** OS_RESULT isr_mbx_receive (OS_ID mailbox, void **message) {
+ 593              		.loc 1 201 0
+ 594              		.cfi_startproc
+ 595              		@ args = 0, pretend = 0, frame = 16
+ 596              		@ frame_needed = 1, uses_anonymous_args = 0
+ 597 0000 90B5     		push	{r4, r7, lr}
+ 598              	.LCFI15:
+ 599              		.cfi_def_cfa_offset 12
+ 600              		.cfi_offset 4, -12
+ 601              		.cfi_offset 7, -8
+ 602              		.cfi_offset 14, -4
+ 603 0002 85B0     		sub	sp, sp, #20
+ 604              	.LCFI16:
+ 605              		.cfi_def_cfa_offset 32
+ 606 0004 00AF     		add	r7, sp, #0
+ 607              	.LCFI17:
+ 608              		.cfi_def_cfa_register 7
+ 609 0006 7860     		str	r0, [r7, #4]
+ 610 0008 3960     		str	r1, [r7, #0]
+ 202:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* Receive a message in the interrupt function. The interrupt function   */
+ 203:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* should not wait for a message since this would block the rtx os.      */
+ 204:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   P_MCB p_MCB = mailbox;
+ 611              		.loc 1 204 0
+ 612 000a 7B68     		ldr	r3, [r7, #4]
+ 613 000c FB60     		str	r3, [r7, #12]
+ 205:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 206:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   if (p_MCB->count) {
+ 614              		.loc 1 206 0
+ 615 000e FB68     		ldr	r3, [r7, #12]
+ 616 0010 9B89     		ldrh	r3, [r3, #12]
+ 617 0012 002B     		cmp	r3, #0
+ 618 0014 34D0     		beq	.L26
+ 207:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     /* A message is available in the fifo buffer. */
+ 208:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     *message = p_MCB->msg[p_MCB->last];
+ 619              		.loc 1 208 0
+ 620 0016 FB68     		ldr	r3, [r7, #12]
+ 621 0018 5B89     		ldrh	r3, [r3, #10]
+ 622 001a 1A46     		mov	r2, r3
+ 623 001c FB68     		ldr	r3, [r7, #12]
+ 624 001e 02F10402 		add	r2, r2, #4
+ 625 0022 53F82220 		ldr	r2, [r3, r2, lsl #2]
+ 626 0026 3B68     		ldr	r3, [r7, #0]
+ 627 0028 1A60     		str	r2, [r3, #0]
+ 209:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     if (p_MCB->state == 2) {
+ 628              		.loc 1 209 0
+ 629 002a FB68     		ldr	r3, [r7, #12]
+ 630 002c 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 631 002e 022B     		cmp	r3, #2
+ 632 0030 06D1     		bne	.L27
+ 210:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       /* A task is locked waiting to send message */
+ 211:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_psq_enq (p_MCB, 0);
+ 633              		.loc 1 211 0
+ 634 0032 F868     		ldr	r0, [r7, #12]
+ 635 0034 4FF00001 		mov	r1, #0
+ 636 0038 FFF7FEFF 		bl	rt_psq_enq
+ 212:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_psh_req ();
+ 637              		.loc 1 212 0
+ 638 003c FFF7FEFF 		bl	rt_psh_req
+ 639              	.L27:
+ 640              	.LBB30:
+ 641              	.LBB31:
+  79:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("mrs %0, primask" : "=r" (result));
+ 642              		.loc 2 79 0
+ 643              	@ 79 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 644 0040 EFF31084 		mrs r4, primask
+ 645              	@ 0 "" 2
+ 646              		.thumb
+ 647 0044 BC60     		str	r4, [r7, #8]
+ 648              		.loc 2 80 0
+ 649              	@ 80 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 650 0046 72B6     		cpsid i
+ 651              	@ 0 "" 2
+ 652              		.thumb
+ 653              	.LBE31:
+ 654              	.LBE30:
+ 213:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     }
+ 214:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     rt_dec (&p_MCB->count);
+ 655              		.loc 1 214 0
+ 656 0048 FB68     		ldr	r3, [r7, #12]
+ 657 004a 9B89     		ldrh	r3, [r3, #12]
+ 658 004c 03F1FF33 		add	r3, r3, #-1
+ 659 0050 9AB2     		uxth	r2, r3
+ 660 0052 FB68     		ldr	r3, [r7, #12]
+ 661 0054 9A81     		strh	r2, [r3, #12]	@ movhi
+ 662              	.LBB32:
+ 663              	.LBB33:
+  72:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsie i");
+ 664              		.loc 2 72 0
+ 665              	@ 72 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 666 0056 62B6     		cpsie i
+ 667              	@ 0 "" 2
+ 668              		.thumb
+ 669              	.LBE33:
+ 670              	.LBE32:
+ 215:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     if (++p_MCB->last == p_MCB->size) {
+ 671              		.loc 1 215 0
+ 672 0058 FB68     		ldr	r3, [r7, #12]
+ 673 005a 5B89     		ldrh	r3, [r3, #10]
+ 674 005c 03F10103 		add	r3, r3, #1
+ 675 0060 9AB2     		uxth	r2, r3
+ 676 0062 FB68     		ldr	r3, [r7, #12]
+ 677 0064 5A81     		strh	r2, [r3, #10]	@ movhi
+ 678 0066 FB68     		ldr	r3, [r7, #12]
+ 679 0068 5A89     		ldrh	r2, [r3, #10]
+ 680 006a FB68     		ldr	r3, [r7, #12]
+ 681 006c DB89     		ldrh	r3, [r3, #14]
+ 682 006e 9A42     		cmp	r2, r3
+ 683 0070 03D1     		bne	.L29
+ 216:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_MCB->last = 0;
+ 684              		.loc 1 216 0
+ 685 0072 FB68     		ldr	r3, [r7, #12]
+ 686 0074 4FF00002 		mov	r2, #0
+ 687 0078 5A81     		strh	r2, [r3, #10]	@ movhi
+ 688              	.L29:
+ 217:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     }
+ 218:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     return (OS_R_MBX);
+ 689              		.loc 1 218 0
+ 690 007a 4FF00403 		mov	r3, #4
+ 691 007e 01E0     		b	.L30
+ 692              	.L26:
+ 219:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   }
+ 220:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   return (OS_R_OK);
+ 693              		.loc 1 220 0
+ 694 0080 4FF00003 		mov	r3, #0
+ 695              	.L30:
+ 221:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** }
+ 696              		.loc 1 221 0
+ 697 0084 1846     		mov	r0, r3
+ 698 0086 07F11407 		add	r7, r7, #20
+ 699 008a BD46     		mov	sp, r7
+ 700 008c 90BD     		pop	{r4, r7, pc}
+ 701              		.cfi_endproc
+ 702              	.LFE13:
+ 704 008e 00BF     		.section	.text.rt_mbx_psh,"ax",%progbits
+ 705              		.align	2
+ 706              		.global	rt_mbx_psh
+ 707              		.thumb
+ 708              		.thumb_func
+ 710              	rt_mbx_psh:
+ 711              	.LFB14:
+ 222:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 223:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 224:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** /*--------------------------- rt_mbx_psh ------------------------------------*/
+ 225:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 226:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** void rt_mbx_psh (P_MCB p_CB, void *p_msg) {
+ 712              		.loc 1 226 0
+ 713              		.cfi_startproc
+ 714              		@ args = 0, pretend = 0, frame = 24
+ 715              		@ frame_needed = 1, uses_anonymous_args = 0
+ 716 0000 90B5     		push	{r4, r7, lr}
+ 717              	.LCFI18:
+ 718              		.cfi_def_cfa_offset 12
+ 719              		.cfi_offset 4, -12
+ 720              		.cfi_offset 7, -8
+ 721              		.cfi_offset 14, -4
+ 722 0002 87B0     		sub	sp, sp, #28
+ 723              	.LCFI19:
+ 724              		.cfi_def_cfa_offset 40
+ 725 0004 00AF     		add	r7, sp, #0
+ 726              	.LCFI20:
+ 727              		.cfi_def_cfa_register 7
+ 728 0006 7860     		str	r0, [r7, #4]
+ 729 0008 3960     		str	r1, [r7, #0]
+ 227:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   /* Store the message to the mailbox queue or pass it to task directly. */
+ 228:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   P_TCB p_TCB;
+ 229:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   void *mem;
+ 230:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** 
+ 231:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   if (p_CB->p_lnk != NULL) switch (p_CB->state) {
+ 730              		.loc 1 231 0
+ 731 000a 7B68     		ldr	r3, [r7, #4]
+ 732 000c 5B68     		ldr	r3, [r3, #4]
+ 733 000e 002B     		cmp	r3, #0
+ 734 0010 00F08380 		beq	.L32
+ 735              		.loc 1 231 0 is_stmt 0 discriminator 1
+ 736 0014 7B68     		ldr	r3, [r7, #4]
+ 737 0016 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 738 0018 022B     		cmp	r3, #2
+ 739 001a 24D0     		beq	.L35
+ 740 001c 032B     		cmp	r3, #3
+ 741 001e 02D0     		beq	.L36
+ 742 0020 012B     		cmp	r3, #1
+ 743 0022 5FD0     		beq	.L34
+ 744              		.loc 1 231 0
+ 745 0024 ACE0     		b	.L31
+ 746              	.L36:
+ 232:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #ifdef __CMSIS_RTOS
+ 233:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     case 3:
+ 234:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       /* Task is waiting to allocate memory, remove it from the waiting list */
+ 235:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       mem = rt_alloc_box(p_msg);
+ 747              		.loc 1 235 0 is_stmt 1
+ 748 0026 3868     		ldr	r0, [r7, #0]
+ 749 0028 FFF7FEFF 		bl	rt_alloc_box
+ 750 002c 7861     		str	r0, [r7, #20]
+ 236:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       if (mem == NULL) break;
+ 751              		.loc 1 236 0
+ 752 002e 7B69     		ldr	r3, [r7, #20]
+ 753 0030 002B     		cmp	r3, #0
+ 754 0032 00F0A480 		beq	.L43
+ 755              	.L37:
+ 237:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_TCB = rt_get_first ((P_XCB)p_CB);
+ 756              		.loc 1 237 0
+ 757 0036 7868     		ldr	r0, [r7, #4]
+ 758 0038 FFF7FEFF 		bl	rt_get_first
+ 759 003c 3861     		str	r0, [r7, #16]
+ 238:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_ret_val(p_TCB, (U32)mem);
+ 760              		.loc 1 238 0
+ 761 003e 7B69     		ldr	r3, [r7, #20]
+ 762 0040 3869     		ldr	r0, [r7, #16]
+ 763 0042 1946     		mov	r1, r3
+ 764 0044 FFF7FEFF 		bl	rt_ret_val
+ 239:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_TCB->state = READY;
+ 765              		.loc 1 239 0
+ 766 0048 3B69     		ldr	r3, [r7, #16]
+ 767 004a 4FF00102 		mov	r2, #1
+ 768 004e 5A70     		strb	r2, [r3, #1]
+ 240:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_rmv_dly (p_TCB);
+ 769              		.loc 1 240 0
+ 770 0050 3869     		ldr	r0, [r7, #16]
+ 771 0052 FFF7FEFF 		bl	rt_rmv_dly
+ 241:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_put_prio (&os_rdy, p_TCB);
+ 772              		.loc 1 241 0
+ 773 0056 40F20000 		movw	r0, #:lower16:os_rdy
+ 774 005a C0F20000 		movt	r0, #:upper16:os_rdy
+ 775 005e 3969     		ldr	r1, [r7, #16]
+ 776 0060 FFF7FEFF 		bl	rt_put_prio
+ 242:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       break;
+ 777              		.loc 1 242 0
+ 778 0064 8CE0     		b	.L31
+ 779              	.L35:
+ 243:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #endif
+ 244:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     case 2:
+ 245:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       /* Task is waiting to send a message, remove it from the waiting list */
+ 246:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_TCB = rt_get_first ((P_XCB)p_CB);
+ 780              		.loc 1 246 0
+ 781 0066 7868     		ldr	r0, [r7, #4]
+ 782 0068 FFF7FEFF 		bl	rt_get_first
+ 783 006c 3861     		str	r0, [r7, #16]
+ 247:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #ifdef __CMSIS_RTOS
+ 248:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_ret_val(p_TCB, 0/*osOK*/);
+ 784              		.loc 1 248 0
+ 785 006e 3869     		ldr	r0, [r7, #16]
+ 786 0070 4FF00001 		mov	r1, #0
+ 787 0074 FFF7FEFF 		bl	rt_ret_val
+ 249:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #else
+ 250:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_ret_val(p_TCB, OS_R_OK);
+ 251:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #endif
+ 252:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_CB->msg[p_CB->first] = p_TCB->msg;
+ 788              		.loc 1 252 0
+ 789 0078 7B68     		ldr	r3, [r7, #4]
+ 790 007a 1B89     		ldrh	r3, [r3, #8]
+ 791 007c 1A46     		mov	r2, r3
+ 792 007e 3B69     		ldr	r3, [r7, #16]
+ 793 0080 D969     		ldr	r1, [r3, #28]
+ 794 0082 7B68     		ldr	r3, [r7, #4]
+ 795 0084 02F10402 		add	r2, r2, #4
+ 796 0088 43F82210 		str	r1, [r3, r2, lsl #2]
+ 797              	.LBB34:
+ 798              	.LBB35:
+  79:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("mrs %0, primask" : "=r" (result));
+ 799              		.loc 2 79 0
+ 800              	@ 79 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 801 008c EFF31084 		mrs r4, primask
+ 802              	@ 0 "" 2
+ 803              		.thumb
+ 804 0090 FC60     		str	r4, [r7, #12]
+ 805              		.loc 2 80 0
+ 806              	@ 80 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 807 0092 72B6     		cpsid i
+ 808              	@ 0 "" 2
+ 809              		.thumb
+ 810              	.LBE35:
+ 811              	.LBE34:
+ 253:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_inc (&p_CB->count);
+ 812              		.loc 1 253 0
+ 813 0094 7B68     		ldr	r3, [r7, #4]
+ 814 0096 9B89     		ldrh	r3, [r3, #12]
+ 815 0098 03F10103 		add	r3, r3, #1
+ 816 009c 9AB2     		uxth	r2, r3
+ 817 009e 7B68     		ldr	r3, [r7, #4]
+ 818 00a0 9A81     		strh	r2, [r3, #12]	@ movhi
+ 819              	.LBB36:
+ 820              	.LBB37:
+  72:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsie i");
+ 821              		.loc 2 72 0
+ 822              	@ 72 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 823 00a2 62B6     		cpsie i
+ 824              	@ 0 "" 2
+ 825              		.thumb
+ 826              	.LBE37:
+ 827              	.LBE36:
+ 254:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       if (++p_CB->first == p_CB->size) {
+ 828              		.loc 1 254 0
+ 829 00a4 7B68     		ldr	r3, [r7, #4]
+ 830 00a6 1B89     		ldrh	r3, [r3, #8]
+ 831 00a8 03F10103 		add	r3, r3, #1
+ 832 00ac 9AB2     		uxth	r2, r3
+ 833 00ae 7B68     		ldr	r3, [r7, #4]
+ 834 00b0 1A81     		strh	r2, [r3, #8]	@ movhi
+ 835 00b2 7B68     		ldr	r3, [r7, #4]
+ 836 00b4 1A89     		ldrh	r2, [r3, #8]
+ 837 00b6 7B68     		ldr	r3, [r7, #4]
+ 838 00b8 DB89     		ldrh	r3, [r3, #14]
+ 839 00ba 9A42     		cmp	r2, r3
+ 840 00bc 03D1     		bne	.L39
+ 255:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****         p_CB->first = 0;
+ 841              		.loc 1 255 0
+ 842 00be 7B68     		ldr	r3, [r7, #4]
+ 843 00c0 4FF00002 		mov	r2, #0
+ 844 00c4 1A81     		strh	r2, [r3, #8]	@ movhi
+ 845              	.L39:
+ 256:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       }
+ 257:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_TCB->state = READY;
+ 846              		.loc 1 257 0
+ 847 00c6 3B69     		ldr	r3, [r7, #16]
+ 848 00c8 4FF00102 		mov	r2, #1
+ 849 00cc 5A70     		strb	r2, [r3, #1]
+ 258:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_rmv_dly (p_TCB);
+ 850              		.loc 1 258 0
+ 851 00ce 3869     		ldr	r0, [r7, #16]
+ 852 00d0 FFF7FEFF 		bl	rt_rmv_dly
+ 259:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_put_prio (&os_rdy, p_TCB);
+ 853              		.loc 1 259 0
+ 854 00d4 40F20000 		movw	r0, #:lower16:os_rdy
+ 855 00d8 C0F20000 		movt	r0, #:upper16:os_rdy
+ 856 00dc 3969     		ldr	r1, [r7, #16]
+ 857 00de FFF7FEFF 		bl	rt_put_prio
+ 260:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       break;
+ 858              		.loc 1 260 0
+ 859 00e2 4DE0     		b	.L31
+ 860              	.L34:
+ 261:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     case 1:
+ 262:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       /* Task is waiting for a message, pass the message to the task directly */
+ 263:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_TCB = rt_get_first ((P_XCB)p_CB);
+ 861              		.loc 1 263 0
+ 862 00e4 7868     		ldr	r0, [r7, #4]
+ 863 00e6 FFF7FEFF 		bl	rt_get_first
+ 864 00ea 3861     		str	r0, [r7, #16]
+ 264:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #ifdef __CMSIS_RTOS
+ 265:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_ret_val2(p_TCB, 0x10/*osEventMessage*/, (U32)p_msg);
+ 865              		.loc 1 265 0
+ 866 00ec 3B68     		ldr	r3, [r7, #0]
+ 867 00ee 3869     		ldr	r0, [r7, #16]
+ 868 00f0 4FF01001 		mov	r1, #16
+ 869 00f4 1A46     		mov	r2, r3
+ 870 00f6 FFF7FEFF 		bl	rt_ret_val2
+ 266:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #else
+ 267:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       *p_TCB->msg = p_msg;
+ 268:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_ret_val (p_TCB, OS_R_MBX);
+ 269:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** #endif
+ 270:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_TCB->state = READY;
+ 871              		.loc 1 270 0
+ 872 00fa 3B69     		ldr	r3, [r7, #16]
+ 873 00fc 4FF00102 		mov	r2, #1
+ 874 0100 5A70     		strb	r2, [r3, #1]
+ 271:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_rmv_dly (p_TCB);
+ 875              		.loc 1 271 0
+ 876 0102 3869     		ldr	r0, [r7, #16]
+ 877 0104 FFF7FEFF 		bl	rt_rmv_dly
+ 272:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_put_prio (&os_rdy, p_TCB);
+ 878              		.loc 1 272 0
+ 879 0108 40F20000 		movw	r0, #:lower16:os_rdy
+ 880 010c C0F20000 		movt	r0, #:upper16:os_rdy
+ 881 0110 3969     		ldr	r1, [r7, #16]
+ 882 0112 FFF7FEFF 		bl	rt_put_prio
+ 273:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       break;
+ 883              		.loc 1 273 0
+ 884 0116 00BF     		nop
+ 885 0118 32E0     		b	.L31
+ 886              	.L32:
+ 274:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   } else {
+ 275:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     /* No task is waiting for a message, store it to the mailbox queue */
+ 276:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     if (p_CB->count < p_CB->size) {
+ 887              		.loc 1 276 0
+ 888 011a 7B68     		ldr	r3, [r7, #4]
+ 889 011c 9A89     		ldrh	r2, [r3, #12]
+ 890 011e 7B68     		ldr	r3, [r7, #4]
+ 891 0120 DB89     		ldrh	r3, [r3, #14]
+ 892 0122 9A42     		cmp	r2, r3
+ 893 0124 26D2     		bcs	.L41
+ 277:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       p_CB->msg[p_CB->first] = p_msg;
+ 894              		.loc 1 277 0
+ 895 0126 7B68     		ldr	r3, [r7, #4]
+ 896 0128 1B89     		ldrh	r3, [r3, #8]
+ 897 012a 1A46     		mov	r2, r3
+ 898 012c 7B68     		ldr	r3, [r7, #4]
+ 899 012e 02F10402 		add	r2, r2, #4
+ 900 0132 3968     		ldr	r1, [r7, #0]
+ 901 0134 43F82210 		str	r1, [r3, r2, lsl #2]
+ 902              	.LBB38:
+ 903              	.LBB39:
+  79:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("mrs %0, primask" : "=r" (result));
+ 904              		.loc 2 79 0
+ 905              	@ 79 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 906 0138 EFF31084 		mrs r4, primask
+ 907              	@ 0 "" 2
+ 908              		.thumb
+ 909 013c BC60     		str	r4, [r7, #8]
+ 910              		.loc 2 80 0
+ 911              	@ 80 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 912 013e 72B6     		cpsid i
+ 913              	@ 0 "" 2
+ 914              		.thumb
+ 915              	.LBE39:
+ 916              	.LBE38:
+ 278:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       rt_inc (&p_CB->count);
+ 917              		.loc 1 278 0
+ 918 0140 7B68     		ldr	r3, [r7, #4]
+ 919 0142 9B89     		ldrh	r3, [r3, #12]
+ 920 0144 03F10103 		add	r3, r3, #1
+ 921 0148 9AB2     		uxth	r2, r3
+ 922 014a 7B68     		ldr	r3, [r7, #4]
+ 923 014c 9A81     		strh	r2, [r3, #12]	@ movhi
+ 924              	.LBB40:
+ 925              	.LBB41:
+  72:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsie i");
+ 926              		.loc 2 72 0
+ 927              	@ 72 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 928 014e 62B6     		cpsie i
+ 929              	@ 0 "" 2
+ 930              		.thumb
+ 931              	.LBE41:
+ 932              	.LBE40:
+ 279:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       if (++p_CB->first == p_CB->size) {
+ 933              		.loc 1 279 0
+ 934 0150 7B68     		ldr	r3, [r7, #4]
+ 935 0152 1B89     		ldrh	r3, [r3, #8]
+ 936 0154 03F10103 		add	r3, r3, #1
+ 937 0158 9AB2     		uxth	r2, r3
+ 938 015a 7B68     		ldr	r3, [r7, #4]
+ 939 015c 1A81     		strh	r2, [r3, #8]	@ movhi
+ 940 015e 7B68     		ldr	r3, [r7, #4]
+ 941 0160 1A89     		ldrh	r2, [r3, #8]
+ 942 0162 7B68     		ldr	r3, [r7, #4]
+ 943 0164 DB89     		ldrh	r3, [r3, #14]
+ 944 0166 9A42     		cmp	r2, r3
+ 945 0168 0AD1     		bne	.L31
+ 280:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****         p_CB->first = 0;
+ 946              		.loc 1 280 0
+ 947 016a 7B68     		ldr	r3, [r7, #4]
+ 948 016c 4FF00002 		mov	r2, #0
+ 949 0170 1A81     		strh	r2, [r3, #8]	@ movhi
+ 950 0172 05E0     		b	.L31
+ 951              	.L41:
+ 281:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       }
+ 282:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     }
+ 283:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     else {
+ 284:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       os_error (OS_ERR_MBX_OVF);
+ 952              		.loc 1 284 0
+ 953 0174 4FF00300 		mov	r0, #3
+ 954 0178 FFF7FEFF 		bl	os_error
+ 955 017c 00E0     		b	.L31
+ 956              	.L43:
+ 236:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****       if (mem == NULL) break;
+ 957              		.loc 1 236 0
+ 958 017e 00BF     		nop
+ 959              	.L31:
+ 285:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****     }
+ 286:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c ****   }
+ 287:../Dave/Generated/src/RTOS001/SRC/rt_Mailbox.c **** }
+ 960              		.loc 1 287 0
+ 961 0180 07F11C07 		add	r7, r7, #28
+ 962 0184 BD46     		mov	sp, r7
+ 963 0186 90BD     		pop	{r4, r7, pc}
+ 964              		.cfi_endproc
+ 965              	.LFE14:
+ 967              		.text
+ 968              	.Letext0:
+ 969              		.file 3 "../Dave/Generated/src/RTOS001/SRC/rt_TypeDef.h"
+ 970              		.file 4 "../Dave/Generated/src/RTOS001/SRC/RTX_Config.h"
+ 971              		.file 5 "../Dave/Generated/src/RTOS001/SRC/rt_List.h"
+ 972              		.file 6 "../Dave/Generated/src/RTOS001/SRC/rt_Task.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 rt_Mailbox.c
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:20     .text.rt_mbx_init:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:25     .text.rt_mbx_init:00000000 rt_mbx_init
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:93     .text.rt_mbx_send:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:98     .text.rt_mbx_send:00000000 rt_mbx_send
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:288    .text.rt_mbx_wait:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:293    .text.rt_mbx_wait:00000000 rt_mbx_wait
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:501    .text.rt_mbx_check:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:506    .text.rt_mbx_check:00000000 rt_mbx_check
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:544    .text.isr_mbx_send:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:549    .text.isr_mbx_send:00000000 isr_mbx_send
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:586    .text.isr_mbx_receive:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:591    .text.isr_mbx_receive:00000000 isr_mbx_receive
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:705    .text.rt_mbx_psh:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccgWKr11.s:710    .text.rt_mbx_psh:00000000 rt_mbx_psh
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
+                           .group:00000000 wm4.rt_TypeDef.h.79.db0d61ef3f79bbdae3d134fa36f08304
+                           .group:00000000 wm4.RTX_Config.h.42.eb93c57b7f787c25a05db70c41047f1a
+                           .group:00000000 wm4.rt_List.h.38.eac26046fac8ea42e6920eca3c3ee440
+                           .group:00000000 wm4.rt_MemBox.h.36.bed0d6bbd95e17b5f9057dfffad2dc95
+                           .group:00000000 wm4.rt_Task.h.38.ad357e63c89f04311a4b4ec53df91b63
+                           .group:00000000 wm4.rt_HAL_CM.h.36.531af519683d77df9d264c8d6c8a6b22
+
+UNDEFINED SYMBOLS
+rt_get_first
+rt_ret_val2
+rt_rmv_dly
+rt_dispatch
+os_tsk
+rt_put_prio
+rt_block
+rt_ret_val
+rt_psq_enq
+rt_psh_req
+rt_alloc_box
+os_rdy
+os_error

@@ -185,5 +185,7 @@
 	<storageModule moduleId="org.eclipse.cdt.core.language.mapping">
 		<project-mappings/>
 	</storageModule>
-	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="refreshScope" versionNumber="1">
+		<resource resourceType="PROJECT" workspacePath="/DAVE4500"/>
+	</storageModule>
 </cproject>

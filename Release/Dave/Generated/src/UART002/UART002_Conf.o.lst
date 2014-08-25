@@ -1,0 +1,46 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 4
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"UART002_Conf.c"
+  16              		.global	UART002_Handle0
+  17              		.comm	AppDynamicData0,20,4
+  18              		.section	.rodata
+  19              		.align	2
+  22              	UART002_Handle0:
+  23 0000 00000000 		.word	AppDynamicData0
+  24 0004 00       		.byte	0
+  25 0005 00       		.byte	0
+  26 0006 0000     		.space	2
+  27 0008 B0040000 		.word	1200
+  28 000c 0700     		.short	7
+  29 000e 0000     		.space	2
+  30 0010 00000340 		.word	1073938432
+  31 0014 00       		.byte	0
+  32 0015 00       		.byte	0
+  33 0016 01       		.byte	1
+  34 0017 01       		.byte	1
+  35 0018 9B00     		.short	155
+  36 001a B103     		.short	945
+  37 001c 0F00     		.short	15
+  38 001e 0900     		.short	9
+  39 0020 00       		.byte	0
+  40 0021 000000   		.space	3
+  41              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+DEFINED SYMBOLS
+                            *ABS*:00000000 UART002_Conf.c
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccCxmAOh.s:22     .rodata:00000000 UART002_Handle0
+                            *COM*:00000014 AppDynamicData0
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccCxmAOh.s:19     .rodata:00000000 $d
+
+NO UNDEFINED SYMBOLS

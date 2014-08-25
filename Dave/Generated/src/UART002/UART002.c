@@ -437,8 +437,8 @@ void UART002_Init(void)
   UART002_Handle0.DynamicData->ChannelSemId = \
         osSemaphoreCreate(osSemaphore(UART002_ChannelSemHandle0),1);      
     
-  /* Configuration of TX Pin 1.7 based on User configuration */
-  PORT1->PDR0  &= (~(PORT1_PDR0_PD7_Msk));  
+  /* Configuration of TX Pin 5.1 based on User configuration */
+  PORT5->PDR0  &= (~(PORT5_PDR0_PD1_Msk));  
   /* Configuration of RX Pin 5.0 based on User configuration */
 
  /* RXPIN instance (no.0) is not mapped to any port pin. */

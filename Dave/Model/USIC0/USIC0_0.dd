@@ -217,8 +217,8 @@
   <provided xsi:type="ResourceModel:BitField" name="SIZE" URI="http://www.infineon.com/0.1.30/peripheral/usic/0/channel/0/tbctr_size" maxValue="7" minValue="0" startPos="24" stopPos="26" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_0.app#//@consumed.24"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="4"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="4"/>
     <toolTipHelpDescription>Buffer Size</toolTipHelpDescription>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b000" description="The FIFO mechanism is disabled. The buffer does not accept any request for data."/>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b001" description="The FIFO buffer contains 2 entries."/>
@@ -243,15 +243,15 @@
   <provided xsi:type="ResourceModel:BitField" name="PDIV" URI="http://www.infineon.com/0.1.30/peripheral/usic/0/channel/0/brg/pdiv" maxValue="1023" minValue="0" startPos="16" stopPos="25" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_0.app#//@consumed.26"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="3ff"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="3ff"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="fa"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="fa"/>
     <toolTipHelpDescription>Divider Mode: Divider Factor to Generate fPDIV</toolTipHelpDescription>
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="STEP" URI="http://www.infineon.com/0.1.30/peripheral/usic/0/channel/0/fdr/step" maxValue="1023" minValue="0" startPos="0" stopPos="9" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_0.app#//@consumed.27"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="292"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="292"/>
     <toolTipHelpDescription>Step Value</toolTipHelpDescription>
   </provided>
   <provided xsi:type="ResourceModel:SignalDeclaration" name="c0_dx3ins" description="Selected input signal of DX3 " URI="http://www.infineon.com/0.1.30/peripheral/usic/0/channel/0/dx3ins" signalType="SINGAL" direction="IN" isVisible="true">
@@ -551,14 +551,14 @@
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="DPTR" URI="http://www.infineon.com/0.1.30/peripheral/usic/0/channel/0/rbctr_dptr" maxValue="63" minValue="0" startPos="0" stopPos="5" accessPermission="w">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="16"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="16"/>
     <toolTipHelpDescription>Data Pointer</toolTipHelpDescription>
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="DPTR" URI="http://www.infineon.com/0.1.30/peripheral/usic/0/channel/0/tbctr_dptr" maxValue="63" minValue="0" startPos="0" stopPos="5" accessPermission="w">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="2"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="2"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <toolTipHelpDescription>Data Pointer</toolTipHelpDescription>
   </provided>
   <categoryDescription description="USIC 0 Device Description" name="USIC 0"/>

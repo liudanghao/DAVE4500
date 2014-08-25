@@ -1,0 +1,165 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 4
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"rt_MemBox.c"
+  16              		.section	.text._init_box,"ax",%progbits
+  17              		.align	1
+  18              		.global	_init_box
+  19              		.thumb
+  20              		.thumb_func
+  22              	_init_box:
+  23              		@ args = 0, pretend = 0, frame = 0
+  24              		@ frame_needed = 0, uses_anonymous_args = 0
+  25 0000 002A     		cmp	r2, #0
+  26 0002 10B5     		push	{r4, lr}
+  27 0004 06DA     		bge	.L2
+  28 0006 22F00043 		bic	r3, r2, #-2147483648
+  29 000a DA1D     		adds	r2, r3, #7
+  30 000c 22F00703 		bic	r3, r2, #7
+  31 0010 1022     		movs	r2, #16
+  32 0012 03E0     		b	.L3
+  33              	.L2:
+  34 0014 D31C     		adds	r3, r2, #3
+  35 0016 23F00303 		bic	r3, r3, #3
+  36 001a 0C22     		movs	r2, #12
+  37              	.L3:
+  38 001c 8BB1     		cbz	r3, .L8
+  39 001e D418     		adds	r4, r2, r3
+  40 0020 8C42     		cmp	r4, r1
+  41 0022 0ED8     		bhi	.L8
+  42 0024 4118     		adds	r1, r0, r1
+  43 0026 8218     		adds	r2, r0, r2
+  44 0028 4160     		str	r1, [r0, #4]
+  45 002a 0260     		str	r2, [r0, #0]
+  46 002c 8360     		str	r3, [r0, #8]
+  47 002e C91A     		subs	r1, r1, r3
+  48              	.L6:
+  49 0030 D018     		adds	r0, r2, r3
+  50 0032 8842     		cmp	r0, r1
+  51 0034 02D8     		bhi	.L5
+  52 0036 1060     		str	r0, [r2, #0]
+  53 0038 0246     		mov	r2, r0
+  54 003a F9E7     		b	.L6
+  55              	.L5:
+  56 003c 0020     		movs	r0, #0
+  57 003e 1060     		str	r0, [r2, #0]
+  58 0040 10BD     		pop	{r4, pc}
+  59              	.L8:
+  60 0042 0120     		movs	r0, #1
+  61 0044 10BD     		pop	{r4, pc}
+  63              		.section	.text.rt_alloc_box,"ax",%progbits
+  64              		.align	1
+  65              		.global	rt_alloc_box
+  66              		.thumb
+  67              		.thumb_func
+  69              	rt_alloc_box:
+  70              		@ args = 0, pretend = 0, frame = 0
+  71              		@ frame_needed = 0, uses_anonymous_args = 0
+  72              		@ link register save eliminated.
+  73              	@ 79 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+  74 0000 EFF31081 		mrs r1, primask
+  75              	@ 0 "" 2
+  76              	@ 80 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+  77 0004 72B6     		cpsid i
+  78              	@ 0 "" 2
+  79              		.thumb
+  80 0006 0368     		ldr	r3, [r0, #0]
+  81 0008 01F00101 		and	r1, r1, #1
+  82 000c 0BB1     		cbz	r3, .L11
+  83 000e 1A68     		ldr	r2, [r3, #0]
+  84 0010 0260     		str	r2, [r0, #0]
+  85              	.L11:
+  86 0012 01B9     		cbnz	r1, .L12
+  87              	@ 72 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+  88 0014 62B6     		cpsie i
+  89              	@ 0 "" 2
+  90              		.thumb
+  91              	.L12:
+  92 0016 1846     		mov	r0, r3
+  93 0018 7047     		bx	lr
+  95              		.section	.text._calloc_box,"ax",%progbits
+  96              		.align	1
+  97              		.global	_calloc_box
+  98              		.thumb
+  99              		.thumb_func
+ 101              	_calloc_box:
+ 102              		@ args = 0, pretend = 0, frame = 0
+ 103              		@ frame_needed = 0, uses_anonymous_args = 0
+ 104 0000 10B5     		push	{r4, lr}
+ 105 0002 0446     		mov	r4, r0
+ 106 0004 FFF7FEFF 		bl	_alloc_box
+ 107 0008 40B1     		cbz	r0, .L21
+ 108 000a A168     		ldr	r1, [r4, #8]
+ 109 000c 0346     		mov	r3, r0
+ 110              	.L18:
+ 111 000e 4218     		adds	r2, r0, r1
+ 112 0010 9342     		cmp	r3, r2
+ 113 0012 03D0     		beq	.L21
+ 114              	.L19:
+ 115 0014 0022     		movs	r2, #0
+ 116 0016 43F8042B 		str	r2, [r3], #4
+ 117 001a F8E7     		b	.L18
+ 118              	.L21:
+ 119 001c 10BD     		pop	{r4, pc}
+ 121              		.section	.text.rt_free_box,"ax",%progbits
+ 122              		.align	1
+ 123              		.global	rt_free_box
+ 124              		.thumb
+ 125              		.thumb_func
+ 127              	rt_free_box:
+ 128              		@ args = 0, pretend = 0, frame = 0
+ 129              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130              		@ link register save eliminated.
+ 131 0000 8142     		cmp	r1, r0
+ 132 0002 0DD3     		bcc	.L25
+ 133 0004 4368     		ldr	r3, [r0, #4]
+ 134 0006 9942     		cmp	r1, r3
+ 135 0008 0AD2     		bcs	.L25
+ 136              	@ 79 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 137 000a EFF31083 		mrs r3, primask
+ 138              	@ 0 "" 2
+ 139              	@ 80 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 140 000e 72B6     		cpsid i
+ 141              	@ 0 "" 2
+ 142              		.thumb
+ 143 0010 0268     		ldr	r2, [r0, #0]
+ 144 0012 0A60     		str	r2, [r1, #0]
+ 145 0014 0160     		str	r1, [r0, #0]
+ 146 0016 13F00100 		ands	r0, r3, #1
+ 147 001a 03D1     		bne	.L26
+ 148              	@ 72 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 149 001c 62B6     		cpsie i
+ 150              	@ 0 "" 2
+ 151              		.thumb
+ 152 001e 7047     		bx	lr
+ 153              	.L25:
+ 154 0020 0120     		movs	r0, #1
+ 155 0022 7047     		bx	lr
+ 156              	.L26:
+ 157 0024 0020     		movs	r0, #0
+ 158 0026 7047     		bx	lr
+ 160              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+DEFINED SYMBOLS
+                            *ABS*:00000000 rt_MemBox.c
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccCb3yYu.s:17     .text._init_box:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccCb3yYu.s:22     .text._init_box:00000000 _init_box
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccCb3yYu.s:64     .text.rt_alloc_box:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccCb3yYu.s:69     .text.rt_alloc_box:00000000 rt_alloc_box
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccCb3yYu.s:96     .text._calloc_box:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccCb3yYu.s:101    .text._calloc_box:00000000 _calloc_box
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccCb3yYu.s:122    .text.rt_free_box:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccCb3yYu.s:127    .text.rt_free_box:00000000 rt_free_box
+
+UNDEFINED SYMBOLS
+_alloc_box

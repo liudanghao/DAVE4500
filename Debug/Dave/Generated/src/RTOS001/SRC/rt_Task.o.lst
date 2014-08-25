@@ -1,0 +1,2133 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"rt_Task.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.rt_svc_init,"ax",%progbits
+  20              		.align	2
+  21              		.thumb
+  22              		.thumb_func
+  24              	rt_svc_init:
+  25              	.LFB7:
+  26              		.file 1 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h"
+   1:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** /*----------------------------------------------------------------------------
+   2:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      RL-ARM - RTX
+   3:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *----------------------------------------------------------------------------
+   4:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      Name:    RT_HAL_CM.H
+   5:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      Purpose: Hardware Abstraction Layer for Cortex-M definitions
+   6:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      Rev.:    V4.70
+   7:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *----------------------------------------------------------------------------
+   8:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *
+   9:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
+  10:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * All rights reserved.
+  11:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * Redistribution and use in source and binary forms, with or without
+  12:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * modification, are permitted provided that the following conditions are met:
+  13:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *  - Redistributions of source code must retain the above copyright
+  14:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    notice, this list of conditions and the following disclaimer.
+  15:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *  - Redistributions in binary form must reproduce the above copyright
+  16:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    notice, this list of conditions and the following disclaimer in the
+  17:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    documentation and/or other materials provided with the distribution.
+  18:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *  - Neither the name of ARM  nor the names of its contributors may be used 
+  19:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    to endorse or promote products derived from this software without 
+  20:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    specific prior written permission.
+  21:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *
+  22:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+  23:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+  24:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  25:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  26:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  27:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+  28:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+  29:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+  30:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  32:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * POSSIBILITY OF SUCH DAMAGE.
+  33:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *---------------------------------------------------------------------------*/
+  34:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  35:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** /* Definitions */
+  36:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define INITIAL_xPSR    0x01000000
+  37:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define DEMCR_TRCENA    0x01000000
+  38:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define ITM_ITMENA      0x00000001
+  39:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define MAGIC_WORD      0xE25A2EA5
+  40:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  41:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if defined (__CC_ARM)          /* ARM Compiler */
+  42:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  43:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if ((__TARGET_ARCH_7_M || __TARGET_ARCH_7E_M) && !defined(NO_EXCLUSIVE_ACCESS))
+  44:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  #define __USE_EXCLUSIVE_ACCESS
+  45:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+  46:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  #undef  __USE_EXCLUSIVE_ACCESS
+  47:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+  48:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  49:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #elif defined (__GNUC__)        /* GNU Compiler */
+  50:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  51:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #undef  __USE_EXCLUSIVE_ACCESS
+  52:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  53:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if defined (__CORTEX_M0)
+  54:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_ARCH_6S_M 1
+  55:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+  56:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_ARCH_6S_M 0
+  57:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+  58:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  59:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if defined (__VFP_FP__) && !defined(__SOFTFP__)
+  60:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_FPU_VFP 1
+  61:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+  62:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_FPU_VFP 0
+  63:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+  64:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  65:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __inline inline
+  66:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __weak   __attribute__((weak))
+  67:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  68:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #ifndef __CMSIS_GENERIC
+  69:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  70:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __attribute__((always_inline)) static inline void __enable_irq(void)
+  71:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** {
+  72:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsie i");
+  73:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+  74:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  75:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __attribute__((always_inline)) static inline U32 __disable_irq(void)
+  76:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** {
+  77:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   U32 result;
+  78:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  79:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("mrs %0, primask" : "=r" (result));
+  80:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsid i");
+  81:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   return(result & 1);
+  82:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+  83:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  84:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+  85:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  86:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __attribute__(( always_inline)) static inline U8 __clz(U32 value)
+  87:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** {
+  88:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   U8 result;
+  89:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   
+  90:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("clz %0, %1" : "=r" (result) : "r" (value));
+  91:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   return(result);
+  92:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+  93:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  94:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #elif defined (__ICCARM__)      /* IAR Compiler */
+  95:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  96:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #undef  __USE_EXCLUSIVE_ACCESS
+  97:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  98:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if (__CORE__ == __ARM6M__)
+  99:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_ARCH_6S_M 1
+ 100:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+ 101:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_ARCH_6S_M 0
+ 102:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+ 103:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 104:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if defined __ARMVFP__
+ 105:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_FPU_VFP 1
+ 106:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+ 107:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_FPU_VFP 0
+ 108:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+ 109:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 110:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __inline inline
+ 111:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 112:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #ifndef __CMSIS_GENERIC
+ 113:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 114:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** static inline void __enable_irq(void)
+ 115:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** {
+ 116:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsie i");
+ 117:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+ 118:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 119:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** static inline U32 __disable_irq(void)
+ 120:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** {
+ 121:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   U32 result;
+ 122:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   
+ 123:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("mrs %0, primask" : "=r" (result));
+ 124:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsid i");
+ 125:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   return(result & 1);
+ 126:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+ 127:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 128:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+ 129:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 130:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** static inline U8 __clz(U32 value)
+ 131:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** {
+ 132:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   U8 result;
+ 133:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   
+ 134:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("clz %0, %1" : "=r" (result) : "r" (value));
+ 135:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   return(result);
+ 136:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+ 137:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 138:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+ 139:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 140:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** /* NVIC registers */
+ 141:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define NVIC_ST_CTRL    (*((volatile U32 *)0xE000E010))
+ 142:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define NVIC_ST_RELOAD  (*((volatile U32 *)0xE000E014))
+ 143:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define NVIC_ST_CURRENT (*((volatile U32 *)0xE000E018))
+ 144:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define NVIC_ISER         ((volatile U32 *)0xE000E100)
+ 145:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define NVIC_ICER         ((volatile U32 *)0xE000E180)
+ 146:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if (__TARGET_ARCH_6S_M)
+ 147:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define NVIC_IP           ((volatile U32 *)0xE000E400)
+ 148:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+ 149:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define NVIC_IP           ((volatile U8  *)0xE000E400)
+ 150:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+ 151:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define NVIC_INT_CTRL   (*((volatile U32 *)0xE000ED04))
+ 152:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define NVIC_AIR_CTRL   (*((volatile U32 *)0xE000ED0C))
+ 153:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define NVIC_SYS_PRI2   (*((volatile U32 *)0xE000ED1C))
+ 154:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define NVIC_SYS_PRI3   (*((volatile U32 *)0xE000ED20))
+ 155:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 156:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_PEND_IRQ()   NVIC_INT_CTRL  = (1<<28)
+ 157:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_PENDING      ((NVIC_INT_CTRL >> 26) & (1<<2 | 1))
+ 158:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_UNPEND(fl)   NVIC_INT_CTRL  = (*fl = OS_PENDING) << 25
+ 159:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_PEND(fl,p)   NVIC_INT_CTRL  = (fl | p<<2) << 26
+ 160:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_LOCK()       NVIC_ST_CTRL   =  0x0005
+ 161:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_UNLOCK()     NVIC_ST_CTRL   =  0x0007
+ 162:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 163:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_X_PENDING    ((NVIC_INT_CTRL >> 28) & 1)
+ 164:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_X_UNPEND(fl) NVIC_INT_CTRL  = (*fl = OS_X_PENDING) << 27
+ 165:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_X_PEND(fl,p) NVIC_INT_CTRL  = (fl | p) << 28
+ 166:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if (__TARGET_ARCH_6S_M)
+ 167:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_X_INIT(n)    NVIC_IP[n>>2] |= 0xFF << (8*(n & 0x03)); \
+ 168:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****                         NVIC_ISER[n>>5] = 1 << (n & 0x1F)
+ 169:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+ 170:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_X_INIT(n)    NVIC_IP[n] = 0xFF; \
+ 171:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****                         NVIC_ISER[n>>5] = 1 << (n & 0x1F)
+ 172:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+ 173:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_X_LOCK(n)    NVIC_ICER[n>>5] = 1 << (n & 0x1F)
+ 174:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define OS_X_UNLOCK(n)  NVIC_ISER[n>>5] = 1 << (n & 0x1F)
+ 175:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 176:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** /* Core Debug registers */
+ 177:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define DEMCR           (*((volatile U32 *)0xE000EDFC))
+ 178:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 179:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** /* ITM registers */
+ 180:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define ITM_CONTROL     (*((volatile U32 *)0xE0000E80))
+ 181:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define ITM_ENABLE      (*((volatile U32 *)0xE0000E00))
+ 182:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define ITM_PORT30_U32  (*((volatile U32 *)0xE0000078))
+ 183:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define ITM_PORT31_U32  (*((volatile U32 *)0xE000007C))
+ 184:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define ITM_PORT31_U16  (*((volatile U16 *)0xE000007C))
+ 185:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define ITM_PORT31_U8   (*((volatile U8  *)0xE000007C))
+ 186:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 187:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** /* Variables */
+ 188:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** extern BIT dbg_msg;
+ 189:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 190:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** /* Functions */
+ 191:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #ifdef __USE_EXCLUSIVE_ACCESS
+ 192:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  #define rt_inc(p)     while(__strex((__ldrex(p)+1),p))
+ 193:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  #define rt_dec(p)     while(__strex((__ldrex(p)-1),p))
+ 194:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+ 195:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  #define rt_inc(p)     __disable_irq();(*p)++;__enable_irq();
+ 196:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  #define rt_dec(p)     __disable_irq();(*p)--;__enable_irq();
+ 197:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+ 198:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 199:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __inline static U32 rt_inc_qi (U32 size, U8 *count, U8 *first) {
+ 200:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   U32 cnt,c2;
+ 201:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #ifdef __USE_EXCLUSIVE_ACCESS
+ 202:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   do {
+ 203:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****     if ((cnt = __ldrex(count)) == size) {
+ 204:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****       __clrex();
+ 205:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****       return (cnt); }
+ 206:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   } while (__strex(cnt+1, count));
+ 207:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   do {
+ 208:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****     c2 = (cnt = __ldrex(first)) + 1;
+ 209:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****     if (c2 == size) c2 = 0;
+ 210:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   } while (__strex(c2, first));
+ 211:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+ 212:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __disable_irq();
+ 213:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   if ((cnt = *count) < size) {
+ 214:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****     *count = cnt+1;
+ 215:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****     c2 = (cnt = *first) + 1;
+ 216:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****     if (c2 == size) c2 = 0;
+ 217:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****     *first = c2; 
+ 218:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   }
+ 219:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __enable_irq ();
+ 220:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+ 221:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   return (cnt);
+ 222:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+ 223:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 224:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __inline static void rt_systick_init (void) {
+ 225:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   NVIC_ST_RELOAD  = os_trv;
+ 226:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   NVIC_ST_CURRENT = 0;
+ 227:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   NVIC_ST_CTRL    = 0x0007;
+ 228:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   NVIC_SYS_PRI3  |= 0xFF000000;
+ 229:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+ 230:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 231:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __inline static U32 rt_systick_val (void) {
+ 232:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   return (os_trv - NVIC_ST_CURRENT);
+ 233:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+ 234:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 235:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __inline static U32 rt_systick_ovf (void) {
+ 236:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   return ((NVIC_INT_CTRL >> 26) & 1);
+ 237:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+ 238:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+ 239:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __inline static void rt_svc_init (void) {
+  27              		.loc 1 239 0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 16
+  30              		@ frame_needed = 1, uses_anonymous_args = 0
+  31              		@ link register save eliminated.
+  32 0000 90B4     		push	{r4, r7}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 4, -8
+  36              		.cfi_offset 7, -4
+  37 0002 84B0     		sub	sp, sp, #16
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 24
+  40 0004 00AF     		add	r7, sp, #0
+  41              	.LCFI2:
+  42              		.cfi_def_cfa_register 7
+ 240:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if !(__TARGET_ARCH_6S_M)
+ 241:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   int sh,prigroup;
+ 242:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+ 243:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   NVIC_SYS_PRI3 |= 0x00FF0000;
+  43              		.loc 1 243 0
+  44 0006 4EF62053 		movw	r3, #60704
+  45 000a CEF20003 		movt	r3, 57344
+  46 000e 4EF62052 		movw	r2, #60704
+  47 0012 CEF20002 		movt	r2, 57344
+  48 0016 1268     		ldr	r2, [r2, #0]
+  49 0018 42F47F02 		orr	r2, r2, #16711680
+  50 001c 1A60     		str	r2, [r3, #0]
+ 244:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if (__TARGET_ARCH_6S_M)
+ 245:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   NVIC_SYS_PRI2 |= (NVIC_SYS_PRI3<<(8+1)) & 0xFC000000;
+ 246:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+ 247:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   sh       = 8 - __clz (~((NVIC_SYS_PRI3 << 8) & 0xFF000000));
+  51              		.loc 1 247 0
+  52 001e 4EF62053 		movw	r3, #60704
+  53 0022 CEF20003 		movt	r3, 57344
+  54 0026 1B68     		ldr	r3, [r3, #0]
+  55 0028 4FEA0323 		lsl	r3, r3, #8
+  56 002c 03F07F43 		and	r3, r3, #-16777216
+  57 0030 6FEA0303 		mvn	r3, r3
+  58 0034 7B60     		str	r3, [r7, #4]
+  59              	.LBB4:
+  60              	.LBB5:
+  90:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("clz %0, %1" : "=r" (result) : "r" (value));
+  61              		.loc 1 90 0
+  62 0036 7B68     		ldr	r3, [r7, #4]
+  63              	@ 90 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+  64 0038 B3FA83F4 		clz r4, r3
+  65              	@ 0 "" 2
+  66              		.thumb
+  67 003c FC70     		strb	r4, [r7, #3]
+  91:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   return(result);
+  68              		.loc 1 91 0
+  69 003e FB78     		ldrb	r3, [r7, #3]	@ zero_extendqisi2
+  70              	.LBE5:
+  71              	.LBE4:
+  72              		.loc 1 247 0
+  73 0040 C3F10803 		rsb	r3, r3, #8
+  74 0044 FB60     		str	r3, [r7, #12]
+ 248:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   prigroup = ((NVIC_AIR_CTRL >> 8) & 0x07);
+  75              		.loc 1 248 0
+  76 0046 4EF60C53 		movw	r3, #60684
+  77 004a CEF20003 		movt	r3, 57344
+  78 004e 1B68     		ldr	r3, [r3, #0]
+  79 0050 4FEA1323 		lsr	r3, r3, #8
+  80 0054 03F00703 		and	r3, r3, #7
+  81 0058 BB60     		str	r3, [r7, #8]
+ 249:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   if (prigroup >= sh) {
+  82              		.loc 1 249 0
+  83 005a BA68     		ldr	r2, [r7, #8]
+  84 005c FB68     		ldr	r3, [r7, #12]
+  85 005e 9A42     		cmp	r2, r3
+  86 0060 03DB     		blt	.L3
+ 250:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****     sh = prigroup + 1;
+  87              		.loc 1 250 0
+  88 0062 BB68     		ldr	r3, [r7, #8]
+  89 0064 03F10103 		add	r3, r3, #1
+  90 0068 FB60     		str	r3, [r7, #12]
+  91              	.L3:
+ 251:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   }
+ 252:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   NVIC_SYS_PRI2 = ((0xFEFFFFFF << sh) & 0xFF000000) | (NVIC_SYS_PRI2 & 0x00FFFFFF);
+  92              		.loc 1 252 0
+  93 006a 4EF61C53 		movw	r3, #60700
+  94 006e CEF20003 		movt	r3, 57344
+  95 0072 6FF08071 		mvn	r1, #16777216
+  96 0076 FA68     		ldr	r2, [r7, #12]
+  97 0078 01FA02F2 		lsl	r2, r1, r2
+  98 007c 02F07F41 		and	r1, r2, #-16777216
+  99 0080 4EF61C52 		movw	r2, #60700
+ 100 0084 CEF20002 		movt	r2, 57344
+ 101 0088 1268     		ldr	r2, [r2, #0]
+ 102 008a 22F07F42 		bic	r2, r2, #-16777216
+ 103 008e 0A43     		orrs	r2, r2, r1
+ 104 0090 1A60     		str	r2, [r3, #0]
+ 253:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+ 254:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+ 105              		.loc 1 254 0
+ 106 0092 07F11007 		add	r7, r7, #16
+ 107 0096 BD46     		mov	sp, r7
+ 108 0098 90BC     		pop	{r4, r7}
+ 109 009a 7047     		bx	lr
+ 110              		.cfi_endproc
+ 111              	.LFE7:
+ 113              		.comm	os_tsk,8,4
+ 114              		.comm	os_idle_TCB,52,4
+ 115              		.section	.text.rt_get_TID,"ax",%progbits
+ 116              		.align	2
+ 117              		.thumb
+ 118              		.thumb_func
+ 120              	rt_get_TID:
+ 121              	.LFB8:
+ 122              		.file 2 "../Dave/Generated/src/RTOS001/SRC/rt_Task.c"
+   1:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*----------------------------------------------------------------------------
+   2:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *      RL-ARM - RTX
+   3:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *----------------------------------------------------------------------------
+   4:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *      Name:    RT_TASK.C
+   5:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *      Purpose: Task functions and system start up.
+   6:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *      Rev.:    V4.73
+   7:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *----------------------------------------------------------------------------
+   8:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *
+   9:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
+  10:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * All rights reserved.
+  11:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * Redistribution and use in source and binary forms, with or without
+  12:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * modification, are permitted provided that the following conditions are met:
+  13:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *  - Redistributions of source code must retain the above copyright
+  14:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *    notice, this list of conditions and the following disclaimer.
+  15:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *  - Redistributions in binary form must reproduce the above copyright
+  16:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *    notice, this list of conditions and the following disclaimer in the
+  17:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *    documentation and/or other materials provided with the distribution.
+  18:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *  - Neither the name of ARM  nor the names of its contributors may be used 
+  19:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *    to endorse or promote products derived from this software without 
+  20:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *    specific prior written permission.
+  21:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *
+  22:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+  23:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+  24:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  25:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  26:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  27:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+  28:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+  29:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+  30:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  32:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  * POSSIBILITY OF SUCH DAMAGE.
+  33:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *---------------------------------------------------------------------------*/
+  34:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  35:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #include "rt_TypeDef.h"
+  36:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #include "RTX_Config.h"
+  37:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #include "rt_System.h"
+  38:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #include "rt_Task.h"
+  39:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #include "rt_List.h"
+  40:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #include "rt_MemBox.h"
+  41:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #include "rt_Robin.h"
+  42:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #include "rt_HAL_CM.h"
+  43:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  44:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*----------------------------------------------------------------------------
+  45:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *      Global Variables
+  46:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *---------------------------------------------------------------------------*/
+  47:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  48:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /* Running and next task info. */
+  49:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** struct OS_TSK os_tsk;
+  50:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  51:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /* Task Control Blocks of idle demon */
+  52:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** struct OS_TCB os_idle_TCB;
+  53:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  54:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  55:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*----------------------------------------------------------------------------
+  56:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *      Local Functions
+  57:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****  *---------------------------------------------------------------------------*/
+  58:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  59:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** static OS_TID rt_get_TID (void) {
+ 123              		.loc 2 59 0
+ 124              		.cfi_startproc
+ 125              		@ args = 0, pretend = 0, frame = 8
+ 126              		@ frame_needed = 1, uses_anonymous_args = 0
+ 127              		@ link register save eliminated.
+ 128 0000 80B4     		push	{r7}
+ 129              	.LCFI3:
+ 130              		.cfi_def_cfa_offset 4
+ 131              		.cfi_offset 7, -4
+ 132 0002 83B0     		sub	sp, sp, #12
+ 133              	.LCFI4:
+ 134              		.cfi_def_cfa_offset 16
+ 135 0004 00AF     		add	r7, sp, #0
+ 136              	.LCFI5:
+ 137              		.cfi_def_cfa_register 7
+  60:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   U32 tid;
+  61:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  62:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   for (tid = 1; tid <= os_maxtaskrun; tid++) {
+ 138              		.loc 2 62 0
+ 139 0006 4FF00103 		mov	r3, #1
+ 140 000a 7B60     		str	r3, [r7, #4]
+ 141 000c 10E0     		b	.L5
+ 142              	.L8:
+  63:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     if (os_active_TCB[tid-1] == NULL) {
+ 143              		.loc 2 63 0
+ 144 000e 7B68     		ldr	r3, [r7, #4]
+ 145 0010 03F1FF32 		add	r2, r3, #-1
+ 146 0014 40F20003 		movw	r3, #:lower16:os_active_TCB
+ 147 0018 C0F20003 		movt	r3, #:upper16:os_active_TCB
+ 148 001c 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 149 0020 002B     		cmp	r3, #0
+ 150 0022 01D1     		bne	.L6
+  64:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       return ((OS_TID)tid);
+ 151              		.loc 2 64 0
+ 152 0024 7B68     		ldr	r3, [r7, #4]
+ 153 0026 0EE0     		b	.L7
+ 154              	.L6:
+  62:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   for (tid = 1; tid <= os_maxtaskrun; tid++) {
+ 155              		.loc 2 62 0
+ 156 0028 7B68     		ldr	r3, [r7, #4]
+ 157 002a 03F10103 		add	r3, r3, #1
+ 158 002e 7B60     		str	r3, [r7, #4]
+ 159              	.L5:
+  62:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   for (tid = 1; tid <= os_maxtaskrun; tid++) {
+ 160              		.loc 2 62 0 is_stmt 0 discriminator 1
+ 161 0030 40F20003 		movw	r3, #:lower16:os_maxtaskrun
+ 162 0034 C0F20003 		movt	r3, #:upper16:os_maxtaskrun
+ 163 0038 1B88     		ldrh	r3, [r3, #0]
+ 164 003a 1A46     		mov	r2, r3
+ 165 003c 7B68     		ldr	r3, [r7, #4]
+ 166 003e 9A42     		cmp	r2, r3
+ 167 0040 E5D2     		bcs	.L8
+  65:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     }
+  66:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+  67:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   return (0);
+ 168              		.loc 2 67 0 is_stmt 1
+ 169 0042 4FF00003 		mov	r3, #0
+ 170              	.L7:
+  68:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 171              		.loc 2 68 0
+ 172 0046 1846     		mov	r0, r3
+ 173 0048 07F10C07 		add	r7, r7, #12
+ 174 004c BD46     		mov	sp, r7
+ 175 004e 80BC     		pop	{r7}
+ 176 0050 7047     		bx	lr
+ 177              		.cfi_endproc
+ 178              	.LFE8:
+ 180 0052 00BF     		.section	.text.rt_init_context,"ax",%progbits
+ 181              		.align	2
+ 182              		.thumb
+ 183              		.thumb_func
+ 185              	rt_init_context:
+ 186              	.LFB9:
+  69:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  70:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  71:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*--------------------------- rt_init_context -------------------------------*/
+  72:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  73:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** static void rt_init_context (P_TCB p_TCB, U8 priority, FUNCP task_body) {
+ 187              		.loc 2 73 0
+ 188              		.cfi_startproc
+ 189              		@ args = 0, pretend = 0, frame = 16
+ 190              		@ frame_needed = 1, uses_anonymous_args = 0
+ 191 0000 80B5     		push	{r7, lr}
+ 192              	.LCFI6:
+ 193              		.cfi_def_cfa_offset 8
+ 194              		.cfi_offset 7, -8
+ 195              		.cfi_offset 14, -4
+ 196 0002 84B0     		sub	sp, sp, #16
+ 197              	.LCFI7:
+ 198              		.cfi_def_cfa_offset 24
+ 199 0004 00AF     		add	r7, sp, #0
+ 200              	.LCFI8:
+ 201              		.cfi_def_cfa_register 7
+ 202 0006 F860     		str	r0, [r7, #12]
+ 203 0008 0B46     		mov	r3, r1
+ 204 000a 7A60     		str	r2, [r7, #4]
+ 205 000c FB72     		strb	r3, [r7, #11]
+  74:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Initialize general part of the Task Control Block. */
+  75:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->cb_type   = TCB;
+ 206              		.loc 2 75 0
+ 207 000e FB68     		ldr	r3, [r7, #12]
+ 208 0010 4FF00002 		mov	r2, #0
+ 209 0014 1A70     		strb	r2, [r3, #0]
+  76:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->state     = READY;
+ 210              		.loc 2 76 0
+ 211 0016 FB68     		ldr	r3, [r7, #12]
+ 212 0018 4FF00102 		mov	r2, #1
+ 213 001c 5A70     		strb	r2, [r3, #1]
+  77:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->prio      = priority;
+ 214              		.loc 2 77 0
+ 215 001e FB68     		ldr	r3, [r7, #12]
+ 216 0020 FA7A     		ldrb	r2, [r7, #11]
+ 217 0022 9A70     		strb	r2, [r3, #2]
+  78:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->prio_base = priority;
+ 218              		.loc 2 78 0
+ 219 0024 FB68     		ldr	r3, [r7, #12]
+ 220 0026 FA7A     		ldrb	r2, [r7, #11]
+ 221 0028 83F82420 		strb	r2, [r3, #36]
+  79:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->p_lnk     = NULL;
+ 222              		.loc 2 79 0
+ 223 002c FB68     		ldr	r3, [r7, #12]
+ 224 002e 4FF00002 		mov	r2, #0
+ 225 0032 5A60     		str	r2, [r3, #4]
+  80:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->p_rlnk    = NULL;
+ 226              		.loc 2 80 0
+ 227 0034 FB68     		ldr	r3, [r7, #12]
+ 228 0036 4FF00002 		mov	r2, #0
+ 229 003a 9A60     		str	r2, [r3, #8]
+  81:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->p_dlnk    = NULL;
+ 230              		.loc 2 81 0
+ 231 003c FB68     		ldr	r3, [r7, #12]
+ 232 003e 4FF00002 		mov	r2, #0
+ 233 0042 DA60     		str	r2, [r3, #12]
+  82:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->p_blnk    = NULL;
+ 234              		.loc 2 82 0
+ 235 0044 FB68     		ldr	r3, [r7, #12]
+ 236 0046 4FF00002 		mov	r2, #0
+ 237 004a 1A61     		str	r2, [r3, #16]
+  83:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->p_mlnk    = NULL;
+ 238              		.loc 2 83 0
+ 239 004c FB68     		ldr	r3, [r7, #12]
+ 240 004e 4FF00002 		mov	r2, #0
+ 241 0052 1A62     		str	r2, [r3, #32]
+  84:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->delta_time    = 0;
+ 242              		.loc 2 84 0
+ 243 0054 FB68     		ldr	r3, [r7, #12]
+ 244 0056 4FF00002 		mov	r2, #0
+ 245 005a 9A82     		strh	r2, [r3, #20]	@ movhi
+  85:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->interval_time = 0;
+ 246              		.loc 2 85 0
+ 247 005c FB68     		ldr	r3, [r7, #12]
+ 248 005e 4FF00002 		mov	r2, #0
+ 249 0062 DA82     		strh	r2, [r3, #22]	@ movhi
+  86:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->events  = 0;
+ 250              		.loc 2 86 0
+ 251 0064 FB68     		ldr	r3, [r7, #12]
+ 252 0066 4FF00002 		mov	r2, #0
+ 253 006a 1A83     		strh	r2, [r3, #24]	@ movhi
+  87:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->waits   = 0;
+ 254              		.loc 2 87 0
+ 255 006c FB68     		ldr	r3, [r7, #12]
+ 256 006e 4FF00002 		mov	r2, #0
+ 257 0072 5A83     		strh	r2, [r3, #26]	@ movhi
+  88:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_TCB->stack_frame = 0;
+ 258              		.loc 2 88 0
+ 259 0074 FB68     		ldr	r3, [r7, #12]
+ 260 0076 4FF00002 		mov	r2, #0
+ 261 007a 83F82520 		strb	r2, [r3, #37]
+  89:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  90:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (p_TCB->priv_stack == 0) {
+ 262              		.loc 2 90 0
+ 263 007e FB68     		ldr	r3, [r7, #12]
+ 264 0080 DB8C     		ldrh	r3, [r3, #38]
+ 265 0082 002B     		cmp	r3, #0
+ 266 0084 08D1     		bne	.L10
+  91:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     /* Allocate the memory space for the stack. */
+  92:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     p_TCB->stack = rt_alloc_box (mp_stk);
+ 267              		.loc 2 92 0
+ 268 0086 40F20000 		movw	r0, #:lower16:mp_stk
+ 269 008a C0F20000 		movt	r0, #:upper16:mp_stk
+ 270 008e FFF7FEFF 		bl	rt_alloc_box
+ 271 0092 0246     		mov	r2, r0
+ 272 0094 FB68     		ldr	r3, [r7, #12]
+ 273 0096 DA62     		str	r2, [r3, #44]
+ 274              	.L10:
+  93:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+  94:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_init_stack (p_TCB, task_body);
+ 275              		.loc 2 94 0
+ 276 0098 F868     		ldr	r0, [r7, #12]
+ 277 009a 7968     		ldr	r1, [r7, #4]
+ 278 009c FFF7FEFF 		bl	rt_init_stack
+  95:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 279              		.loc 2 95 0
+ 280 00a0 07F11007 		add	r7, r7, #16
+ 281 00a4 BD46     		mov	sp, r7
+ 282 00a6 80BD     		pop	{r7, pc}
+ 283              		.cfi_endproc
+ 284              	.LFE9:
+ 286              		.section	.text.rt_switch_req,"ax",%progbits
+ 287              		.align	2
+ 288              		.global	rt_switch_req
+ 289              		.thumb
+ 290              		.thumb_func
+ 292              	rt_switch_req:
+ 293              	.LFB10:
+  96:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  97:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+  98:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*--------------------------- rt_switch_req ---------------------------------*/
+  99:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 100:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** void rt_switch_req (P_TCB p_new) {
+ 294              		.loc 2 100 0
+ 295              		.cfi_startproc
+ 296              		@ args = 0, pretend = 0, frame = 8
+ 297              		@ frame_needed = 1, uses_anonymous_args = 0
+ 298              		@ link register save eliminated.
+ 299 0000 80B4     		push	{r7}
+ 300              	.LCFI9:
+ 301              		.cfi_def_cfa_offset 4
+ 302              		.cfi_offset 7, -4
+ 303 0002 83B0     		sub	sp, sp, #12
+ 304              	.LCFI10:
+ 305              		.cfi_def_cfa_offset 16
+ 306 0004 00AF     		add	r7, sp, #0
+ 307              	.LCFI11:
+ 308              		.cfi_def_cfa_register 7
+ 309 0006 7860     		str	r0, [r7, #4]
+ 101:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Switch to next task (identified by "p_new"). */
+ 102:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_tsk.new   = p_new;
+ 310              		.loc 2 102 0
+ 311 0008 40F20003 		movw	r3, #:lower16:os_tsk
+ 312 000c C0F20003 		movt	r3, #:upper16:os_tsk
+ 313 0010 7A68     		ldr	r2, [r7, #4]
+ 314 0012 5A60     		str	r2, [r3, #4]
+ 103:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_new->state = RUNNING;
+ 315              		.loc 2 103 0
+ 316 0014 7B68     		ldr	r3, [r7, #4]
+ 317 0016 4FF00202 		mov	r2, #2
+ 318 001a 5A70     		strb	r2, [r3, #1]
+ 104:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   DBG_TASK_SWITCH(p_new->task_id);
+ 105:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 319              		.loc 2 105 0
+ 320 001c 07F10C07 		add	r7, r7, #12
+ 321 0020 BD46     		mov	sp, r7
+ 322 0022 80BC     		pop	{r7}
+ 323 0024 7047     		bx	lr
+ 324              		.cfi_endproc
+ 325              	.LFE10:
+ 327 0026 00BF     		.section	.text.rt_dispatch,"ax",%progbits
+ 328              		.align	2
+ 329              		.global	rt_dispatch
+ 330              		.thumb
+ 331              		.thumb_func
+ 333              	rt_dispatch:
+ 334              	.LFB11:
+ 106:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 107:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 108:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*--------------------------- rt_dispatch -----------------------------------*/
+ 109:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 110:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** void rt_dispatch (P_TCB next_TCB) {
+ 335              		.loc 2 110 0
+ 336              		.cfi_startproc
+ 337              		@ args = 0, pretend = 0, frame = 8
+ 338              		@ frame_needed = 1, uses_anonymous_args = 0
+ 339 0000 80B5     		push	{r7, lr}
+ 340              	.LCFI12:
+ 341              		.cfi_def_cfa_offset 8
+ 342              		.cfi_offset 7, -8
+ 343              		.cfi_offset 14, -4
+ 344 0002 82B0     		sub	sp, sp, #8
+ 345              	.LCFI13:
+ 346              		.cfi_def_cfa_offset 16
+ 347 0004 00AF     		add	r7, sp, #0
+ 348              	.LCFI14:
+ 349              		.cfi_def_cfa_register 7
+ 350 0006 7860     		str	r0, [r7, #4]
+ 111:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Dispatch next task if any identified or dispatch highest ready task    */
+ 112:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* "next_TCB" identifies a task to run or has value NULL (=no next task)  */
+ 113:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (next_TCB == NULL) {
+ 351              		.loc 2 113 0
+ 352 0008 7B68     		ldr	r3, [r7, #4]
+ 353 000a 002B     		cmp	r3, #0
+ 354 000c 0AD1     		bne	.L13
+ 114:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     /* Running task was blocked: continue with highest ready task */
+ 115:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     next_TCB = rt_get_first (&os_rdy);
+ 355              		.loc 2 115 0
+ 356 000e 40F20000 		movw	r0, #:lower16:os_rdy
+ 357 0012 C0F20000 		movt	r0, #:upper16:os_rdy
+ 358 0016 FFF7FEFF 		bl	rt_get_first
+ 359 001a 7860     		str	r0, [r7, #4]
+ 116:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_switch_req (next_TCB);
+ 360              		.loc 2 116 0
+ 361 001c 7868     		ldr	r0, [r7, #4]
+ 362 001e FFF7FEFF 		bl	rt_switch_req
+ 363 0022 28E0     		b	.L12
+ 364              	.L13:
+ 117:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 118:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   else {
+ 119:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     /* Check which task continues */
+ 120:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     if (next_TCB->prio > os_tsk.run->prio) {
+ 365              		.loc 2 120 0
+ 366 0024 7B68     		ldr	r3, [r7, #4]
+ 367 0026 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 368 0028 40F20003 		movw	r3, #:lower16:os_tsk
+ 369 002c C0F20003 		movt	r3, #:upper16:os_tsk
+ 370 0030 1B68     		ldr	r3, [r3, #0]
+ 371 0032 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 372 0034 9A42     		cmp	r2, r3
+ 373 0036 13D9     		bls	.L15
+ 121:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       /* preempt running task */
+ 122:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       rt_put_rdy_first (os_tsk.run);
+ 374              		.loc 2 122 0
+ 375 0038 40F20003 		movw	r3, #:lower16:os_tsk
+ 376 003c C0F20003 		movt	r3, #:upper16:os_tsk
+ 377 0040 1B68     		ldr	r3, [r3, #0]
+ 378 0042 1846     		mov	r0, r3
+ 379 0044 FFF7FEFF 		bl	rt_put_rdy_first
+ 123:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       os_tsk.run->state = READY;
+ 380              		.loc 2 123 0
+ 381 0048 40F20003 		movw	r3, #:lower16:os_tsk
+ 382 004c C0F20003 		movt	r3, #:upper16:os_tsk
+ 383 0050 1B68     		ldr	r3, [r3, #0]
+ 384 0052 4FF00102 		mov	r2, #1
+ 385 0056 5A70     		strb	r2, [r3, #1]
+ 124:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       rt_switch_req (next_TCB);
+ 386              		.loc 2 124 0
+ 387 0058 7868     		ldr	r0, [r7, #4]
+ 388 005a FFF7FEFF 		bl	rt_switch_req
+ 389 005e 0AE0     		b	.L12
+ 390              	.L15:
+ 125:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     }
+ 126:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     else {
+ 127:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       /* put next task into ready list, no task switch takes place */
+ 128:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       next_TCB->state = READY;
+ 391              		.loc 2 128 0
+ 392 0060 7B68     		ldr	r3, [r7, #4]
+ 393 0062 4FF00102 		mov	r2, #1
+ 394 0066 5A70     		strb	r2, [r3, #1]
+ 129:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       rt_put_prio (&os_rdy, next_TCB);
+ 395              		.loc 2 129 0
+ 396 0068 40F20000 		movw	r0, #:lower16:os_rdy
+ 397 006c C0F20000 		movt	r0, #:upper16:os_rdy
+ 398 0070 7968     		ldr	r1, [r7, #4]
+ 399 0072 FFF7FEFF 		bl	rt_put_prio
+ 400              	.L12:
+ 130:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     }
+ 131:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 132:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 401              		.loc 2 132 0
+ 402 0076 07F10807 		add	r7, r7, #8
+ 403 007a BD46     		mov	sp, r7
+ 404 007c 80BD     		pop	{r7, pc}
+ 405              		.cfi_endproc
+ 406              	.LFE11:
+ 408 007e 00BF     		.section	.text.rt_block,"ax",%progbits
+ 409              		.align	2
+ 410              		.global	rt_block
+ 411              		.thumb
+ 412              		.thumb_func
+ 414              	rt_block:
+ 415              	.LFB12:
+ 133:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 134:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 135:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*--------------------------- rt_block --------------------------------------*/
+ 136:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 137:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** void rt_block (U16 timeout, U8 block_state) {
+ 416              		.loc 2 137 0
+ 417              		.cfi_startproc
+ 418              		@ args = 0, pretend = 0, frame = 16
+ 419              		@ frame_needed = 1, uses_anonymous_args = 0
+ 420 0000 80B5     		push	{r7, lr}
+ 421              	.LCFI15:
+ 422              		.cfi_def_cfa_offset 8
+ 423              		.cfi_offset 7, -8
+ 424              		.cfi_offset 14, -4
+ 425 0002 84B0     		sub	sp, sp, #16
+ 426              	.LCFI16:
+ 427              		.cfi_def_cfa_offset 24
+ 428 0004 00AF     		add	r7, sp, #0
+ 429              	.LCFI17:
+ 430              		.cfi_def_cfa_register 7
+ 431 0006 0246     		mov	r2, r0
+ 432 0008 0B46     		mov	r3, r1
+ 433 000a FA80     		strh	r2, [r7, #6]	@ movhi
+ 434 000c 7B71     		strb	r3, [r7, #5]
+ 138:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Block running task and choose next ready task.                         */
+ 139:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* "timeout" sets a time-out value or is 0xffff (=no time-out).           */
+ 140:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* "block_state" defines the appropriate task state */
+ 141:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   P_TCB next_TCB;
+ 142:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 143:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (timeout) {
+ 435              		.loc 2 143 0
+ 436 000e FB88     		ldrh	r3, [r7, #6]
+ 437 0010 002B     		cmp	r3, #0
+ 438 0012 1FD0     		beq	.L16
+ 144:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     if (timeout < 0xffff) {
+ 439              		.loc 2 144 0
+ 440 0014 FA88     		ldrh	r2, [r7, #6]
+ 441 0016 4FF6FF73 		movw	r3, #65535
+ 442 001a 9A42     		cmp	r2, r3
+ 443 001c 09D0     		beq	.L18
+ 145:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       rt_put_dly (os_tsk.run, timeout);
+ 444              		.loc 2 145 0
+ 445 001e 40F20003 		movw	r3, #:lower16:os_tsk
+ 446 0022 C0F20003 		movt	r3, #:upper16:os_tsk
+ 447 0026 1A68     		ldr	r2, [r3, #0]
+ 448 0028 FB88     		ldrh	r3, [r7, #6]
+ 449 002a 1046     		mov	r0, r2
+ 450 002c 1946     		mov	r1, r3
+ 451 002e FFF7FEFF 		bl	rt_put_dly
+ 452              	.L18:
+ 146:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     }
+ 147:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     os_tsk.run->state = block_state;
+ 453              		.loc 2 147 0
+ 454 0032 40F20003 		movw	r3, #:lower16:os_tsk
+ 455 0036 C0F20003 		movt	r3, #:upper16:os_tsk
+ 456 003a 1B68     		ldr	r3, [r3, #0]
+ 457 003c 7A79     		ldrb	r2, [r7, #5]
+ 458 003e 5A70     		strb	r2, [r3, #1]
+ 148:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     next_TCB = rt_get_first (&os_rdy);
+ 459              		.loc 2 148 0
+ 460 0040 40F20000 		movw	r0, #:lower16:os_rdy
+ 461 0044 C0F20000 		movt	r0, #:upper16:os_rdy
+ 462 0048 FFF7FEFF 		bl	rt_get_first
+ 463 004c F860     		str	r0, [r7, #12]
+ 149:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_switch_req (next_TCB);
+ 464              		.loc 2 149 0
+ 465 004e F868     		ldr	r0, [r7, #12]
+ 466 0050 FFF7FEFF 		bl	rt_switch_req
+ 467              	.L16:
+ 150:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 151:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 468              		.loc 2 151 0
+ 469 0054 07F11007 		add	r7, r7, #16
+ 470 0058 BD46     		mov	sp, r7
+ 471 005a 80BD     		pop	{r7, pc}
+ 472              		.cfi_endproc
+ 473              	.LFE12:
+ 475              		.section	.text.rt_tsk_pass,"ax",%progbits
+ 476              		.align	2
+ 477              		.global	rt_tsk_pass
+ 478              		.thumb
+ 479              		.thumb_func
+ 481              	rt_tsk_pass:
+ 482              	.LFB13:
+ 152:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 153:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 154:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*--------------------------- rt_tsk_pass -----------------------------------*/
+ 155:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 156:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** void rt_tsk_pass (void) {
+ 483              		.loc 2 156 0
+ 484              		.cfi_startproc
+ 485              		@ args = 0, pretend = 0, frame = 8
+ 486              		@ frame_needed = 1, uses_anonymous_args = 0
+ 487 0000 80B5     		push	{r7, lr}
+ 488              	.LCFI18:
+ 489              		.cfi_def_cfa_offset 8
+ 490              		.cfi_offset 7, -8
+ 491              		.cfi_offset 14, -4
+ 492 0002 82B0     		sub	sp, sp, #8
+ 493              	.LCFI19:
+ 494              		.cfi_def_cfa_offset 16
+ 495 0004 00AF     		add	r7, sp, #0
+ 496              	.LCFI20:
+ 497              		.cfi_def_cfa_register 7
+ 157:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Allow tasks of same priority level to run cooperatively.*/
+ 158:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   P_TCB p_new;
+ 159:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 160:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_new = rt_get_same_rdy_prio();
+ 498              		.loc 2 160 0
+ 499 0006 FFF7FEFF 		bl	rt_get_same_rdy_prio
+ 500 000a 7860     		str	r0, [r7, #4]
+ 161:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (p_new != NULL) {
+ 501              		.loc 2 161 0
+ 502 000c 7B68     		ldr	r3, [r7, #4]
+ 503 000e 002B     		cmp	r3, #0
+ 504 0010 16D0     		beq	.L19
+ 162:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_put_prio ((P_XCB)&os_rdy, os_tsk.run);
+ 505              		.loc 2 162 0
+ 506 0012 40F20003 		movw	r3, #:lower16:os_tsk
+ 507 0016 C0F20003 		movt	r3, #:upper16:os_tsk
+ 508 001a 1B68     		ldr	r3, [r3, #0]
+ 509 001c 40F20000 		movw	r0, #:lower16:os_rdy
+ 510 0020 C0F20000 		movt	r0, #:upper16:os_rdy
+ 511 0024 1946     		mov	r1, r3
+ 512 0026 FFF7FEFF 		bl	rt_put_prio
+ 163:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     os_tsk.run->state = READY;
+ 513              		.loc 2 163 0
+ 514 002a 40F20003 		movw	r3, #:lower16:os_tsk
+ 515 002e C0F20003 		movt	r3, #:upper16:os_tsk
+ 516 0032 1B68     		ldr	r3, [r3, #0]
+ 517 0034 4FF00102 		mov	r2, #1
+ 518 0038 5A70     		strb	r2, [r3, #1]
+ 164:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_switch_req (p_new);
+ 519              		.loc 2 164 0
+ 520 003a 7868     		ldr	r0, [r7, #4]
+ 521 003c FFF7FEFF 		bl	rt_switch_req
+ 522              	.L19:
+ 165:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 166:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 523              		.loc 2 166 0
+ 524 0040 07F10807 		add	r7, r7, #8
+ 525 0044 BD46     		mov	sp, r7
+ 526 0046 80BD     		pop	{r7, pc}
+ 527              		.cfi_endproc
+ 528              	.LFE13:
+ 530              		.section	.text.rt_tsk_self,"ax",%progbits
+ 531              		.align	2
+ 532              		.global	rt_tsk_self
+ 533              		.thumb
+ 534              		.thumb_func
+ 536              	rt_tsk_self:
+ 537              	.LFB14:
+ 167:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 168:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 169:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*--------------------------- rt_tsk_self -----------------------------------*/
+ 170:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 171:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** OS_TID rt_tsk_self (void) {
+ 538              		.loc 2 171 0
+ 539              		.cfi_startproc
+ 540              		@ args = 0, pretend = 0, frame = 0
+ 541              		@ frame_needed = 1, uses_anonymous_args = 0
+ 542              		@ link register save eliminated.
+ 543 0000 80B4     		push	{r7}
+ 544              	.LCFI21:
+ 545              		.cfi_def_cfa_offset 4
+ 546              		.cfi_offset 7, -4
+ 547 0002 00AF     		add	r7, sp, #0
+ 548              	.LCFI22:
+ 549              		.cfi_def_cfa_register 7
+ 172:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Return own task identifier value. */
+ 173:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (os_tsk.run == NULL) {
+ 550              		.loc 2 173 0
+ 551 0004 40F20003 		movw	r3, #:lower16:os_tsk
+ 552 0008 C0F20003 		movt	r3, #:upper16:os_tsk
+ 553 000c 1B68     		ldr	r3, [r3, #0]
+ 554 000e 002B     		cmp	r3, #0
+ 555 0010 02D1     		bne	.L22
+ 174:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     return (0);
+ 556              		.loc 2 174 0
+ 557 0012 4FF00003 		mov	r3, #0
+ 558 0016 05E0     		b	.L23
+ 559              	.L22:
+ 175:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 176:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   return (os_tsk.run->task_id);
+ 560              		.loc 2 176 0
+ 561 0018 40F20003 		movw	r3, #:lower16:os_tsk
+ 562 001c C0F20003 		movt	r3, #:upper16:os_tsk
+ 563 0020 1B68     		ldr	r3, [r3, #0]
+ 564 0022 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 565              	.L23:
+ 177:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 566              		.loc 2 177 0
+ 567 0024 1846     		mov	r0, r3
+ 568 0026 BD46     		mov	sp, r7
+ 569 0028 80BC     		pop	{r7}
+ 570 002a 7047     		bx	lr
+ 571              		.cfi_endproc
+ 572              	.LFE14:
+ 574              		.section	.text.rt_tsk_prio,"ax",%progbits
+ 575              		.align	2
+ 576              		.global	rt_tsk_prio
+ 577              		.thumb
+ 578              		.thumb_func
+ 580              	rt_tsk_prio:
+ 581              	.LFB15:
+ 178:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 179:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 180:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*--------------------------- rt_tsk_prio -----------------------------------*/
+ 181:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 182:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** OS_RESULT rt_tsk_prio (OS_TID task_id, U8 new_prio) {
+ 582              		.loc 2 182 0
+ 583              		.cfi_startproc
+ 584              		@ args = 0, pretend = 0, frame = 16
+ 585              		@ frame_needed = 1, uses_anonymous_args = 0
+ 586 0000 80B5     		push	{r7, lr}
+ 587              	.LCFI23:
+ 588              		.cfi_def_cfa_offset 8
+ 589              		.cfi_offset 7, -8
+ 590              		.cfi_offset 14, -4
+ 591 0002 84B0     		sub	sp, sp, #16
+ 592              	.LCFI24:
+ 593              		.cfi_def_cfa_offset 24
+ 594 0004 00AF     		add	r7, sp, #0
+ 595              	.LCFI25:
+ 596              		.cfi_def_cfa_register 7
+ 597 0006 7860     		str	r0, [r7, #4]
+ 598 0008 0B46     		mov	r3, r1
+ 599 000a FB70     		strb	r3, [r7, #3]
+ 183:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Change execution priority of a task to "new_prio". */
+ 184:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   P_TCB p_task;
+ 185:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 186:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (task_id == 0) {
+ 600              		.loc 2 186 0
+ 601 000c 7B68     		ldr	r3, [r7, #4]
+ 602 000e 002B     		cmp	r3, #0
+ 603 0010 34D1     		bne	.L25
+ 187:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     /* Change execution priority of calling task. */
+ 188:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     os_tsk.run->prio      = new_prio;
+ 604              		.loc 2 188 0
+ 605 0012 40F20003 		movw	r3, #:lower16:os_tsk
+ 606 0016 C0F20003 		movt	r3, #:upper16:os_tsk
+ 607 001a 1B68     		ldr	r3, [r3, #0]
+ 608 001c FA78     		ldrb	r2, [r7, #3]
+ 609 001e 9A70     		strb	r2, [r3, #2]
+ 189:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     os_tsk.run->prio_base = new_prio;
+ 610              		.loc 2 189 0
+ 611 0020 40F20003 		movw	r3, #:lower16:os_tsk
+ 612 0024 C0F20003 		movt	r3, #:upper16:os_tsk
+ 613 0028 1B68     		ldr	r3, [r3, #0]
+ 614 002a FA78     		ldrb	r2, [r7, #3]
+ 615 002c 83F82420 		strb	r2, [r3, #36]
+ 616 0030 00E0     		b	.L26
+ 617              	.L33:
+ 190:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** run:if (rt_rdy_prio() > new_prio) {
+ 191:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       rt_put_prio (&os_rdy, os_tsk.run);
+ 192:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       os_tsk.run->state   = READY;
+ 193:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       rt_dispatch (NULL);
+ 194:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     }
+ 195:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     return (OS_R_OK);
+ 196:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 197:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 198:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Find the task in the "os_active_TCB" array. */
+ 199:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (task_id > os_maxtaskrun || os_active_TCB[task_id-1] == NULL) {
+ 200:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     /* Task with "task_id" not found or not started. */
+ 201:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     return (OS_R_NOK);
+ 202:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 203:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_task = os_active_TCB[task_id-1];
+ 204:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_task->prio      = new_prio;
+ 205:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_task->prio_base = new_prio;
+ 206:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (p_task == os_tsk.run) {
+ 207:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     goto run;
+ 618              		.loc 2 207 0
+ 619 0032 00BF     		nop
+ 620              	.L26:
+ 190:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** run:if (rt_rdy_prio() > new_prio) {
+ 621              		.loc 2 190 0
+ 622 0034 40F20003 		movw	r3, #:lower16:os_rdy
+ 623 0038 C0F20003 		movt	r3, #:upper16:os_rdy
+ 624 003c 5B68     		ldr	r3, [r3, #4]
+ 625 003e 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 626 0040 FA78     		ldrb	r2, [r7, #3]	@ zero_extendqisi2
+ 627 0042 9A42     		cmp	r2, r3
+ 628 0044 17D2     		bcs	.L27
+ 191:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       rt_put_prio (&os_rdy, os_tsk.run);
+ 629              		.loc 2 191 0
+ 630 0046 40F20003 		movw	r3, #:lower16:os_tsk
+ 631 004a C0F20003 		movt	r3, #:upper16:os_tsk
+ 632 004e 1B68     		ldr	r3, [r3, #0]
+ 633 0050 40F20000 		movw	r0, #:lower16:os_rdy
+ 634 0054 C0F20000 		movt	r0, #:upper16:os_rdy
+ 635 0058 1946     		mov	r1, r3
+ 636 005a FFF7FEFF 		bl	rt_put_prio
+ 192:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       os_tsk.run->state   = READY;
+ 637              		.loc 2 192 0
+ 638 005e 40F20003 		movw	r3, #:lower16:os_tsk
+ 639 0062 C0F20003 		movt	r3, #:upper16:os_tsk
+ 640 0066 1B68     		ldr	r3, [r3, #0]
+ 641 0068 4FF00102 		mov	r2, #1
+ 642 006c 5A70     		strb	r2, [r3, #1]
+ 193:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       rt_dispatch (NULL);
+ 643              		.loc 2 193 0
+ 644 006e 4FF00000 		mov	r0, #0
+ 645 0072 FFF7FEFF 		bl	rt_dispatch
+ 646              	.L27:
+ 195:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     return (OS_R_OK);
+ 647              		.loc 2 195 0
+ 648 0076 4FF00003 		mov	r3, #0
+ 649 007a 42E0     		b	.L28
+ 650              	.L25:
+ 199:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (task_id > os_maxtaskrun || os_active_TCB[task_id-1] == NULL) {
+ 651              		.loc 2 199 0
+ 652 007c 40F20003 		movw	r3, #:lower16:os_maxtaskrun
+ 653 0080 C0F20003 		movt	r3, #:upper16:os_maxtaskrun
+ 654 0084 1B88     		ldrh	r3, [r3, #0]
+ 655 0086 1A46     		mov	r2, r3
+ 656 0088 7B68     		ldr	r3, [r7, #4]
+ 657 008a 9A42     		cmp	r2, r3
+ 658 008c 0AD3     		bcc	.L29
+ 199:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (task_id > os_maxtaskrun || os_active_TCB[task_id-1] == NULL) {
+ 659              		.loc 2 199 0 is_stmt 0 discriminator 1
+ 660 008e 7B68     		ldr	r3, [r7, #4]
+ 661 0090 03F1FF32 		add	r2, r3, #-1
+ 662 0094 40F20003 		movw	r3, #:lower16:os_active_TCB
+ 663 0098 C0F20003 		movt	r3, #:upper16:os_active_TCB
+ 664 009c 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 665 00a0 002B     		cmp	r3, #0
+ 666 00a2 02D1     		bne	.L30
+ 667              	.L29:
+ 201:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     return (OS_R_NOK);
+ 668              		.loc 2 201 0 is_stmt 1
+ 669 00a4 4FF0FF03 		mov	r3, #255
+ 670 00a8 2BE0     		b	.L28
+ 671              	.L30:
+ 203:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_task = os_active_TCB[task_id-1];
+ 672              		.loc 2 203 0
+ 673 00aa 7B68     		ldr	r3, [r7, #4]
+ 674 00ac 03F1FF32 		add	r2, r3, #-1
+ 675 00b0 40F20003 		movw	r3, #:lower16:os_active_TCB
+ 676 00b4 C0F20003 		movt	r3, #:upper16:os_active_TCB
+ 677 00b8 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 678 00bc FB60     		str	r3, [r7, #12]
+ 204:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_task->prio      = new_prio;
+ 679              		.loc 2 204 0
+ 680 00be FB68     		ldr	r3, [r7, #12]
+ 681 00c0 FA78     		ldrb	r2, [r7, #3]
+ 682 00c2 9A70     		strb	r2, [r3, #2]
+ 205:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   p_task->prio_base = new_prio;
+ 683              		.loc 2 205 0
+ 684 00c4 FB68     		ldr	r3, [r7, #12]
+ 685 00c6 FA78     		ldrb	r2, [r7, #3]
+ 686 00c8 83F82420 		strb	r2, [r3, #36]
+ 206:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (p_task == os_tsk.run) {
+ 687              		.loc 2 206 0
+ 688 00cc 40F20003 		movw	r3, #:lower16:os_tsk
+ 689 00d0 C0F20003 		movt	r3, #:upper16:os_tsk
+ 690 00d4 1A68     		ldr	r2, [r3, #0]
+ 691 00d6 FB68     		ldr	r3, [r7, #12]
+ 692 00d8 9A42     		cmp	r2, r3
+ 693 00da AAD0     		beq	.L33
+ 694              	.L31:
+ 208:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 209:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_resort_prio (p_task);
+ 695              		.loc 2 209 0
+ 696 00dc F868     		ldr	r0, [r7, #12]
+ 697 00de FFF7FEFF 		bl	rt_resort_prio
+ 210:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (p_task->state == READY) {
+ 698              		.loc 2 210 0
+ 699 00e2 FB68     		ldr	r3, [r7, #12]
+ 700 00e4 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 701 00e6 012B     		cmp	r3, #1
+ 702 00e8 09D1     		bne	.L32
+ 211:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     /* Task enqueued in a ready list. */
+ 212:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     p_task = rt_get_first (&os_rdy);
+ 703              		.loc 2 212 0
+ 704 00ea 40F20000 		movw	r0, #:lower16:os_rdy
+ 705 00ee C0F20000 		movt	r0, #:upper16:os_rdy
+ 706 00f2 FFF7FEFF 		bl	rt_get_first
+ 707 00f6 F860     		str	r0, [r7, #12]
+ 213:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_dispatch (p_task);
+ 708              		.loc 2 213 0
+ 709 00f8 F868     		ldr	r0, [r7, #12]
+ 710 00fa FFF7FEFF 		bl	rt_dispatch
+ 711              	.L32:
+ 214:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 215:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   return (OS_R_OK);
+ 712              		.loc 2 215 0
+ 713 00fe 4FF00003 		mov	r3, #0
+ 714              	.L28:
+ 216:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 715              		.loc 2 216 0
+ 716 0102 1846     		mov	r0, r3
+ 717 0104 07F11007 		add	r7, r7, #16
+ 718 0108 BD46     		mov	sp, r7
+ 719 010a 80BD     		pop	{r7, pc}
+ 720              		.cfi_endproc
+ 721              	.LFE15:
+ 723              		.section	.text.rt_tsk_create,"ax",%progbits
+ 724              		.align	2
+ 725              		.global	rt_tsk_create
+ 726              		.thumb
+ 727              		.thumb_func
+ 729              	rt_tsk_create:
+ 730              	.LFB16:
+ 217:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 218:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 219:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*--------------------------- rt_tsk_create ---------------------------------*/
+ 220:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 221:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** OS_TID rt_tsk_create (FUNCP task, U32 prio_stksz, void *stk, void *argv) {
+ 731              		.loc 2 221 0
+ 732              		.cfi_startproc
+ 733              		@ args = 0, pretend = 0, frame = 24
+ 734              		@ frame_needed = 1, uses_anonymous_args = 0
+ 735 0000 80B5     		push	{r7, lr}
+ 736              	.LCFI26:
+ 737              		.cfi_def_cfa_offset 8
+ 738              		.cfi_offset 7, -8
+ 739              		.cfi_offset 14, -4
+ 740 0002 86B0     		sub	sp, sp, #24
+ 741              	.LCFI27:
+ 742              		.cfi_def_cfa_offset 32
+ 743 0004 00AF     		add	r7, sp, #0
+ 744              	.LCFI28:
+ 745              		.cfi_def_cfa_register 7
+ 746 0006 F860     		str	r0, [r7, #12]
+ 747 0008 B960     		str	r1, [r7, #8]
+ 748 000a 7A60     		str	r2, [r7, #4]
+ 749 000c 3B60     		str	r3, [r7, #0]
+ 222:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Start a new task declared with "task". */
+ 223:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   P_TCB task_context;
+ 224:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   U32 i;
+ 225:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 226:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Priority 0 is reserved for idle task! */
+ 227:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if ((prio_stksz & 0xFF) == 0) {
+ 750              		.loc 2 227 0
+ 751 000e BB68     		ldr	r3, [r7, #8]
+ 752 0010 DBB2     		uxtb	r3, r3
+ 753 0012 002B     		cmp	r3, #0
+ 754 0014 03D1     		bne	.L35
+ 228:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     prio_stksz += 1;
+ 755              		.loc 2 228 0
+ 756 0016 BB68     		ldr	r3, [r7, #8]
+ 757 0018 03F10103 		add	r3, r3, #1
+ 758 001c BB60     		str	r3, [r7, #8]
+ 759              	.L35:
+ 229:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 230:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   task_context = rt_alloc_box (mp_tcb);
+ 760              		.loc 2 230 0
+ 761 001e 40F20000 		movw	r0, #:lower16:mp_tcb
+ 762 0022 C0F20000 		movt	r0, #:upper16:mp_tcb
+ 763 0026 FFF7FEFF 		bl	rt_alloc_box
+ 764 002a 7861     		str	r0, [r7, #20]
+ 231:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (task_context == NULL) {
+ 765              		.loc 2 231 0
+ 766 002c 7B69     		ldr	r3, [r7, #20]
+ 767 002e 002B     		cmp	r3, #0
+ 768 0030 02D1     		bne	.L36
+ 232:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     return (0);
+ 769              		.loc 2 232 0
+ 770 0032 4FF00003 		mov	r3, #0
+ 771 0036 27E0     		b	.L37
+ 772              	.L36:
+ 233:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 234:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* If "size != 0" use a private user provided stack. */
+ 235:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   task_context->stack      = stk;
+ 773              		.loc 2 235 0
+ 774 0038 7B69     		ldr	r3, [r7, #20]
+ 775 003a 7A68     		ldr	r2, [r7, #4]
+ 776 003c DA62     		str	r2, [r3, #44]
+ 236:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   task_context->priv_stack = prio_stksz >> 8;
+ 777              		.loc 2 236 0
+ 778 003e BB68     		ldr	r3, [r7, #8]
+ 779 0040 4FEA1323 		lsr	r3, r3, #8
+ 780 0044 9AB2     		uxth	r2, r3
+ 781 0046 7B69     		ldr	r3, [r7, #20]
+ 782 0048 DA84     		strh	r2, [r3, #38]	@ movhi
+ 237:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Pass parameter 'argv' to 'rt_init_context' */
+ 238:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   task_context->msg = argv;
+ 783              		.loc 2 238 0
+ 784 004a 7B69     		ldr	r3, [r7, #20]
+ 785 004c 3A68     		ldr	r2, [r7, #0]
+ 786 004e DA61     		str	r2, [r3, #28]
+ 239:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* For 'size == 0' system allocates the user stack from the memory pool. */
+ 240:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_init_context (task_context, prio_stksz & 0xFF, task);
+ 787              		.loc 2 240 0
+ 788 0050 BB68     		ldr	r3, [r7, #8]
+ 789 0052 DBB2     		uxtb	r3, r3
+ 790 0054 7869     		ldr	r0, [r7, #20]
+ 791 0056 1946     		mov	r1, r3
+ 792 0058 FA68     		ldr	r2, [r7, #12]
+ 793 005a FFF7FEFF 		bl	rt_init_context
+ 241:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 242:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Find a free entry in 'os_active_TCB' table. */
+ 243:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   i = rt_get_TID ();
+ 794              		.loc 2 243 0
+ 795 005e FFF7FEFF 		bl	rt_get_TID
+ 796 0062 3861     		str	r0, [r7, #16]
+ 244:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_active_TCB[i-1] = task_context;
+ 797              		.loc 2 244 0
+ 798 0064 3B69     		ldr	r3, [r7, #16]
+ 799 0066 03F1FF32 		add	r2, r3, #-1
+ 800 006a 40F20003 		movw	r3, #:lower16:os_active_TCB
+ 801 006e C0F20003 		movt	r3, #:upper16:os_active_TCB
+ 802 0072 7969     		ldr	r1, [r7, #20]
+ 803 0074 43F82210 		str	r1, [r3, r2, lsl #2]
+ 245:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   task_context->task_id = i;
+ 804              		.loc 2 245 0
+ 805 0078 3B69     		ldr	r3, [r7, #16]
+ 806 007a DAB2     		uxtb	r2, r3
+ 807 007c 7B69     		ldr	r3, [r7, #20]
+ 808 007e DA70     		strb	r2, [r3, #3]
+ 246:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   DBG_TASK_NOTIFY(task_context, __TRUE);
+ 247:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_dispatch (task_context);
+ 809              		.loc 2 247 0
+ 810 0080 7869     		ldr	r0, [r7, #20]
+ 811 0082 FFF7FEFF 		bl	rt_dispatch
+ 248:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   return ((OS_TID)i);
+ 812              		.loc 2 248 0
+ 813 0086 3B69     		ldr	r3, [r7, #16]
+ 814              	.L37:
+ 249:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 815              		.loc 2 249 0
+ 816 0088 1846     		mov	r0, r3
+ 817 008a 07F11807 		add	r7, r7, #24
+ 818 008e BD46     		mov	sp, r7
+ 819 0090 80BD     		pop	{r7, pc}
+ 820              		.cfi_endproc
+ 821              	.LFE16:
+ 823 0092 00BF     		.section	.text.rt_tsk_delete,"ax",%progbits
+ 824              		.align	2
+ 825              		.global	rt_tsk_delete
+ 826              		.thumb
+ 827              		.thumb_func
+ 829              	rt_tsk_delete:
+ 830              	.LFB17:
+ 250:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 251:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 252:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*--------------------------- rt_tsk_delete ---------------------------------*/
+ 253:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 254:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** OS_RESULT rt_tsk_delete (OS_TID task_id) {
+ 831              		.loc 2 254 0
+ 832              		.cfi_startproc
+ 833              		@ args = 0, pretend = 0, frame = 24
+ 834              		@ frame_needed = 1, uses_anonymous_args = 0
+ 835 0000 90B5     		push	{r4, r7, lr}
+ 836              	.LCFI29:
+ 837              		.cfi_def_cfa_offset 12
+ 838              		.cfi_offset 4, -12
+ 839              		.cfi_offset 7, -8
+ 840              		.cfi_offset 14, -4
+ 841 0002 87B0     		sub	sp, sp, #28
+ 842              	.LCFI30:
+ 843              		.cfi_def_cfa_offset 40
+ 844 0004 00AF     		add	r7, sp, #0
+ 845              	.LCFI31:
+ 846              		.cfi_def_cfa_register 7
+ 847 0006 7860     		str	r0, [r7, #4]
+ 255:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Terminate the task identified with "task_id". */
+ 256:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   P_TCB  task_context;
+ 257:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   P_TCB  p_TCB;
+ 258:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   P_MUCB p_MCB, p_MCB0;
+ 259:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 260:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (task_id == 0 || task_id == os_tsk.run->task_id) {
+ 848              		.loc 2 260 0
+ 849 0008 7B68     		ldr	r3, [r7, #4]
+ 850 000a 002B     		cmp	r3, #0
+ 851 000c 0AD0     		beq	.L39
+ 852              		.loc 2 260 0 is_stmt 0 discriminator 1
+ 853 000e 40F20003 		movw	r3, #:lower16:os_tsk
+ 854 0012 C0F20003 		movt	r3, #:upper16:os_tsk
+ 855 0016 1B68     		ldr	r3, [r3, #0]
+ 856 0018 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 857 001a 1A46     		mov	r2, r3
+ 858 001c 7B68     		ldr	r3, [r7, #4]
+ 859 001e 9A42     		cmp	r2, r3
+ 860 0020 40F08D80 		bne	.L40
+ 861              	.L39:
+ 261:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     /* Terminate itself. */
+ 262:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     os_tsk.run->state     = INACTIVE;
+ 862              		.loc 2 262 0 is_stmt 1
+ 863 0024 40F20003 		movw	r3, #:lower16:os_tsk
+ 864 0028 C0F20003 		movt	r3, #:upper16:os_tsk
+ 865 002c 1B68     		ldr	r3, [r3, #0]
+ 866 002e 4FF00002 		mov	r2, #0
+ 867 0032 5A70     		strb	r2, [r3, #1]
+ 263:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     os_tsk.run->tsk_stack = rt_get_PSP ();
+ 868              		.loc 2 263 0
+ 869 0034 40F20003 		movw	r3, #:lower16:os_tsk
+ 870 0038 C0F20003 		movt	r3, #:upper16:os_tsk
+ 871 003c 1C68     		ldr	r4, [r3, #0]
+ 872 003e FFF7FEFF 		bl	rt_get_PSP
+ 873 0042 0346     		mov	r3, r0
+ 874 0044 A362     		str	r3, [r4, #40]
+ 264:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_stk_check ();
+ 875              		.loc 2 264 0
+ 876 0046 FFF7FEFF 		bl	rt_stk_check
+ 265:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     p_MCB = os_tsk.run->p_mlnk;
+ 877              		.loc 2 265 0
+ 878 004a 40F20003 		movw	r3, #:lower16:os_tsk
+ 879 004e C0F20003 		movt	r3, #:upper16:os_tsk
+ 880 0052 1B68     		ldr	r3, [r3, #0]
+ 881 0054 1B6A     		ldr	r3, [r3, #32]
+ 882 0056 7B61     		str	r3, [r7, #20]
+ 266:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     while (p_MCB) {
+ 883              		.loc 2 266 0
+ 884 0058 31E0     		b	.L41
+ 885              	.L43:
+ 267:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       /* Release mutexes owned by this task */
+ 268:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       if (p_MCB->p_lnk) {
+ 886              		.loc 2 268 0
+ 887 005a 7B69     		ldr	r3, [r7, #20]
+ 888 005c 5B68     		ldr	r3, [r3, #4]
+ 889 005e 002B     		cmp	r3, #0
+ 890 0060 2AD0     		beq	.L42
+ 269:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         /* A task is waiting for mutex. */
+ 270:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_TCB = rt_get_first ((P_XCB)p_MCB);
+ 891              		.loc 2 270 0
+ 892 0062 7869     		ldr	r0, [r7, #20]
+ 893 0064 FFF7FEFF 		bl	rt_get_first
+ 894 0068 F860     		str	r0, [r7, #12]
+ 271:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #ifdef __CMSIS_RTOS
+ 272:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         rt_ret_val(p_TCB, 0/*osOK*/);
+ 895              		.loc 2 272 0
+ 896 006a F868     		ldr	r0, [r7, #12]
+ 897 006c 4FF00001 		mov	r1, #0
+ 898 0070 FFF7FEFF 		bl	rt_ret_val
+ 273:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #else
+ 274:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         rt_ret_val(p_TCB, OS_R_MUT); 
+ 275:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #endif
+ 276:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         rt_rmv_dly (p_TCB);
+ 899              		.loc 2 276 0
+ 900 0074 F868     		ldr	r0, [r7, #12]
+ 901 0076 FFF7FEFF 		bl	rt_rmv_dly
+ 277:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_TCB->state = READY;
+ 902              		.loc 2 277 0
+ 903 007a FB68     		ldr	r3, [r7, #12]
+ 904 007c 4FF00102 		mov	r2, #1
+ 905 0080 5A70     		strb	r2, [r3, #1]
+ 278:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         rt_put_prio (&os_rdy, p_TCB);
+ 906              		.loc 2 278 0
+ 907 0082 40F20000 		movw	r0, #:lower16:os_rdy
+ 908 0086 C0F20000 		movt	r0, #:upper16:os_rdy
+ 909 008a F968     		ldr	r1, [r7, #12]
+ 910 008c FFF7FEFF 		bl	rt_put_prio
+ 279:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         /* A waiting task becomes the owner of this mutex. */
+ 280:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB0 = p_MCB;
+ 911              		.loc 2 280 0
+ 912 0090 7B69     		ldr	r3, [r7, #20]
+ 913 0092 BB60     		str	r3, [r7, #8]
+ 281:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB->level  = 1;
+ 914              		.loc 2 281 0
+ 915 0094 7B69     		ldr	r3, [r7, #20]
+ 916 0096 4FF00102 		mov	r2, #1
+ 917 009a 5A80     		strh	r2, [r3, #2]	@ movhi
+ 282:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB->owner  = p_TCB;
+ 918              		.loc 2 282 0
+ 919 009c 7B69     		ldr	r3, [r7, #20]
+ 920 009e FA68     		ldr	r2, [r7, #12]
+ 921 00a0 9A60     		str	r2, [r3, #8]
+ 283:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB->p_mlnk = p_TCB->p_mlnk;
+ 922              		.loc 2 283 0
+ 923 00a2 FB68     		ldr	r3, [r7, #12]
+ 924 00a4 1A6A     		ldr	r2, [r3, #32]
+ 925 00a6 7B69     		ldr	r3, [r7, #20]
+ 926 00a8 DA60     		str	r2, [r3, #12]
+ 284:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_TCB->p_mlnk = p_MCB; 
+ 927              		.loc 2 284 0
+ 928 00aa FB68     		ldr	r3, [r7, #12]
+ 929 00ac 7A69     		ldr	r2, [r7, #20]
+ 930 00ae 1A62     		str	r2, [r3, #32]
+ 285:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB = p_MCB0->p_mlnk;
+ 931              		.loc 2 285 0
+ 932 00b0 BB68     		ldr	r3, [r7, #8]
+ 933 00b2 DB68     		ldr	r3, [r3, #12]
+ 934 00b4 7B61     		str	r3, [r7, #20]
+ 935 00b6 02E0     		b	.L41
+ 936              	.L42:
+ 286:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       }
+ 287:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       else {
+ 288:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB = p_MCB->p_mlnk;
+ 937              		.loc 2 288 0
+ 938 00b8 7B69     		ldr	r3, [r7, #20]
+ 939 00ba DB68     		ldr	r3, [r3, #12]
+ 940 00bc 7B61     		str	r3, [r7, #20]
+ 941              	.L41:
+ 266:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     while (p_MCB) {
+ 942              		.loc 2 266 0 discriminator 1
+ 943 00be 7B69     		ldr	r3, [r7, #20]
+ 944 00c0 002B     		cmp	r3, #0
+ 945 00c2 CAD1     		bne	.L43
+ 289:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       }
+ 290:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     }
+ 291:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     os_active_TCB[os_tsk.run->task_id-1] = NULL;
+ 946              		.loc 2 291 0
+ 947 00c4 40F20003 		movw	r3, #:lower16:os_tsk
+ 948 00c8 C0F20003 		movt	r3, #:upper16:os_tsk
+ 949 00cc 1B68     		ldr	r3, [r3, #0]
+ 950 00ce DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+ 951 00d0 03F1FF32 		add	r2, r3, #-1
+ 952 00d4 40F20003 		movw	r3, #:lower16:os_active_TCB
+ 953 00d8 C0F20003 		movt	r3, #:upper16:os_active_TCB
+ 954 00dc 4FF00001 		mov	r1, #0
+ 955 00e0 43F82210 		str	r1, [r3, r2, lsl #2]
+ 292:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_free_box (mp_stk, os_tsk.run->stack);
+ 956              		.loc 2 292 0
+ 957 00e4 40F20003 		movw	r3, #:lower16:os_tsk
+ 958 00e8 C0F20003 		movt	r3, #:upper16:os_tsk
+ 959 00ec 1B68     		ldr	r3, [r3, #0]
+ 960 00ee DB6A     		ldr	r3, [r3, #44]
+ 961 00f0 40F20000 		movw	r0, #:lower16:mp_stk
+ 962 00f4 C0F20000 		movt	r0, #:upper16:mp_stk
+ 963 00f8 1946     		mov	r1, r3
+ 964 00fa FFF7FEFF 		bl	rt_free_box
+ 293:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     os_tsk.run->stack = NULL;
+ 965              		.loc 2 293 0
+ 966 00fe 40F20003 		movw	r3, #:lower16:os_tsk
+ 967 0102 C0F20003 		movt	r3, #:upper16:os_tsk
+ 968 0106 1B68     		ldr	r3, [r3, #0]
+ 969 0108 4FF00002 		mov	r2, #0
+ 970 010c DA62     		str	r2, [r3, #44]
+ 294:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     DBG_TASK_NOTIFY(os_tsk.run, __FALSE);
+ 295:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_free_box (mp_tcb, os_tsk.run);
+ 971              		.loc 2 295 0
+ 972 010e 40F20003 		movw	r3, #:lower16:os_tsk
+ 973 0112 C0F20003 		movt	r3, #:upper16:os_tsk
+ 974 0116 1B68     		ldr	r3, [r3, #0]
+ 975 0118 40F20000 		movw	r0, #:lower16:mp_tcb
+ 976 011c C0F20000 		movt	r0, #:upper16:mp_tcb
+ 977 0120 1946     		mov	r1, r3
+ 978 0122 FFF7FEFF 		bl	rt_free_box
+ 296:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     os_tsk.run = NULL;
+ 979              		.loc 2 296 0
+ 980 0126 40F20003 		movw	r3, #:lower16:os_tsk
+ 981 012a C0F20003 		movt	r3, #:upper16:os_tsk
+ 982 012e 4FF00002 		mov	r2, #0
+ 983 0132 1A60     		str	r2, [r3, #0]
+ 297:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_dispatch (NULL);
+ 984              		.loc 2 297 0
+ 985 0134 4FF00000 		mov	r0, #0
+ 986 0138 FFF7FEFF 		bl	rt_dispatch
+ 987 013c A4E0     		b	.L44
+ 988              	.L40:
+ 298:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     /* The program should never come to this point. */
+ 299:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 300:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   else {
+ 301:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     /* Find the task in the "os_active_TCB" array. */
+ 302:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     if (task_id > os_maxtaskrun || os_active_TCB[task_id-1] == NULL) {
+ 989              		.loc 2 302 0
+ 990 013e 40F20003 		movw	r3, #:lower16:os_maxtaskrun
+ 991 0142 C0F20003 		movt	r3, #:upper16:os_maxtaskrun
+ 992 0146 1B88     		ldrh	r3, [r3, #0]
+ 993 0148 1A46     		mov	r2, r3
+ 994 014a 7B68     		ldr	r3, [r7, #4]
+ 995 014c 9A42     		cmp	r2, r3
+ 996 014e 0AD3     		bcc	.L45
+ 997              		.loc 2 302 0 is_stmt 0 discriminator 1
+ 998 0150 7B68     		ldr	r3, [r7, #4]
+ 999 0152 03F1FF32 		add	r2, r3, #-1
+ 1000 0156 40F20003 		movw	r3, #:lower16:os_active_TCB
+ 1001 015a C0F20003 		movt	r3, #:upper16:os_active_TCB
+ 1002 015e 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 1003 0162 002B     		cmp	r3, #0
+ 1004 0164 02D1     		bne	.L46
+ 1005              	.L45:
+ 303:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       /* Task with "task_id" not found or not started. */
+ 304:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       return (OS_R_NOK);
+ 1006              		.loc 2 304 0 is_stmt 1
+ 1007 0166 4FF0FF03 		mov	r3, #255
+ 1008 016a 8FE0     		b	.L47
+ 1009              	.L46:
+ 305:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     }
+ 306:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     task_context = os_active_TCB[task_id-1];
+ 1010              		.loc 2 306 0
+ 1011 016c 7B68     		ldr	r3, [r7, #4]
+ 1012 016e 03F1FF32 		add	r2, r3, #-1
+ 1013 0172 40F20003 		movw	r3, #:lower16:os_active_TCB
+ 1014 0176 C0F20003 		movt	r3, #:upper16:os_active_TCB
+ 1015 017a 53F82230 		ldr	r3, [r3, r2, lsl #2]
+ 1016 017e 3B61     		str	r3, [r7, #16]
+ 307:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_rmv_list (task_context);
+ 1017              		.loc 2 307 0
+ 1018 0180 3869     		ldr	r0, [r7, #16]
+ 1019 0182 FFF7FEFF 		bl	rt_rmv_list
+ 308:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_rmv_dly (task_context);
+ 1020              		.loc 2 308 0
+ 1021 0186 3869     		ldr	r0, [r7, #16]
+ 1022 0188 FFF7FEFF 		bl	rt_rmv_dly
+ 309:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     p_MCB = task_context->p_mlnk;
+ 1023              		.loc 2 309 0
+ 1024 018c 3B69     		ldr	r3, [r7, #16]
+ 1025 018e 1B6A     		ldr	r3, [r3, #32]
+ 1026 0190 7B61     		str	r3, [r7, #20]
+ 310:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     while (p_MCB) {
+ 1027              		.loc 2 310 0
+ 1028 0192 31E0     		b	.L48
+ 1029              	.L50:
+ 311:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       /* Release mutexes owned by this task */
+ 312:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       if (p_MCB->p_lnk) {
+ 1030              		.loc 2 312 0
+ 1031 0194 7B69     		ldr	r3, [r7, #20]
+ 1032 0196 5B68     		ldr	r3, [r3, #4]
+ 1033 0198 002B     		cmp	r3, #0
+ 1034 019a 2AD0     		beq	.L49
+ 313:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         /* A task is waiting for mutex. */
+ 314:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_TCB = rt_get_first ((P_XCB)p_MCB);
+ 1035              		.loc 2 314 0
+ 1036 019c 7869     		ldr	r0, [r7, #20]
+ 1037 019e FFF7FEFF 		bl	rt_get_first
+ 1038 01a2 F860     		str	r0, [r7, #12]
+ 315:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #ifdef __CMSIS_RTOS
+ 316:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         rt_ret_val(p_TCB, 0/*osOK*/);
+ 1039              		.loc 2 316 0
+ 1040 01a4 F868     		ldr	r0, [r7, #12]
+ 1041 01a6 4FF00001 		mov	r1, #0
+ 1042 01aa FFF7FEFF 		bl	rt_ret_val
+ 317:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #else
+ 318:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         rt_ret_val(p_TCB, OS_R_MUT); 
+ 319:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #endif
+ 320:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         rt_rmv_dly (p_TCB);
+ 1043              		.loc 2 320 0
+ 1044 01ae F868     		ldr	r0, [r7, #12]
+ 1045 01b0 FFF7FEFF 		bl	rt_rmv_dly
+ 321:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_TCB->state = READY;
+ 1046              		.loc 2 321 0
+ 1047 01b4 FB68     		ldr	r3, [r7, #12]
+ 1048 01b6 4FF00102 		mov	r2, #1
+ 1049 01ba 5A70     		strb	r2, [r3, #1]
+ 322:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         rt_put_prio (&os_rdy, p_TCB);
+ 1050              		.loc 2 322 0
+ 1051 01bc 40F20000 		movw	r0, #:lower16:os_rdy
+ 1052 01c0 C0F20000 		movt	r0, #:upper16:os_rdy
+ 1053 01c4 F968     		ldr	r1, [r7, #12]
+ 1054 01c6 FFF7FEFF 		bl	rt_put_prio
+ 323:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         /* A waiting task becomes the owner of this mutex. */
+ 324:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB0 = p_MCB;
+ 1055              		.loc 2 324 0
+ 1056 01ca 7B69     		ldr	r3, [r7, #20]
+ 1057 01cc BB60     		str	r3, [r7, #8]
+ 325:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB->level  = 1;
+ 1058              		.loc 2 325 0
+ 1059 01ce 7B69     		ldr	r3, [r7, #20]
+ 1060 01d0 4FF00102 		mov	r2, #1
+ 1061 01d4 5A80     		strh	r2, [r3, #2]	@ movhi
+ 326:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB->owner  = p_TCB;
+ 1062              		.loc 2 326 0
+ 1063 01d6 7B69     		ldr	r3, [r7, #20]
+ 1064 01d8 FA68     		ldr	r2, [r7, #12]
+ 1065 01da 9A60     		str	r2, [r3, #8]
+ 327:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB->p_mlnk = p_TCB->p_mlnk;
+ 1066              		.loc 2 327 0
+ 1067 01dc FB68     		ldr	r3, [r7, #12]
+ 1068 01de 1A6A     		ldr	r2, [r3, #32]
+ 1069 01e0 7B69     		ldr	r3, [r7, #20]
+ 1070 01e2 DA60     		str	r2, [r3, #12]
+ 328:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_TCB->p_mlnk = p_MCB; 
+ 1071              		.loc 2 328 0
+ 1072 01e4 FB68     		ldr	r3, [r7, #12]
+ 1073 01e6 7A69     		ldr	r2, [r7, #20]
+ 1074 01e8 1A62     		str	r2, [r3, #32]
+ 329:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB = p_MCB0->p_mlnk;
+ 1075              		.loc 2 329 0
+ 1076 01ea BB68     		ldr	r3, [r7, #8]
+ 1077 01ec DB68     		ldr	r3, [r3, #12]
+ 1078 01ee 7B61     		str	r3, [r7, #20]
+ 1079 01f0 02E0     		b	.L48
+ 1080              	.L49:
+ 330:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       }
+ 331:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       else {
+ 332:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****         p_MCB = p_MCB->p_mlnk;
+ 1081              		.loc 2 332 0
+ 1082 01f2 7B69     		ldr	r3, [r7, #20]
+ 1083 01f4 DB68     		ldr	r3, [r3, #12]
+ 1084 01f6 7B61     		str	r3, [r7, #20]
+ 1085              	.L48:
+ 310:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     while (p_MCB) {
+ 1086              		.loc 2 310 0 discriminator 1
+ 1087 01f8 7B69     		ldr	r3, [r7, #20]
+ 1088 01fa 002B     		cmp	r3, #0
+ 1089 01fc CAD1     		bne	.L50
+ 333:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       }
+ 334:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     }
+ 335:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     os_active_TCB[task_id-1] = NULL;
+ 1090              		.loc 2 335 0
+ 1091 01fe 7B68     		ldr	r3, [r7, #4]
+ 1092 0200 03F1FF32 		add	r2, r3, #-1
+ 1093 0204 40F20003 		movw	r3, #:lower16:os_active_TCB
+ 1094 0208 C0F20003 		movt	r3, #:upper16:os_active_TCB
+ 1095 020c 4FF00001 		mov	r1, #0
+ 1096 0210 43F82210 		str	r1, [r3, r2, lsl #2]
+ 336:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_free_box (mp_stk, task_context->stack);
+ 1097              		.loc 2 336 0
+ 1098 0214 3B69     		ldr	r3, [r7, #16]
+ 1099 0216 DB6A     		ldr	r3, [r3, #44]
+ 1100 0218 40F20000 		movw	r0, #:lower16:mp_stk
+ 1101 021c C0F20000 		movt	r0, #:upper16:mp_stk
+ 1102 0220 1946     		mov	r1, r3
+ 1103 0222 FFF7FEFF 		bl	rt_free_box
+ 337:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     task_context->stack = NULL;
+ 1104              		.loc 2 337 0
+ 1105 0226 3B69     		ldr	r3, [r7, #16]
+ 1106 0228 4FF00002 		mov	r2, #0
+ 1107 022c DA62     		str	r2, [r3, #44]
+ 338:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     DBG_TASK_NOTIFY(task_context, __FALSE);
+ 339:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     rt_free_box (mp_tcb, task_context);
+ 1108              		.loc 2 339 0
+ 1109 022e 40F20000 		movw	r0, #:lower16:mp_tcb
+ 1110 0232 C0F20000 		movt	r0, #:upper16:mp_tcb
+ 1111 0236 3969     		ldr	r1, [r7, #16]
+ 1112 0238 FFF7FEFF 		bl	rt_free_box
+ 340:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     if (rt_rdy_prio() > os_tsk.run->prio) {
+ 1113              		.loc 2 340 0
+ 1114 023c 40F20003 		movw	r3, #:lower16:os_rdy
+ 1115 0240 C0F20003 		movt	r3, #:upper16:os_rdy
+ 1116 0244 5B68     		ldr	r3, [r3, #4]
+ 1117 0246 9A78     		ldrb	r2, [r3, #2]	@ zero_extendqisi2
+ 1118 0248 40F20003 		movw	r3, #:lower16:os_tsk
+ 1119 024c C0F20003 		movt	r3, #:upper16:os_tsk
+ 1120 0250 1B68     		ldr	r3, [r3, #0]
+ 1121 0252 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 1122 0254 9A42     		cmp	r2, r3
+ 1123 0256 17D9     		bls	.L44
+ 341:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       /* Ready task has higher priority than running task. */
+ 342:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       os_tsk.run->state = READY;
+ 1124              		.loc 2 342 0
+ 1125 0258 40F20003 		movw	r3, #:lower16:os_tsk
+ 1126 025c C0F20003 		movt	r3, #:upper16:os_tsk
+ 1127 0260 1B68     		ldr	r3, [r3, #0]
+ 1128 0262 4FF00102 		mov	r2, #1
+ 1129 0266 5A70     		strb	r2, [r3, #1]
+ 343:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       rt_put_prio (&os_rdy, os_tsk.run);
+ 1130              		.loc 2 343 0
+ 1131 0268 40F20003 		movw	r3, #:lower16:os_tsk
+ 1132 026c C0F20003 		movt	r3, #:upper16:os_tsk
+ 1133 0270 1B68     		ldr	r3, [r3, #0]
+ 1134 0272 40F20000 		movw	r0, #:lower16:os_rdy
+ 1135 0276 C0F20000 		movt	r0, #:upper16:os_rdy
+ 1136 027a 1946     		mov	r1, r3
+ 1137 027c FFF7FEFF 		bl	rt_put_prio
+ 344:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****       rt_dispatch (NULL);
+ 1138              		.loc 2 344 0
+ 1139 0280 4FF00000 		mov	r0, #0
+ 1140 0284 FFF7FEFF 		bl	rt_dispatch
+ 1141              	.L44:
+ 345:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     }
+ 346:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 347:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   return (OS_R_OK);
+ 1142              		.loc 2 347 0
+ 1143 0288 4FF00003 		mov	r3, #0
+ 1144              	.L47:
+ 348:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 1145              		.loc 2 348 0
+ 1146 028c 1846     		mov	r0, r3
+ 1147 028e 07F11C07 		add	r7, r7, #28
+ 1148 0292 BD46     		mov	sp, r7
+ 1149 0294 90BD     		pop	{r4, r7, pc}
+ 1150              		.cfi_endproc
+ 1151              	.LFE17:
+ 1153 0296 00BF     		.section	.text.rt_sys_init,"ax",%progbits
+ 1154              		.align	2
+ 1155              		.global	rt_sys_init
+ 1156              		.thumb
+ 1157              		.thumb_func
+ 1159              	rt_sys_init:
+ 1160              	.LFB18:
+ 349:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 350:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 351:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*--------------------------- rt_sys_init -----------------------------------*/
+ 352:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 353:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #ifdef __CMSIS_RTOS
+ 354:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** void rt_sys_init (void) {
+ 1161              		.loc 2 354 0
+ 1162              		.cfi_startproc
+ 1163              		@ args = 0, pretend = 0, frame = 8
+ 1164              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1165 0000 80B5     		push	{r7, lr}
+ 1166              	.LCFI32:
+ 1167              		.cfi_def_cfa_offset 8
+ 1168              		.cfi_offset 7, -8
+ 1169              		.cfi_offset 14, -4
+ 1170 0002 82B0     		sub	sp, sp, #8
+ 1171              	.LCFI33:
+ 1172              		.cfi_def_cfa_offset 16
+ 1173 0004 00AF     		add	r7, sp, #0
+ 1174              	.LCFI34:
+ 1175              		.cfi_def_cfa_register 7
+ 355:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #else
+ 356:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** void rt_sys_init (FUNCP first_task, U32 prio_stksz, void *stk) {
+ 357:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #endif
+ 358:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Initialize system and start up task declared with "first_task". */
+ 359:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   U32 i;
+ 360:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 361:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   DBG_INIT();
+ 362:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 363:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Initialize dynamic memory and task TCB pointers to NULL. */
+ 364:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   for (i = 0; i < os_maxtaskrun; i++) {
+ 1176              		.loc 2 364 0
+ 1177 0006 4FF00003 		mov	r3, #0
+ 1178 000a 7B60     		str	r3, [r7, #4]
+ 1179 000c 0CE0     		b	.L52
+ 1180              	.L53:
+ 365:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     os_active_TCB[i] = NULL;
+ 1181              		.loc 2 365 0 discriminator 2
+ 1182 000e 40F20003 		movw	r3, #:lower16:os_active_TCB
+ 1183 0012 C0F20003 		movt	r3, #:upper16:os_active_TCB
+ 1184 0016 7A68     		ldr	r2, [r7, #4]
+ 1185 0018 4FF00001 		mov	r1, #0
+ 1186 001c 43F82210 		str	r1, [r3, r2, lsl #2]
+ 364:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   for (i = 0; i < os_maxtaskrun; i++) {
+ 1187              		.loc 2 364 0 discriminator 2
+ 1188 0020 7B68     		ldr	r3, [r7, #4]
+ 1189 0022 03F10103 		add	r3, r3, #1
+ 1190 0026 7B60     		str	r3, [r7, #4]
+ 1191              	.L52:
+ 364:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   for (i = 0; i < os_maxtaskrun; i++) {
+ 1192              		.loc 2 364 0 is_stmt 0 discriminator 1
+ 1193 0028 40F20003 		movw	r3, #:lower16:os_maxtaskrun
+ 1194 002c C0F20003 		movt	r3, #:upper16:os_maxtaskrun
+ 1195 0030 1B88     		ldrh	r3, [r3, #0]
+ 1196 0032 1A46     		mov	r2, r3
+ 1197 0034 7B68     		ldr	r3, [r7, #4]
+ 1198 0036 9A42     		cmp	r2, r3
+ 1199 0038 E9D8     		bhi	.L53
+ 366:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 367:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_init_box (&mp_tcb, mp_tcb_size, sizeof(struct OS_TCB));
+ 1200              		.loc 2 367 0 is_stmt 1
+ 1201 003a 40F20003 		movw	r3, #:lower16:mp_tcb_size
+ 1202 003e C0F20003 		movt	r3, #:upper16:mp_tcb_size
+ 1203 0042 1B88     		ldrh	r3, [r3, #0]
+ 1204 0044 40F20000 		movw	r0, #:lower16:mp_tcb
+ 1205 0048 C0F20000 		movt	r0, #:upper16:mp_tcb
+ 1206 004c 1946     		mov	r1, r3
+ 1207 004e 4FF03402 		mov	r2, #52
+ 1208 0052 FFF7FEFF 		bl	_init_box
+ 368:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_init_box (&mp_stk, mp_stk_size, BOX_ALIGN_8 | (U16)(os_stackinfo));
+ 1209              		.loc 2 368 0
+ 1210 0056 40F20003 		movw	r3, #:lower16:mp_stk_size
+ 1211 005a C0F20003 		movt	r3, #:upper16:mp_stk_size
+ 1212 005e 1A68     		ldr	r2, [r3, #0]
+ 1213 0060 40F20003 		movw	r3, #:lower16:os_stackinfo
+ 1214 0064 C0F20003 		movt	r3, #:upper16:os_stackinfo
+ 1215 0068 1B68     		ldr	r3, [r3, #0]
+ 1216 006a 9BB2     		uxth	r3, r3
+ 1217 006c 43F00043 		orr	r3, r3, #-2147483648
+ 1218 0070 40F20000 		movw	r0, #:lower16:mp_stk
+ 1219 0074 C0F20000 		movt	r0, #:upper16:mp_stk
+ 1220 0078 1146     		mov	r1, r2
+ 1221 007a 1A46     		mov	r2, r3
+ 1222 007c FFF7FEFF 		bl	_init_box
+ 369:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_init_box ((U32 *)m_tmr, mp_tmr_size, sizeof(struct OS_TMR));
+ 1223              		.loc 2 369 0
+ 1224 0080 40F20003 		movw	r3, #:lower16:m_tmr
+ 1225 0084 C0F20003 		movt	r3, #:upper16:m_tmr
+ 1226 0088 1A68     		ldr	r2, [r3, #0]
+ 1227 008a 40F20003 		movw	r3, #:lower16:mp_tmr_size
+ 1228 008e C0F20003 		movt	r3, #:upper16:mp_tmr_size
+ 1229 0092 1B88     		ldrh	r3, [r3, #0]
+ 1230 0094 1046     		mov	r0, r2
+ 1231 0096 1946     		mov	r1, r3
+ 1232 0098 4FF00802 		mov	r2, #8
+ 1233 009c FFF7FEFF 		bl	_init_box
+ 370:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 371:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Set up TCB of idle demon */
+ 372:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_idle_TCB.task_id    = 255;
+ 1234              		.loc 2 372 0
+ 1235 00a0 40F20003 		movw	r3, #:lower16:os_idle_TCB
+ 1236 00a4 C0F20003 		movt	r3, #:upper16:os_idle_TCB
+ 1237 00a8 4FF0FF02 		mov	r2, #255
+ 1238 00ac DA70     		strb	r2, [r3, #3]
+ 373:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_idle_TCB.priv_stack = 0;
+ 1239              		.loc 2 373 0
+ 1240 00ae 40F20003 		movw	r3, #:lower16:os_idle_TCB
+ 1241 00b2 C0F20003 		movt	r3, #:upper16:os_idle_TCB
+ 1242 00b6 4FF00002 		mov	r2, #0
+ 1243 00ba DA84     		strh	r2, [r3, #38]	@ movhi
+ 374:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_init_context (&os_idle_TCB, 0, os_idle_demon);
+ 1244              		.loc 2 374 0
+ 1245 00bc 40F20000 		movw	r0, #:lower16:os_idle_TCB
+ 1246 00c0 C0F20000 		movt	r0, #:upper16:os_idle_TCB
+ 1247 00c4 4FF00001 		mov	r1, #0
+ 1248 00c8 40F20002 		movw	r2, #:lower16:os_idle_demon
+ 1249 00cc C0F20002 		movt	r2, #:upper16:os_idle_demon
+ 1250 00d0 FFF7FEFF 		bl	rt_init_context
+ 375:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 376:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Set up ready list: initially empty */
+ 377:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_rdy.cb_type = HCB;
+ 1251              		.loc 2 377 0
+ 1252 00d4 40F20003 		movw	r3, #:lower16:os_rdy
+ 1253 00d8 C0F20003 		movt	r3, #:upper16:os_rdy
+ 1254 00dc 4FF00402 		mov	r2, #4
+ 1255 00e0 1A70     		strb	r2, [r3, #0]
+ 378:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_rdy.p_lnk   = NULL;
+ 1256              		.loc 2 378 0
+ 1257 00e2 40F20003 		movw	r3, #:lower16:os_rdy
+ 1258 00e6 C0F20003 		movt	r3, #:upper16:os_rdy
+ 1259 00ea 4FF00002 		mov	r2, #0
+ 1260 00ee 5A60     		str	r2, [r3, #4]
+ 379:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Set up delay list: initially empty */
+ 380:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_dly.cb_type = HCB;
+ 1261              		.loc 2 380 0
+ 1262 00f0 40F20003 		movw	r3, #:lower16:os_dly
+ 1263 00f4 C0F20003 		movt	r3, #:upper16:os_dly
+ 1264 00f8 4FF00402 		mov	r2, #4
+ 1265 00fc 1A70     		strb	r2, [r3, #0]
+ 381:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_dly.p_dlnk  = NULL;
+ 1266              		.loc 2 381 0
+ 1267 00fe 40F20003 		movw	r3, #:lower16:os_dly
+ 1268 0102 C0F20003 		movt	r3, #:upper16:os_dly
+ 1269 0106 4FF00002 		mov	r2, #0
+ 1270 010a DA60     		str	r2, [r3, #12]
+ 382:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_dly.p_blnk  = NULL;
+ 1271              		.loc 2 382 0
+ 1272 010c 40F20003 		movw	r3, #:lower16:os_dly
+ 1273 0110 C0F20003 		movt	r3, #:upper16:os_dly
+ 1274 0114 4FF00002 		mov	r2, #0
+ 1275 0118 1A61     		str	r2, [r3, #16]
+ 383:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_dly.delta_time = 0;
+ 1276              		.loc 2 383 0
+ 1277 011a 40F20003 		movw	r3, #:lower16:os_dly
+ 1278 011e C0F20003 		movt	r3, #:upper16:os_dly
+ 1279 0122 4FF00002 		mov	r2, #0
+ 1280 0126 9A82     		strh	r2, [r3, #20]	@ movhi
+ 384:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 385:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Fix SP and system variables to assume idle task is running */
+ 386:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Transform main program into idle task by assuming idle TCB */
+ 387:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #ifndef __CMSIS_RTOS
+ 388:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_set_PSP (os_idle_TCB.tsk_stack+32);
+ 389:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #endif
+ 390:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_tsk.run = &os_idle_TCB;
+ 1281              		.loc 2 390 0
+ 1282 0128 40F20003 		movw	r3, #:lower16:os_tsk
+ 1283 012c C0F20003 		movt	r3, #:upper16:os_tsk
+ 1284 0130 40F20002 		movw	r2, #:lower16:os_idle_TCB
+ 1285 0134 C0F20002 		movt	r2, #:upper16:os_idle_TCB
+ 1286 0138 1A60     		str	r2, [r3, #0]
+ 391:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_tsk.run->state = RUNNING;
+ 1287              		.loc 2 391 0
+ 1288 013a 40F20003 		movw	r3, #:lower16:os_tsk
+ 1289 013e C0F20003 		movt	r3, #:upper16:os_tsk
+ 1290 0142 1B68     		ldr	r3, [r3, #0]
+ 1291 0144 4FF00202 		mov	r2, #2
+ 1292 0148 5A70     		strb	r2, [r3, #1]
+ 392:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 393:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Initialize ps queue */
+ 394:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_psq->first = 0;
+ 1293              		.loc 2 394 0
+ 1294 014a 40F20003 		movw	r3, #:lower16:os_fifo
+ 1295 014e C0F20003 		movt	r3, #:upper16:os_fifo
+ 1296 0152 4FF00002 		mov	r2, #0
+ 1297 0156 1A70     		strb	r2, [r3, #0]
+ 395:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_psq->last  = 0;
+ 1298              		.loc 2 395 0
+ 1299 0158 40F20003 		movw	r3, #:lower16:os_fifo
+ 1300 015c C0F20003 		movt	r3, #:upper16:os_fifo
+ 1301 0160 4FF00002 		mov	r2, #0
+ 1302 0164 5A70     		strb	r2, [r3, #1]
+ 396:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_psq->size  = os_fifo_size;
+ 1303              		.loc 2 396 0
+ 1304 0166 40F20003 		movw	r3, #:lower16:os_fifo
+ 1305 016a C0F20003 		movt	r3, #:upper16:os_fifo
+ 1306 016e 40F20002 		movw	r2, #:lower16:os_fifo_size
+ 1307 0172 C0F20002 		movt	r2, #:upper16:os_fifo_size
+ 1308 0176 1278     		ldrb	r2, [r2, #0]	@ zero_extendqisi2
+ 1309 0178 DA70     		strb	r2, [r3, #3]
+ 397:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 398:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_init_robin ();
+ 1310              		.loc 2 398 0
+ 1311 017a FFF7FEFF 		bl	rt_init_robin
+ 399:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 400:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Intitialize SVC and PendSV */
+ 401:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_svc_init ();
+ 1312              		.loc 2 401 0
+ 1313 017e FFF7FEFF 		bl	rt_svc_init
+ 402:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 403:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #ifndef __CMSIS_RTOS
+ 404:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Intitialize and start system clock timer */
+ 405:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_tick_irqn = os_tick_init ();
+ 406:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (os_tick_irqn >= 0) {
+ 407:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     OS_X_INIT(os_tick_irqn);
+ 408:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 409:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 410:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Start up first user task before entering the endless loop */
+ 411:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   rt_tsk_create (first_task, prio_stksz, stk, NULL);
+ 412:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #endif
+ 413:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 1314              		.loc 2 413 0
+ 1315 0182 07F10807 		add	r7, r7, #8
+ 1316 0186 BD46     		mov	sp, r7
+ 1317 0188 80BD     		pop	{r7, pc}
+ 1318              		.cfi_endproc
+ 1319              	.LFE18:
+ 1321 018a 00BF     		.section	.text.rt_sys_start,"ax",%progbits
+ 1322              		.align	2
+ 1323              		.global	rt_sys_start
+ 1324              		.thumb
+ 1325              		.thumb_func
+ 1327              	rt_sys_start:
+ 1328              	.LFB19:
+ 414:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 415:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 416:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** /*--------------------------- rt_sys_start ----------------------------------*/
+ 417:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 418:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** #ifdef __CMSIS_RTOS
+ 419:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** void rt_sys_start (void) {
+ 1329              		.loc 2 419 0
+ 1330              		.cfi_startproc
+ 1331              		@ args = 0, pretend = 0, frame = 0
+ 1332              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1333 0000 80B5     		push	{r7, lr}
+ 1334              	.LCFI35:
+ 1335              		.cfi_def_cfa_offset 8
+ 1336              		.cfi_offset 7, -8
+ 1337              		.cfi_offset 14, -4
+ 1338 0002 00AF     		add	r7, sp, #0
+ 1339              	.LCFI36:
+ 1340              		.cfi_def_cfa_register 7
+ 420:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Start system */
+ 421:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** 
+ 422:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   /* Intitialize and start system clock timer */
+ 423:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   os_tick_irqn = os_tick_init ();
+ 1341              		.loc 2 423 0
+ 1342 0004 FFF7FEFF 		bl	os_tick_init
+ 1343 0008 0246     		mov	r2, r0
+ 1344 000a 40F20003 		movw	r3, #:lower16:os_tick_irqn
+ 1345 000e C0F20003 		movt	r3, #:upper16:os_tick_irqn
+ 1346 0012 1A60     		str	r2, [r3, #0]
+ 424:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   if (os_tick_irqn >= 0) {
+ 1347              		.loc 2 424 0
+ 1348 0014 40F20003 		movw	r3, #:lower16:os_tick_irqn
+ 1349 0018 C0F20003 		movt	r3, #:upper16:os_tick_irqn
+ 1350 001c 1B68     		ldr	r3, [r3, #0]
+ 1351 001e 002B     		cmp	r3, #0
+ 1352 0020 24DB     		blt	.L54
+ 425:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****     OS_X_INIT(os_tick_irqn);
+ 1353              		.loc 2 425 0
+ 1354 0022 40F20003 		movw	r3, #:lower16:os_tick_irqn
+ 1355 0026 C0F20003 		movt	r3, #:upper16:os_tick_irqn
+ 1356 002a 1B68     		ldr	r3, [r3, #0]
+ 1357 002c 03F16043 		add	r3, r3, #-536870912
+ 1358 0030 03F56443 		add	r3, r3, #58368
+ 1359 0034 4FF0FF02 		mov	r2, #255
+ 1360 0038 1A70     		strb	r2, [r3, #0]
+ 1361 003a 40F20003 		movw	r3, #:lower16:os_tick_irqn
+ 1362 003e C0F20003 		movt	r3, #:upper16:os_tick_irqn
+ 1363 0042 1B68     		ldr	r3, [r3, #0]
+ 1364 0044 4FEA6313 		asr	r3, r3, #5
+ 1365 0048 4FEA8303 		lsl	r3, r3, #2
+ 1366 004c 03F16043 		add	r3, r3, #-536870912
+ 1367 0050 03F56143 		add	r3, r3, #57600
+ 1368 0054 40F20002 		movw	r2, #:lower16:os_tick_irqn
+ 1369 0058 C0F20002 		movt	r2, #:upper16:os_tick_irqn
+ 1370 005c 1268     		ldr	r2, [r2, #0]
+ 1371 005e 02F01F02 		and	r2, r2, #31
+ 1372 0062 4FF00101 		mov	r1, #1
+ 1373 0066 01FA02F2 		lsl	r2, r1, r2
+ 1374 006a 1A60     		str	r2, [r3, #0]
+ 1375              	.L54:
+ 426:../Dave/Generated/src/RTOS001/SRC/rt_Task.c ****   }
+ 427:../Dave/Generated/src/RTOS001/SRC/rt_Task.c **** }
+ 1376              		.loc 2 427 0
+ 1377 006c 80BD     		pop	{r7, pc}
+ 1378              		.cfi_endproc
+ 1379              	.LFE19:
+ 1381 006e 00BF     		.text
+ 1382              	.Letext0:
+ 1383              		.file 3 "../Dave/Generated/src/RTOS001/SRC/rt_TypeDef.h"
+ 1384              		.file 4 "../Dave/Generated/src/RTOS001/SRC/RTX_Config.h"
+ 1385              		.file 5 "../Dave/Generated/src/RTOS001/SRC/rt_System.h"
+ 1386              		.file 6 "../Dave/Generated/src/RTOS001/SRC/rt_List.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 rt_Task.c
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:20     .text.rt_svc_init:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:24     .text.rt_svc_init:00000000 rt_svc_init
+                            *COM*:00000008 os_tsk
+                            *COM*:00000034 os_idle_TCB
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:116    .text.rt_get_TID:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:120    .text.rt_get_TID:00000000 rt_get_TID
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:181    .text.rt_init_context:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:185    .text.rt_init_context:00000000 rt_init_context
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:287    .text.rt_switch_req:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:292    .text.rt_switch_req:00000000 rt_switch_req
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:328    .text.rt_dispatch:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:333    .text.rt_dispatch:00000000 rt_dispatch
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:409    .text.rt_block:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:414    .text.rt_block:00000000 rt_block
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:476    .text.rt_tsk_pass:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:481    .text.rt_tsk_pass:00000000 rt_tsk_pass
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:531    .text.rt_tsk_self:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:536    .text.rt_tsk_self:00000000 rt_tsk_self
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:575    .text.rt_tsk_prio:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:580    .text.rt_tsk_prio:00000000 rt_tsk_prio
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:724    .text.rt_tsk_create:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:729    .text.rt_tsk_create:00000000 rt_tsk_create
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:824    .text.rt_tsk_delete:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:829    .text.rt_tsk_delete:00000000 rt_tsk_delete
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:1154   .text.rt_sys_init:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:1159   .text.rt_sys_init:00000000 rt_sys_init
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:1322   .text.rt_sys_start:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccvI1KMa.s:1327   .text.rt_sys_start:00000000 rt_sys_start
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
+                           .group:00000000 wm4.rt_TypeDef.h.79.db0d61ef3f79bbdae3d134fa36f08304
+                           .group:00000000 wm4.RTX_Config.h.42.eb93c57b7f787c25a05db70c41047f1a
+                           .group:00000000 wm4.rt_Task.h.38.ad357e63c89f04311a4b4ec53df91b63
+                           .group:00000000 wm4.rt_List.h.38.eac26046fac8ea42e6920eca3c3ee440
+                           .group:00000000 wm4.rt_MemBox.h.36.bed0d6bbd95e17b5f9057dfffad2dc95
+                           .group:00000000 wm4.rt_HAL_CM.h.36.531af519683d77df9d264c8d6c8a6b22
+
+UNDEFINED SYMBOLS
+os_active_TCB
+os_maxtaskrun
+mp_stk
+rt_alloc_box
+rt_init_stack
+os_rdy
+rt_get_first
+rt_put_rdy_first
+rt_put_prio
+rt_put_dly
+rt_get_same_rdy_prio
+rt_resort_prio
+mp_tcb
+rt_get_PSP
+rt_stk_check
+rt_ret_val
+rt_rmv_dly
+rt_free_box
+rt_rmv_list
+mp_tcb_size
+_init_box
+mp_stk_size
+os_stackinfo
+m_tmr
+mp_tmr_size
+os_idle_demon
+os_dly
+os_fifo
+os_fifo_size
+rt_init_robin
+os_tick_init
+os_tick_irqn

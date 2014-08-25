@@ -1,0 +1,672 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 6
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"rt_MemBox.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text._init_box,"ax",%progbits
+  20              		.align	2
+  21              		.global	_init_box
+  22              		.thumb
+  23              		.thumb_func
+  25              	_init_box:
+  26              	.LFB8:
+  27              		.file 1 "../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c"
+   1:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** /*----------------------------------------------------------------------------
+   2:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *      RL-ARM - RTX
+   3:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *----------------------------------------------------------------------------
+   4:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *      Name:    RT_MEMBOX.C
+   5:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *      Purpose: Interface functions for fixed memory block management system
+   6:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *      Rev.:    V4.70
+   7:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *----------------------------------------------------------------------------
+   8:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *
+   9:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
+  10:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * All rights reserved.
+  11:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * Redistribution and use in source and binary forms, with or without
+  12:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * modification, are permitted provided that the following conditions are met:
+  13:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *  - Redistributions of source code must retain the above copyright
+  14:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *    notice, this list of conditions and the following disclaimer.
+  15:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *  - Redistributions in binary form must reproduce the above copyright
+  16:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *    notice, this list of conditions and the following disclaimer in the
+  17:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *    documentation and/or other materials provided with the distribution.
+  18:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *  - Neither the name of ARM  nor the names of its contributors may be used 
+  19:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *    to endorse or promote products derived from this software without 
+  20:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *    specific prior written permission.
+  21:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *
+  22:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+  23:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+  24:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  25:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  26:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  27:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+  28:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+  29:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+  30:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  32:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  * POSSIBILITY OF SUCH DAMAGE.
+  33:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *---------------------------------------------------------------------------*/
+  34:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+  35:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #include "rt_TypeDef.h"
+  36:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #include "RTX_Config.h"
+  37:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #include "rt_System.h"
+  38:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #include "rt_MemBox.h"
+  39:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #include "rt_HAL_CM.h"
+  40:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+  41:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** /*----------------------------------------------------------------------------
+  42:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *      Global Functions
+  43:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****  *---------------------------------------------------------------------------*/
+  44:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+  45:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+  46:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** /*--------------------------- _init_box -------------------------------------*/
+  47:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+  48:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** int _init_box  (void *box_mem, U32 box_size, U32 blk_size) {
+  28              		.loc 1 48 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 32
+  31              		@ frame_needed = 1, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 80B4     		push	{r7}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 7, -4
+  37 0002 89B0     		sub	sp, sp, #36
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 40
+  40 0004 00AF     		add	r7, sp, #0
+  41              	.LCFI2:
+  42              		.cfi_def_cfa_register 7
+  43 0006 F860     		str	r0, [r7, #12]
+  44 0008 B960     		str	r1, [r7, #8]
+  45 000a 7A60     		str	r2, [r7, #4]
+  49:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   /* Initialize memory block system, returns 0 if OK, 1 if fails. */
+  50:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   void *end;
+  51:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   void *blk;
+  52:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   void *next;
+  53:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   U32  sizeof_bm;
+  54:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+  55:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   /* Create memory structure. */
+  56:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   if (blk_size & BOX_ALIGN_8) {
+  46              		.loc 1 56 0
+  47 000c 7B68     		ldr	r3, [r7, #4]
+  48 000e 002B     		cmp	r3, #0
+  49 0010 0BDA     		bge	.L2
+  57:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     /* Memory blocks 8-byte aligned. */ 
+  58:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     blk_size = ((blk_size & ~BOX_ALIGN_8) + 7) & ~7;
+  50              		.loc 1 58 0
+  51 0012 7B68     		ldr	r3, [r7, #4]
+  52 0014 23F00043 		bic	r3, r3, #-2147483648
+  53 0018 03F10703 		add	r3, r3, #7
+  54 001c 23F00703 		bic	r3, r3, #7
+  55 0020 7B60     		str	r3, [r7, #4]
+  59:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     sizeof_bm = (sizeof (struct OS_BM) + 7) & ~7;
+  56              		.loc 1 59 0
+  57 0022 4FF01003 		mov	r3, #16
+  58 0026 BB61     		str	r3, [r7, #24]
+  59 0028 08E0     		b	.L3
+  60              	.L2:
+  60:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   }
+  61:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   else {
+  62:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     /* Memory blocks 4-byte aligned. */
+  63:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     blk_size = (blk_size + 3) & ~3;
+  61              		.loc 1 63 0
+  62 002a 7B68     		ldr	r3, [r7, #4]
+  63 002c 03F10303 		add	r3, r3, #3
+  64 0030 23F00303 		bic	r3, r3, #3
+  65 0034 7B60     		str	r3, [r7, #4]
+  64:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     sizeof_bm = sizeof (struct OS_BM);
+  66              		.loc 1 64 0
+  67 0036 4FF00C03 		mov	r3, #12
+  68 003a BB61     		str	r3, [r7, #24]
+  69              	.L3:
+  65:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   }
+  66:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   if (blk_size == 0) {
+  70              		.loc 1 66 0
+  71 003c 7B68     		ldr	r3, [r7, #4]
+  72 003e 002B     		cmp	r3, #0
+  73 0040 02D1     		bne	.L4
+  67:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     return (1);
+  74              		.loc 1 67 0
+  75 0042 4FF00103 		mov	r3, #1
+  76 0046 34E0     		b	.L5
+  77              	.L4:
+  68:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   }
+  69:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   if ((blk_size + sizeof_bm) > box_size) {
+  78              		.loc 1 69 0
+  79 0048 7A68     		ldr	r2, [r7, #4]
+  80 004a BB69     		ldr	r3, [r7, #24]
+  81 004c D218     		adds	r2, r2, r3
+  82 004e BB68     		ldr	r3, [r7, #8]
+  83 0050 9A42     		cmp	r2, r3
+  84 0052 02D9     		bls	.L6
+  70:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     return (1);
+  85              		.loc 1 70 0
+  86 0054 4FF00103 		mov	r3, #1
+  87 0058 2BE0     		b	.L5
+  88              	.L6:
+  71:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   }
+  72:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   /* Create a Memory structure. */
+  73:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   blk = ((U8 *) box_mem) + sizeof_bm;
+  89              		.loc 1 73 0
+  90 005a FA68     		ldr	r2, [r7, #12]
+  91 005c BB69     		ldr	r3, [r7, #24]
+  92 005e D318     		adds	r3, r2, r3
+  93 0060 FB61     		str	r3, [r7, #28]
+  74:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   ((P_BM) box_mem)->free = blk;
+  94              		.loc 1 74 0
+  95 0062 FB68     		ldr	r3, [r7, #12]
+  96 0064 FA69     		ldr	r2, [r7, #28]
+  97 0066 1A60     		str	r2, [r3, #0]
+  75:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   end = ((U8 *) box_mem) + box_size;
+  98              		.loc 1 75 0
+  99 0068 FA68     		ldr	r2, [r7, #12]
+ 100 006a BB68     		ldr	r3, [r7, #8]
+ 101 006c D318     		adds	r3, r2, r3
+ 102 006e 7B61     		str	r3, [r7, #20]
+  76:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   ((P_BM) box_mem)->end      = end;
+ 103              		.loc 1 76 0
+ 104 0070 FB68     		ldr	r3, [r7, #12]
+ 105 0072 7A69     		ldr	r2, [r7, #20]
+ 106 0074 5A60     		str	r2, [r3, #4]
+  77:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   ((P_BM) box_mem)->blk_size = blk_size;
+ 107              		.loc 1 77 0
+ 108 0076 FB68     		ldr	r3, [r7, #12]
+ 109 0078 7A68     		ldr	r2, [r7, #4]
+ 110 007a 9A60     		str	r2, [r3, #8]
+  78:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+  79:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   /* Link all free blocks using offsets. */
+  80:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   end = ((U8 *) end) - blk_size;
+ 111              		.loc 1 80 0
+ 112 007c 7B68     		ldr	r3, [r7, #4]
+ 113 007e C3F10003 		rsb	r3, r3, #0
+ 114 0082 7A69     		ldr	r2, [r7, #20]
+ 115 0084 D318     		adds	r3, r2, r3
+ 116 0086 7B61     		str	r3, [r7, #20]
+ 117              	.L9:
+  81:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   while (1)  {
+  82:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     next = ((U8 *) blk) + blk_size;
+ 118              		.loc 1 82 0
+ 119 0088 FA69     		ldr	r2, [r7, #28]
+ 120 008a 7B68     		ldr	r3, [r7, #4]
+ 121 008c D318     		adds	r3, r2, r3
+ 122 008e 3B61     		str	r3, [r7, #16]
+  83:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     if (next > end)  break;
+ 123              		.loc 1 83 0
+ 124 0090 3A69     		ldr	r2, [r7, #16]
+ 125 0092 7B69     		ldr	r3, [r7, #20]
+ 126 0094 9A42     		cmp	r2, r3
+ 127 0096 05D8     		bhi	.L11
+ 128              	.L7:
+  84:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     *((void **)blk) = next;
+ 129              		.loc 1 84 0
+ 130 0098 FB69     		ldr	r3, [r7, #28]
+ 131 009a 3A69     		ldr	r2, [r7, #16]
+ 132 009c 1A60     		str	r2, [r3, #0]
+  85:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     blk = next;
+ 133              		.loc 1 85 0
+ 134 009e 3B69     		ldr	r3, [r7, #16]
+ 135 00a0 FB61     		str	r3, [r7, #28]
+  86:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   }
+ 136              		.loc 1 86 0
+ 137 00a2 F1E7     		b	.L9
+ 138              	.L11:
+  83:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     if (next > end)  break;
+ 139              		.loc 1 83 0
+ 140 00a4 00BF     		nop
+ 141              	.L10:
+  87:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   /* end marker */
+  88:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   *((void **)blk) = 0;
+ 142              		.loc 1 88 0
+ 143 00a6 FB69     		ldr	r3, [r7, #28]
+ 144 00a8 4FF00002 		mov	r2, #0
+ 145 00ac 1A60     		str	r2, [r3, #0]
+  89:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   return (0);
+ 146              		.loc 1 89 0
+ 147 00ae 4FF00003 		mov	r3, #0
+ 148              	.L5:
+  90:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** }
+ 149              		.loc 1 90 0
+ 150 00b2 1846     		mov	r0, r3
+ 151 00b4 07F12407 		add	r7, r7, #36
+ 152 00b8 BD46     		mov	sp, r7
+ 153 00ba 80BC     		pop	{r7}
+ 154 00bc 7047     		bx	lr
+ 155              		.cfi_endproc
+ 156              	.LFE8:
+ 158 00be 00BF     		.section	.text.rt_alloc_box,"ax",%progbits
+ 159              		.align	2
+ 160              		.global	rt_alloc_box
+ 161              		.thumb
+ 162              		.thumb_func
+ 164              	rt_alloc_box:
+ 165              	.LFB9:
+  91:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+  92:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** /*--------------------------- rt_alloc_box ----------------------------------*/
+  93:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+  94:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** void *rt_alloc_box (void *box_mem) {
+ 166              		.loc 1 94 0
+ 167              		.cfi_startproc
+ 168              		@ args = 0, pretend = 0, frame = 24
+ 169              		@ frame_needed = 1, uses_anonymous_args = 0
+ 170              		@ link register save eliminated.
+ 171 0000 90B4     		push	{r4, r7}
+ 172              	.LCFI3:
+ 173              		.cfi_def_cfa_offset 8
+ 174              		.cfi_offset 4, -8
+ 175              		.cfi_offset 7, -4
+ 176 0002 86B0     		sub	sp, sp, #24
+ 177              	.LCFI4:
+ 178              		.cfi_def_cfa_offset 32
+ 179 0004 00AF     		add	r7, sp, #0
+ 180              	.LCFI5:
+ 181              		.cfi_def_cfa_register 7
+ 182 0006 7860     		str	r0, [r7, #4]
+ 183              	.LBB10:
+ 184              	.LBB11:
+ 185              		.file 2 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h"
+   1:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** /*----------------------------------------------------------------------------
+   2:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      RL-ARM - RTX
+   3:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *----------------------------------------------------------------------------
+   4:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      Name:    RT_HAL_CM.H
+   5:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      Purpose: Hardware Abstraction Layer for Cortex-M definitions
+   6:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *      Rev.:    V4.70
+   7:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *----------------------------------------------------------------------------
+   8:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *
+   9:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
+  10:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * All rights reserved.
+  11:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * Redistribution and use in source and binary forms, with or without
+  12:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * modification, are permitted provided that the following conditions are met:
+  13:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *  - Redistributions of source code must retain the above copyright
+  14:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    notice, this list of conditions and the following disclaimer.
+  15:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *  - Redistributions in binary form must reproduce the above copyright
+  16:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    notice, this list of conditions and the following disclaimer in the
+  17:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    documentation and/or other materials provided with the distribution.
+  18:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *  - Neither the name of ARM  nor the names of its contributors may be used 
+  19:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    to endorse or promote products derived from this software without 
+  20:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *    specific prior written permission.
+  21:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *
+  22:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+  23:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+  24:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  25:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  26:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  27:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+  28:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+  29:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+  30:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  32:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  * POSSIBILITY OF SUCH DAMAGE.
+  33:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  *---------------------------------------------------------------------------*/
+  34:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  35:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** /* Definitions */
+  36:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define INITIAL_xPSR    0x01000000
+  37:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define DEMCR_TRCENA    0x01000000
+  38:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define ITM_ITMENA      0x00000001
+  39:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define MAGIC_WORD      0xE25A2EA5
+  40:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  41:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if defined (__CC_ARM)          /* ARM Compiler */
+  42:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  43:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if ((__TARGET_ARCH_7_M || __TARGET_ARCH_7E_M) && !defined(NO_EXCLUSIVE_ACCESS))
+  44:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  #define __USE_EXCLUSIVE_ACCESS
+  45:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+  46:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****  #undef  __USE_EXCLUSIVE_ACCESS
+  47:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+  48:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  49:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #elif defined (__GNUC__)        /* GNU Compiler */
+  50:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  51:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #undef  __USE_EXCLUSIVE_ACCESS
+  52:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  53:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if defined (__CORTEX_M0)
+  54:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_ARCH_6S_M 1
+  55:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+  56:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_ARCH_6S_M 0
+  57:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+  58:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  59:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #if defined (__VFP_FP__) && !defined(__SOFTFP__)
+  60:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_FPU_VFP 1
+  61:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #else
+  62:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __TARGET_FPU_VFP 0
+  63:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #endif
+  64:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  65:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __inline inline
+  66:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #define __weak   __attribute__((weak))
+  67:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  68:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** #ifndef __CMSIS_GENERIC
+  69:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  70:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __attribute__((always_inline)) static inline void __enable_irq(void)
+  71:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** {
+  72:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsie i");
+  73:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** }
+  74:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  75:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** __attribute__((always_inline)) static inline U32 __disable_irq(void)
+  76:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** {
+  77:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   U32 result;
+  78:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h **** 
+  79:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("mrs %0, primask" : "=r" (result));
+ 186              		.loc 2 79 0
+ 187              	@ 79 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 188 0008 EFF31084 		mrs r4, primask
+ 189              	@ 0 "" 2
+ 190              		.thumb
+ 191 000c FC60     		str	r4, [r7, #12]
+  80:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsid i");
+ 192              		.loc 2 80 0
+ 193              	@ 80 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 194 000e 72B6     		cpsid i
+ 195              	@ 0 "" 2
+  81:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   return(result & 1);
+ 196              		.loc 2 81 0
+ 197              		.thumb
+ 198 0010 FB68     		ldr	r3, [r7, #12]
+ 199 0012 03F00103 		and	r3, r3, #1
+ 200              	.LBE11:
+ 201              	.LBE10:
+  95:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   /* Allocate a memory block and return start address. */
+  96:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   void **free;
+  97:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #ifndef __USE_EXCLUSIVE_ACCESS
+  98:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   int  irq_dis;
+  99:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+ 100:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   irq_dis = __disable_irq ();
+ 202              		.loc 1 100 0
+ 203 0016 7B61     		str	r3, [r7, #20]
+ 101:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   free = ((P_BM) box_mem)->free;
+ 204              		.loc 1 101 0
+ 205 0018 7B68     		ldr	r3, [r7, #4]
+ 206 001a 1B68     		ldr	r3, [r3, #0]
+ 207 001c 3B61     		str	r3, [r7, #16]
+ 102:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   if (free) {
+ 208              		.loc 1 102 0
+ 209 001e 3B69     		ldr	r3, [r7, #16]
+ 210 0020 002B     		cmp	r3, #0
+ 211 0022 03D0     		beq	.L14
+ 103:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     ((P_BM) box_mem)->free = *free;
+ 212              		.loc 1 103 0
+ 213 0024 3B69     		ldr	r3, [r7, #16]
+ 214 0026 1A68     		ldr	r2, [r3, #0]
+ 215 0028 7B68     		ldr	r3, [r7, #4]
+ 216 002a 1A60     		str	r2, [r3, #0]
+ 217              	.L14:
+ 104:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   }
+ 105:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   if (!irq_dis) __enable_irq ();
+ 218              		.loc 1 105 0
+ 219 002c 7B69     		ldr	r3, [r7, #20]
+ 220 002e 002B     		cmp	r3, #0
+ 221 0030 00D1     		bne	.L15
+ 222              	.LBB12:
+ 223              	.LBB13:
+  72:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsie i");
+ 224              		.loc 2 72 0
+ 225              	@ 72 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 226 0032 62B6     		cpsie i
+ 227              	@ 0 "" 2
+ 228              		.thumb
+ 229              	.L15:
+ 230              	.LBE13:
+ 231              	.LBE12:
+ 106:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #else
+ 107:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   do {
+ 108:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     if ((free = (void **)__ldrex(&((P_BM) box_mem)->free)) == 0) {
+ 109:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****       __clrex();
+ 110:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****       break;
+ 111:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     }
+ 112:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   } while (__strex((U32)*free, &((P_BM) box_mem)->free));
+ 113:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #endif
+ 114:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   return (free);
+ 232              		.loc 1 114 0
+ 233 0034 3B69     		ldr	r3, [r7, #16]
+ 115:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** }
+ 234              		.loc 1 115 0
+ 235 0036 1846     		mov	r0, r3
+ 236 0038 07F11807 		add	r7, r7, #24
+ 237 003c BD46     		mov	sp, r7
+ 238 003e 90BC     		pop	{r4, r7}
+ 239 0040 7047     		bx	lr
+ 240              		.cfi_endproc
+ 241              	.LFE9:
+ 243 0042 00BF     		.section	.text._calloc_box,"ax",%progbits
+ 244              		.align	2
+ 245              		.global	_calloc_box
+ 246              		.thumb
+ 247              		.thumb_func
+ 249              	_calloc_box:
+ 250              	.LFB10:
+ 116:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+ 117:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+ 118:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** /*--------------------------- _calloc_box -----------------------------------*/
+ 119:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+ 120:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** void *_calloc_box (void *box_mem)  {
+ 251              		.loc 1 120 0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 24
+ 254              		@ frame_needed = 1, uses_anonymous_args = 0
+ 255 0000 80B5     		push	{r7, lr}
+ 256              	.LCFI6:
+ 257              		.cfi_def_cfa_offset 8
+ 258              		.cfi_offset 7, -8
+ 259              		.cfi_offset 14, -4
+ 260 0002 86B0     		sub	sp, sp, #24
+ 261              	.LCFI7:
+ 262              		.cfi_def_cfa_offset 32
+ 263 0004 00AF     		add	r7, sp, #0
+ 264              	.LCFI8:
+ 265              		.cfi_def_cfa_register 7
+ 266 0006 7860     		str	r0, [r7, #4]
+ 121:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   /* Allocate a 0-initialized memory block and return start address. */
+ 122:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   void *free;
+ 123:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   U32 *p;
+ 124:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   U32 i;
+ 125:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+ 126:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   free = _alloc_box (box_mem);
+ 267              		.loc 1 126 0
+ 268 0008 7868     		ldr	r0, [r7, #4]
+ 269 000a FFF7FEFF 		bl	_alloc_box
+ 270 000e F860     		str	r0, [r7, #12]
+ 127:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   if (free)  {
+ 271              		.loc 1 127 0
+ 272 0010 FB68     		ldr	r3, [r7, #12]
+ 273 0012 002B     		cmp	r3, #0
+ 274 0014 14D0     		beq	.L18
+ 128:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     p = free;
+ 275              		.loc 1 128 0
+ 276 0016 FB68     		ldr	r3, [r7, #12]
+ 277 0018 7B61     		str	r3, [r7, #20]
+ 129:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     for (i = ((P_BM) box_mem)->blk_size; i; i -= 4)  {
+ 278              		.loc 1 129 0
+ 279 001a 7B68     		ldr	r3, [r7, #4]
+ 280 001c 9B68     		ldr	r3, [r3, #8]
+ 281 001e 3B61     		str	r3, [r7, #16]
+ 282 0020 0BE0     		b	.L19
+ 283              	.L20:
+ 130:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****       *p = 0;
+ 284              		.loc 1 130 0 discriminator 2
+ 285 0022 7B69     		ldr	r3, [r7, #20]
+ 286 0024 4FF00002 		mov	r2, #0
+ 287 0028 1A60     		str	r2, [r3, #0]
+ 131:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****       p++;
+ 288              		.loc 1 131 0 discriminator 2
+ 289 002a 7B69     		ldr	r3, [r7, #20]
+ 290 002c 03F10403 		add	r3, r3, #4
+ 291 0030 7B61     		str	r3, [r7, #20]
+ 129:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     for (i = ((P_BM) box_mem)->blk_size; i; i -= 4)  {
+ 292              		.loc 1 129 0 discriminator 2
+ 293 0032 3B69     		ldr	r3, [r7, #16]
+ 294 0034 A3F10403 		sub	r3, r3, #4
+ 295 0038 3B61     		str	r3, [r7, #16]
+ 296              	.L19:
+ 129:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     for (i = ((P_BM) box_mem)->blk_size; i; i -= 4)  {
+ 297              		.loc 1 129 0 is_stmt 0 discriminator 1
+ 298 003a 3B69     		ldr	r3, [r7, #16]
+ 299 003c 002B     		cmp	r3, #0
+ 300 003e F0D1     		bne	.L20
+ 301              	.L18:
+ 132:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     }
+ 133:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   }
+ 134:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   return (free);
+ 302              		.loc 1 134 0 is_stmt 1
+ 303 0040 FB68     		ldr	r3, [r7, #12]
+ 135:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** }
+ 304              		.loc 1 135 0
+ 305 0042 1846     		mov	r0, r3
+ 306 0044 07F11807 		add	r7, r7, #24
+ 307 0048 BD46     		mov	sp, r7
+ 308 004a 80BD     		pop	{r7, pc}
+ 309              		.cfi_endproc
+ 310              	.LFE10:
+ 312              		.section	.text.rt_free_box,"ax",%progbits
+ 313              		.align	2
+ 314              		.global	rt_free_box
+ 315              		.thumb
+ 316              		.thumb_func
+ 318              	rt_free_box:
+ 319              	.LFB11:
+ 136:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+ 137:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+ 138:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** /*--------------------------- rt_free_box -----------------------------------*/
+ 139:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+ 140:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** int rt_free_box (void *box_mem, void *box) {
+ 320              		.loc 1 140 0
+ 321              		.cfi_startproc
+ 322              		@ args = 0, pretend = 0, frame = 16
+ 323              		@ frame_needed = 1, uses_anonymous_args = 0
+ 324              		@ link register save eliminated.
+ 325 0000 90B4     		push	{r4, r7}
+ 326              	.LCFI9:
+ 327              		.cfi_def_cfa_offset 8
+ 328              		.cfi_offset 4, -8
+ 329              		.cfi_offset 7, -4
+ 330 0002 84B0     		sub	sp, sp, #16
+ 331              	.LCFI10:
+ 332              		.cfi_def_cfa_offset 24
+ 333 0004 00AF     		add	r7, sp, #0
+ 334              	.LCFI11:
+ 335              		.cfi_def_cfa_register 7
+ 336 0006 7860     		str	r0, [r7, #4]
+ 337 0008 3960     		str	r1, [r7, #0]
+ 141:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   /* Free a memory block, returns 0 if OK, 1 if box does not belong to box_mem */
+ 142:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #ifndef __USE_EXCLUSIVE_ACCESS
+ 143:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   int irq_dis;
+ 144:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #endif
+ 145:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+ 146:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   if (box < box_mem || box >= ((P_BM) box_mem)->end) {
+ 338              		.loc 1 146 0
+ 339 000a 3A68     		ldr	r2, [r7, #0]
+ 340 000c 7B68     		ldr	r3, [r7, #4]
+ 341 000e 9A42     		cmp	r2, r3
+ 342 0010 04D3     		bcc	.L23
+ 343              		.loc 1 146 0 is_stmt 0 discriminator 1
+ 344 0012 7B68     		ldr	r3, [r7, #4]
+ 345 0014 5A68     		ldr	r2, [r3, #4]
+ 346 0016 3B68     		ldr	r3, [r7, #0]
+ 347 0018 9A42     		cmp	r2, r3
+ 348 001a 02D8     		bhi	.L24
+ 349              	.L23:
+ 147:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     return (1);
+ 350              		.loc 1 147 0 is_stmt 1
+ 351 001c 4FF00103 		mov	r3, #1
+ 352 0020 14E0     		b	.L25
+ 353              	.L24:
+ 354              	.LBB14:
+ 355              	.LBB15:
+  79:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("mrs %0, primask" : "=r" (result));
+ 356              		.loc 2 79 0
+ 357              	@ 79 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 358 0022 EFF31084 		mrs r4, primask
+ 359              	@ 0 "" 2
+ 360              		.thumb
+ 361 0026 BC60     		str	r4, [r7, #8]
+  80:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsid i");
+ 362              		.loc 2 80 0
+ 363              	@ 80 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 364 0028 72B6     		cpsid i
+ 365              	@ 0 "" 2
+ 366              		.loc 2 81 0
+ 367              		.thumb
+ 368 002a BB68     		ldr	r3, [r7, #8]
+ 369 002c 03F00103 		and	r3, r3, #1
+ 370              	.LBE15:
+ 371              	.LBE14:
+ 148:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   }
+ 149:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** 
+ 150:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #ifndef __USE_EXCLUSIVE_ACCESS
+ 151:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   irq_dis = __disable_irq ();
+ 372              		.loc 1 151 0
+ 373 0030 FB60     		str	r3, [r7, #12]
+ 152:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   *((void **)box) = ((P_BM) box_mem)->free;
+ 374              		.loc 1 152 0
+ 375 0032 7B68     		ldr	r3, [r7, #4]
+ 376 0034 1A68     		ldr	r2, [r3, #0]
+ 377 0036 3B68     		ldr	r3, [r7, #0]
+ 378 0038 1A60     		str	r2, [r3, #0]
+ 153:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   ((P_BM) box_mem)->free = box;
+ 379              		.loc 1 153 0
+ 380 003a 7B68     		ldr	r3, [r7, #4]
+ 381 003c 3A68     		ldr	r2, [r7, #0]
+ 382 003e 1A60     		str	r2, [r3, #0]
+ 154:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   if (!irq_dis) __enable_irq ();
+ 383              		.loc 1 154 0
+ 384 0040 FB68     		ldr	r3, [r7, #12]
+ 385 0042 002B     		cmp	r3, #0
+ 386 0044 00D1     		bne	.L27
+ 387              	.LBB16:
+ 388              	.LBB17:
+  72:../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h ****   __asm volatile ("cpsie i");
+ 389              		.loc 2 72 0
+ 390              	@ 72 "../Dave/Generated/src/RTOS001/SRC/rt_HAL_CM.h" 1
+ 391 0046 62B6     		cpsie i
+ 392              	@ 0 "" 2
+ 393              		.thumb
+ 394              	.L27:
+ 395              	.LBE17:
+ 396              	.LBE16:
+ 155:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #else
+ 156:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   do {
+ 157:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****     *((void **)box) = (void *)__ldrex(&((P_BM) box_mem)->free);
+ 158:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   } while (__strex ((U32)box, &((P_BM) box_mem)->free));
+ 159:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** #endif
+ 160:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c ****   return (0);
+ 397              		.loc 1 160 0
+ 398 0048 4FF00003 		mov	r3, #0
+ 399              	.L25:
+ 161:../Dave/Generated/src/RTOS001/SRC/rt_MemBox.c **** }
+ 400              		.loc 1 161 0
+ 401 004c 1846     		mov	r0, r3
+ 402 004e 07F11007 		add	r7, r7, #16
+ 403 0052 BD46     		mov	sp, r7
+ 404 0054 90BC     		pop	{r4, r7}
+ 405 0056 7047     		bx	lr
+ 406              		.cfi_endproc
+ 407              	.LFE11:
+ 409              		.text
+ 410              	.Letext0:
+ 411              		.file 3 "../Dave/Generated/src/RTOS001/SRC/rt_TypeDef.h"
+ 412              		.file 4 "../Dave/Generated/src/RTOS001/SRC/RTX_Config.h"
+DEFINED SYMBOLS
+                            *ABS*:00000000 rt_MemBox.c
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccwyrSst.s:20     .text._init_box:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccwyrSst.s:25     .text._init_box:00000000 _init_box
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccwyrSst.s:159    .text.rt_alloc_box:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccwyrSst.s:164    .text.rt_alloc_box:00000000 rt_alloc_box
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccwyrSst.s:244    .text._calloc_box:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccwyrSst.s:249    .text._calloc_box:00000000 _calloc_box
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccwyrSst.s:313    .text.rt_free_box:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\ccwyrSst.s:318    .text.rt_free_box:00000000 rt_free_box
+                     .debug_frame:00000010 $d
+                           .group:00000000 wm4.1.35166846b5321d4273ad8c4248893ac3
+                           .group:00000000 wm4.rt_TypeDef.h.79.db0d61ef3f79bbdae3d134fa36f08304
+                           .group:00000000 wm4.RTX_Config.h.42.eb93c57b7f787c25a05db70c41047f1a
+                           .group:00000000 wm4.rt_MemBox.h.36.bed0d6bbd95e17b5f9057dfffad2dc95
+                           .group:00000000 wm4.rt_HAL_CM.h.36.531af519683d77df9d264c8d6c8a6b22
+
+UNDEFINED SYMBOLS
+_alloc_box

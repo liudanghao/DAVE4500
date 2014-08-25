@@ -1,0 +1,82 @@
+   1              	# 1 "../Dave/Generated/src/RTOS001/SRC/HAL_CM4.s"
+   1              	/*----------------------------------------------------------------------------
+   0              	
+   2              	 *      RL-ARM - RTX
+   3              	 *----------------------------------------------------------------------------
+   4              	 *      Name:    HAL_CM4.S
+   5              	 *      Purpose: Hardware Abstraction Layer for Cortex-M4
+   6              	 *      Rev.:    V4.70
+   7              	 *----------------------------------------------------------------------------
+   8              	 *
+   9              	 * Copyright (c) 1999-2009 KEIL, 2009-2013 ARM Germany GmbH
+  10              	 * All rights reserved.
+  11              	 * Redistribution and use in source and binary forms, with or without
+  12              	 * modification, are permitted provided that the following conditions are met:
+  13              	 *  - Redistributions of source code must retain the above copyright
+  14              	 *    notice, this list of conditions and the following disclaimer.
+  15              	 *  - Redistributions in binary form must reproduce the above copyright
+  16              	 *    notice, this list of conditions and the following disclaimer in the
+  17              	 *    documentation and/or other materials provided with the distribution.
+  18              	 *  - Neither the name of ARM  nor the names of its contributors may be used 
+  19              	 *    to endorse or promote products derived from this software without 
+  20              	 *    specific prior written permission.
+  21              	 *
+  22              	 * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
+  23              	 * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
+  24              	 * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+  25              	 * ARE DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS AND CONTRIBUTORS BE
+  26              	 * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+  27              	 * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF 
+  28              	 * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS 
+  29              	 * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN 
+  30              	 * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+  31              	 * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+  32              	 * POSSIBILITY OF SUCH DAMAGE.
+  33              	 *---------------------------------------------------------------------------*/
+  34              	
+  35              	#ifdef __GNUC__
+  36              	
+  37              	#ifdef UC_ID
+  38              	# include <uc_id.inc>
+   1              	/*************************************************************************** */
+  39              	# if ((UC_SERIES == XMC45) && (UC_STEP <= STEP_AB)) || ((UC_SERIES == XMC44 || UC_SERIES == XMC42) 
+  40              	#  define IFX_XMC4XXX
+  41              	# endif
+  42              	#endif
+  43              	
+  44              	        .file   "HAL_CM4.S"
+   0              	
+DEFINED SYMBOLS
+                            *ABS*:00000000 HAL_CM4.S
+           HAL_CM4.S:47     *ABS*:00000025 TCB_STACKF
+           HAL_CM4.S:48     *ABS*:00000028 TCB_TSTACK
+           HAL_CM4.S:58     .text:00000000 $t
+           HAL_CM4.S:66     .text:00000000 rt_set_PSP
+                       .ARM.exidx:00000000 $d
+           HAL_CM4.S:82     .text:00000006 rt_get_PSP
+           HAL_CM4.S:100    .text:0000000c os_set_env
+           HAL_CM4.S:126    .text:00000024 _alloc_box
+           HAL_CM4.S:153    .text:00000040 _free_box
+           HAL_CM4.S:178    .text:0000005c SVC_Handler
+           HAL_CM4.S:249    .text:000000d0 SVC_User
+           HAL_CM4.S:226    .text:000000ac SVC_Next
+           HAL_CM4.S:239    .text:000000ce SVC_Exit
+           HAL_CM4.S:264    .text:000000f0 SVC_Done
+           HAL_CM4.S:277    .text:000000f2 PendSV_Handler
+           HAL_CM4.S:289    .text:000000f8 Sys_Switch
+           HAL_CM4.S:330    .text:00000150 Sys_Exit
+           HAL_CM4.S:347    .text:00000152 SysTick_Handler
+           HAL_CM4.S:369    .text:0000015c OS_Tick_Handler
+           HAL_CM4.S:382    .text:0000016a $d
+
+UNDEFINED SYMBOLS
+os_flags
+rt_alloc_box
+rt_free_box
+os_tsk
+rt_stk_check
+SVC_Count
+SVC_Table
+rt_pop_req
+rt_systick
+os_tick_irqack

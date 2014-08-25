@@ -1,0 +1,175 @@
+   1              		.syntax unified
+   2              		.cpu cortex-m4
+   3              		.eabi_attribute 27, 3
+   4              		.fpu fpv4-sp-d16
+   5              		.eabi_attribute 20, 1
+   6              		.eabi_attribute 21, 1
+   7              		.eabi_attribute 23, 3
+   8              		.eabi_attribute 24, 1
+   9              		.eabi_attribute 25, 1
+  10              		.eabi_attribute 26, 1
+  11              		.eabi_attribute 30, 4
+  12              		.eabi_attribute 34, 1
+  13              		.eabi_attribute 18, 4
+  14              		.thumb
+  15              		.file	"RTX_Conf_CM.c"
+  16              		.section	.text.os_idle_demon,"ax",%progbits
+  17              		.align	1
+  18              		.global	os_idle_demon
+  19              		.thumb
+  20              		.thumb_func
+  22              	os_idle_demon:
+  23              		@ Volatile: function does not return.
+  24              		@ args = 0, pretend = 0, frame = 0
+  25              		@ frame_needed = 0, uses_anonymous_args = 0
+  26              		@ link register save eliminated.
+  27              	.L2:
+  28 0000 FEE7     		b	.L2
+  30              		.section	.text.os_tmr_call,"ax",%progbits
+  31              		.align	1
+  32              		.global	os_tmr_call
+  33              		.thumb
+  34              		.thumb_func
+  36              	os_tmr_call:
+  37              		@ args = 0, pretend = 0, frame = 0
+  38              		@ frame_needed = 0, uses_anonymous_args = 0
+  39              		@ link register save eliminated.
+  40 0000 7047     		bx	lr
+  42              		.section	.text.os_error,"ax",%progbits
+  43              		.align	1
+  44              		.global	os_error
+  45              		.thumb
+  46              		.thumb_func
+  48              	os_error:
+  49              		@ Volatile: function does not return.
+  50              		@ args = 0, pretend = 0, frame = 0
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52              		@ link register save eliminated.
+  53              	.L5:
+  54 0000 FEE7     		b	.L5
+  56              		.global	mp_tmr_size
+  57              		.global	m_tmr
+  58              		.comm	osMessageQId_osTimerMessageQ,4,4
+  59              		.global	os_messageQ_def_osTimerMessageQ
+  60              		.global	os_messageQ_q_osTimerMessageQ
+  61              		.comm	osThreadId_osTimerThread,4,4
+  62              		.global	os_thread_def_osTimerThread
+  63              		.comm	os_active_TCB,28,4
+  64              		.global	os_fifo_size
+  65              		.comm	os_fifo,132,4
+  66              		.global	os_stack_sz
+  67              		.comm	os_stack_mem,24,8
+  68              		.global	mp_stk_size
+  69              		.comm	mp_stk,1416,8
+  70              		.global	mp_tcb_size
+  71              		.comm	mp_tcb,376,4
+  72              		.global	os_timernum
+  73              		.global	os_clockrate
+  74              		.global	CMSIS_RTOS_RTX_Version
+  75              		.global	CMSIS_RTOS_API_Version
+  76              		.global	os_flags
+  77              		.global	os_trv
+  78              		.global	os_tickus_f
+  79              		.global	os_tickus_i
+  80              		.global	os_tickfreq
+  81              		.global	os_rrobin
+  82              		.global	os_stackinfo
+  83              		.global	os_maxtaskrun
+  84              		.section	.rodata
+  85              		.align	2
+  88              	mp_tmr_size:
+  89 0000 0000     		.space	2
+  90 0002 0000     		.space	2
+  93              	os_messageQ_def_osTimerMessageQ:
+  94 0004 00000000 		.word	0
+  95 0008 00000000 		.word	os_messageQ_q_osTimerMessageQ
+  98              	os_fifo_size:
+  99 000c 10       		.byte	16
+ 100 000d 000000   		.space	3
+ 103              	os_stack_sz:
+ 104 0010 18000000 		.word	24
+ 107              	mp_stk_size:
+ 108 0014 88050000 		.word	1416
+ 111              	mp_tcb_size:
+ 112 0018 7801     		.short	376
+ 113 001a 0000     		.space	2
+ 116              	os_timernum:
+ 117 001c 00000000 		.space	4
+ 120              	os_clockrate:
+ 121 0020 E8030000 		.word	1000
+ 124              	CMSIS_RTOS_RTX_Version:
+ 125 0024 4A000400 		.word	262218
+ 128              	CMSIS_RTOS_API_Version:
+ 129 0028 02000100 		.word	65538
+ 132              	os_flags:
+ 133 002c 01       		.byte	1
+ 134 002d 000000   		.space	3
+ 137              	os_trv:
+ 138 0030 BFD40100 		.word	119999
+ 141              	os_tickus_f:
+ 142 0034 0000     		.space	2
+ 145              	os_tickus_i:
+ 146 0036 7800     		.short	120
+ 149              	os_tickfreq:
+ 150 0038 000E2707 		.word	120000000
+ 153              	os_rrobin:
+ 154 003c 05000100 		.word	65541
+ 157              	os_stackinfo:
+ 158 0040 C8000101 		.word	16842952
+ 161              	os_maxtaskrun:
+ 162 0044 0700     		.short	7
+ 163 0046 0000     		.bss
+ 164              		.align	2
+ 167              	m_tmr:
+ 168 0000 00000000 		.space	4
+ 171              	os_messageQ_q_osTimerMessageQ:
+ 172 0004 00000000 		.space	16
+ 172      00000000 
+ 172      00000000 
+ 172      00000000 
+ 175              	os_thread_def_osTimerThread:
+ 176 0014 00000000 		.space	16
+ 176      00000000 
+ 176      00000000 
+ 176      00000000 
+ 177              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.7.4 20130913 (release) [ARM/embedded-4_7-br
+DEFINED SYMBOLS
+                            *ABS*:00000000 RTX_Conf_CM.c
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:17     .text.os_idle_demon:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:22     .text.os_idle_demon:00000000 os_idle_demon
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:31     .text.os_tmr_call:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:36     .text.os_tmr_call:00000000 os_tmr_call
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:43     .text.os_error:00000000 $t
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:48     .text.os_error:00000000 os_error
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:88     .rodata:00000000 mp_tmr_size
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:167    .bss:00000000 m_tmr
+                            *COM*:00000004 osMessageQId_osTimerMessageQ
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:93     .rodata:00000004 os_messageQ_def_osTimerMessageQ
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:171    .bss:00000004 os_messageQ_q_osTimerMessageQ
+                            *COM*:00000004 osThreadId_osTimerThread
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:175    .bss:00000014 os_thread_def_osTimerThread
+                            *COM*:0000001c os_active_TCB
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:98     .rodata:0000000c os_fifo_size
+                            *COM*:00000084 os_fifo
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:103    .rodata:00000010 os_stack_sz
+                            *COM*:00000018 os_stack_mem
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:107    .rodata:00000014 mp_stk_size
+                            *COM*:00000588 mp_stk
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:111    .rodata:00000018 mp_tcb_size
+                            *COM*:00000178 mp_tcb
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:116    .rodata:0000001c os_timernum
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:120    .rodata:00000020 os_clockrate
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:124    .rodata:00000024 CMSIS_RTOS_RTX_Version
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:128    .rodata:00000028 CMSIS_RTOS_API_Version
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:132    .rodata:0000002c os_flags
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:137    .rodata:00000030 os_trv
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:141    .rodata:00000034 os_tickus_f
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:145    .rodata:00000036 os_tickus_i
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:149    .rodata:00000038 os_tickfreq
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:153    .rodata:0000003c os_rrobin
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:157    .rodata:00000040 os_stackinfo
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:161    .rodata:00000044 os_maxtaskrun
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:85     .rodata:00000000 $d
+C:\Users\LIUDAN~1\AppData\Local\Temp\cc8Q9gdW.s:164    .bss:00000000 $d
+
+NO UNDEFINED SYMBOLS
