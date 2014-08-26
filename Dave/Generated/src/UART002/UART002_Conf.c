@@ -90,10 +90,33 @@ const UART002_HandleType UART002_Handle0  =
    				},
    .RxFIFOTrigger = 1,/* FIFO Tigger Level */
    .TxFIFOTrigger = 1,/* FIFO Tigger Level */
-   .BGR_STEP = (uint16_t)155,  /* Baud Rate Generation step value */
-   .BGR_PDIV = (uint16_t)945,   /* Baud Rate Generation  pdiv value */
-   .BGR_DCTQ = (uint16_t)15, /* Baud Rate Generation dctq value */   
-   .BGR_SP = (uint16_t)9, /* Baud Rate Generation sampling point */
+   .BGR_STEP = (uint16_t)17,  /* Baud Rate Generation step value */
+   .BGR_PDIV = (uint16_t)165,   /* Baud Rate Generation  pdiv value */
+   .BGR_DCTQ = (uint16_t)9, /* Baud Rate Generation dctq value */   
+   .BGR_SP = (uint16_t)6, /* Baud Rate Generation sampling point */
+   .BGR_PCTQ = (uint8_t)0  /* Baud Rate Generation pctq value */   
+};
+
+
+UART002_DynamicDataType AppDynamicData1; 
+const UART002_HandleType UART002_Handle1  = 
+{  
+   .DynamicData = &AppDynamicData1,
+   .UartRegs = USIC1_CH1, /* Usic Channel offset value */
+   .Mode = (UART_ModeType)0,   
+   .DMAMode = (UART002_DMAType)0,
+   .ChConfig = {
+		       (UART_ParityType)0,/* Parity */
+		       (UART_StopBitType)0,/* StopBit */
+               1200,/*Baud Rate */
+               7/* Word Length */
+   				},
+   .RxFIFOTrigger = 1,/* FIFO Tigger Level */
+   .TxFIFOTrigger = 1,/* FIFO Tigger Level */
+   .BGR_STEP = (uint16_t)17,  /* Baud Rate Generation step value */
+   .BGR_PDIV = (uint16_t)165,   /* Baud Rate Generation  pdiv value */
+   .BGR_DCTQ = (uint16_t)9, /* Baud Rate Generation dctq value */   
+   .BGR_SP = (uint16_t)6, /* Baud Rate Generation sampling point */
    .BGR_PCTQ = (uint8_t)0  /* Baud Rate Generation pctq value */   
 };
 

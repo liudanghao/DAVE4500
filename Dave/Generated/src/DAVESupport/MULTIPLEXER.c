@@ -102,7 +102,10 @@ void DAVE_MUX_Init(void)
            
     UsicCcrMode[0] |= (uint32_t) RD_REG(USIC0_CH0->CCR, USIC_CH_CCR_MODE_Msk, USIC_CH_CCR_MODE_Pos);
     WR_REG(USIC0_CH0->CCR, USIC_CH_CCR_MODE_Msk, USIC_CH_CCR_MODE_Pos,0);  
-                        
+                          
+    UsicCcrMode[3] |= (uint32_t) RD_REG(USIC1_CH1->CCR, USIC_CH_CCR_MODE_Msk, USIC_CH_CCR_MODE_Pos); 
+    WR_REG(USIC1_CH1->CCR, USIC_CH_CCR_MODE_Msk, USIC_CH_CCR_MODE_Pos,0);
+         
       
     						
    /*USIC 0 Channel 0 Mux Related SFR/Bitfields Configurations*/ 						         
@@ -120,19 +123,36 @@ void DAVE_MUX_Init(void)
  //Interrupt node 3 is selected for Standard receive buffer event                 
  WR_REG(USIC0_CH0->RBCTR, USIC_CH_RBCTR_SRBINP_Msk, USIC_CH_RBCTR_SRBINP_Pos,3);  
  					      
-          
+                 
    // Data Pointer & Buffer Size for Transmitter Buffer Control  
- WR_REG(USIC0_CH0->TBCTR, USIC_CH_TBCTR_DPTRSIZE_Msk, USIC_CH_TBCTR_DPTRSIZE_Pos,0x04000000);		/*    DPTR = 0,  SIZE = 4 */ 
-           
+ WR_REG(USIC0_CH0->TBCTR, USIC_CH_TBCTR_DPTRSIZE_Msk, USIC_CH_TBCTR_DPTRSIZE_Pos,0x04000010);		/*    DPTR = 16,  SIZE = 4 */ 
+         
   // Data Pointer & Buffer Size for Receiver Buffer Control  
- WR_REG(USIC0_CH0->RBCTR, USIC_CH_RBCTR_DPTRSIZE_Msk, USIC_CH_RBCTR_DPTRSIZE_Pos,0x01000010);		/*    DPTR = 16,  SIZE = 1 */ 
+ WR_REG(USIC0_CH0->RBCTR, USIC_CH_RBCTR_DPTRSIZE_Msk, USIC_CH_RBCTR_DPTRSIZE_Pos,0x04000000);		/*    DPTR = 0,  SIZE = 4 */ 
  						
    /*USIC 0 Channel 1 Mux Related SFR/Bitfields Configurations*/ 									  					 				 				 		       				              				  					    					 					   				  					 				 				       				  										 									 					 					  									      					              					  						    					      
          						
    /*USIC 1 Channel 0 Mux Related SFR/Bitfields Configurations*/ 									  					 				 				 		       				              				  					    					 					   				  					 				 				       				  										 									 					 					  									      					              					  						    					      
        						
-   /*USIC 1 Channel 1 Mux Related SFR/Bitfields Configurations*/ 									  					 				 				 		       				              				  					    					 					   				  					 				 				       				  										 									 					 					  									      					              					  						    					      
-         						
+   /*USIC 1 Channel 1 Mux Related SFR/Bitfields Configurations*/ 						         
+ WR_REG(USIC1_CH1->DX0CR, USIC_CH_DX0CR_DSEL_Msk, USIC_CH_DX0CR_DSEL_Pos,3); 
+  			  					 				 				 		       				              				  					    					 					   				  					 				 				         
+ //Standard transmit buffer event is enabled.                 
+ WR_REG(USIC1_CH1->TBCTR, USIC_CH_TBCTR_STBIEN_Msk, USIC_CH_TBCTR_STBIEN_Pos,1);
+    				  					    
+ //Standard receive buffer event is enabled.                 
+ WR_REG(USIC1_CH1->RBCTR, USIC_CH_RBCTR_SRBIEN_Msk, USIC_CH_RBCTR_SRBIEN_Pos,1);  
+ 					 									 					 					  									      					              					  						       
+ //Interrupt node 1 is selected for Standard receive buffer event                 
+ WR_REG(USIC1_CH1->RBCTR, USIC_CH_RBCTR_SRBINP_Msk, USIC_CH_RBCTR_SRBINP_Pos,1);  
+ 					      
+                 
+   // Data Pointer & Buffer Size for Transmitter Buffer Control  
+ WR_REG(USIC1_CH1->TBCTR, USIC_CH_TBCTR_DPTRSIZE_Msk, USIC_CH_TBCTR_DPTRSIZE_Pos,0x04000010);		/*    DPTR = 16,  SIZE = 4 */ 
+         
+  // Data Pointer & Buffer Size for Receiver Buffer Control  
+ WR_REG(USIC1_CH1->RBCTR, USIC_CH_RBCTR_DPTRSIZE_Msk, USIC_CH_RBCTR_DPTRSIZE_Pos,0x04000000);		/*    DPTR = 0,  SIZE = 4 */ 
+   						
    /*USIC 2 Channel 0 Mux Related SFR/Bitfields Configurations*/ 									  					 				 				 		       				              				  					    					 					   				  					 				 				       				  										 									 					 					  									      					              					  						    					      
        						
    /*USIC 2 Channel 1 Mux Related SFR/Bitfields Configurations*/ 									  					 				 				 		       				              				  					    					 					   				  					 				 				       				  										 									 					 					  									      					              					  						    					      
@@ -141,7 +161,9 @@ void DAVE_MUX_Init(void)
   /* Enable mode after configuring all USIC registers to avoid unintended edges */  
             
    WR_REG(USIC0_CH0->CCR, USIC_CH_CCR_MODE_Msk, USIC_CH_CCR_MODE_Pos,UsicCcrMode[0]); 
-                   	         
+             
+   WR_REG(USIC1_CH1->CCR, USIC_CH_CCR_MODE_Msk, USIC_CH_CCR_MODE_Pos,UsicCcrMode[3]);
+               	         
                                               
    	 
             	         
@@ -151,6 +173,8 @@ void DAVE_MUX_Init(void)
                                           
 
 /*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                                      
+  WR_REG(PORT0->IOCR0, 0xb800U, PORT_IOCR_PC1_PCR_Pos, 0x12U);                /*P0.1 : PORT0_IOCR0_PC1_PCR and PORT0_IOCR0_PC1_OE */					   
+					                         
   WR_REG(PORT1->IOCR0, PORT_IOCR_PC0_OE_Msk, PORT_IOCR_PC0_OE_Pos, PORT_IOCR_OE1);                /*    P1.0 : PORT1_IOCR0_PC0_OE */					   
 					                         
   WR_REG(PORT1->IOCR0, PORT_IOCR_PC1_OE_Msk, PORT_IOCR_PC1_OE_Pos, PORT_IOCR_OE1);                /*    P1.1 : PORT1_IOCR0_PC1_OE */					   

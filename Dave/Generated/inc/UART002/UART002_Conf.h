@@ -61,8 +61,15 @@ extern "C" {
 #define UART002_0_USIC 	  USIC0
 /*Base Address of mapped USIC Channel for App Instance 0 */
 #define UART002_0_USIC_CH  USIC0_CH0
+/*Base Address of mapped USIC Module for App Instance 1 */
+#define UART002_1_USIC 	  USIC1
+/*Base Address of mapped USIC Channel for App Instance 1 */
+#define UART002_1_USIC_CH  USIC1_CH1
 
 extern const UART002_HandleType UART002_Handle0; 
+
+
+extern const UART002_HandleType UART002_Handle1; 
 
 
 #ifdef __cplusplus

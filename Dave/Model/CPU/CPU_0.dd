@@ -80,5 +80,45 @@
   <provided xsi:type="ResourceModel:SignalDeclaration" name="USIC0_3_IRQHandler" description="USIC0_3_IRQHandler" URI="http://www.infineon.com/0.1.29/peripheral/cpu/0/nvic/interrupt/87/signal_in" signalType="INTERRUPT" interruptVectorAddress="102" isVisible="true">
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_0.app#//@consumed.46"/>
   </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="USIC1_0_IRQHandler" URI="http://www.infineon.com/0.1.29/peripheral/cpu/0/nvic/interrupt/90">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.12"/>
+    <resourcesList name="iser_setena" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/iser2/setena26" isResolved="true"/>
+    <resourcesList name="icer_clrena" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/icer2/clrena26" isResolved="true"/>
+    <resourcesList name="ispr_setpend" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/ispr2/setpend26" isResolved="true"/>
+    <resourcesList name="icpr_clrpend" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/icpr2/clrpend26" isResolved="true"/>
+    <resourcesList name="iabr_active" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/iabr2/active26" isResolved="true"/>
+    <resourcesList name="ipr_pri" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/ipr22/pri_90" isResolved="true"/>
+    <resourcesList name="signal_in" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/usic1_0_irqhandler" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="pri_90" URI="http://www.infineon.com/0.1.29/peripheral/cpu/0/nvic/interrupt/90/ipr_pri" maxValue="255" minValue="0" startPos="16" stopPos="23" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.32"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="fc"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="fc"/>
+    <toolTipHelpDescription>Priority of interrupt 90</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="USIC1_0_IRQHandler" description="USIC1_0_IRQHandler" URI="http://www.infineon.com/0.1.29/peripheral/cpu/0/nvic/interrupt/90/signal_in" signalType="INTERRUPT" interruptVectorAddress="105" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.51"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="USIC1_1_IRQHandler" URI="http://www.infineon.com/0.1.29/peripheral/cpu/0/nvic/interrupt/91">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.13"/>
+    <resourcesList name="iser_setena" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/iser2/setena27" isResolved="true"/>
+    <resourcesList name="icer_clrena" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/icer2/clrena27" isResolved="true"/>
+    <resourcesList name="ispr_setpend" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/ispr2/setpend27" isResolved="true"/>
+    <resourcesList name="icpr_clrpend" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/icpr2/clrpend27" isResolved="true"/>
+    <resourcesList name="iabr_active" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/iabr2/active27" isResolved="true"/>
+    <resourcesList name="ipr_pri" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/ipr22/pri_91" isResolved="true"/>
+    <resourcesList name="signal_in" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/cpu/0/usic1_1_irqhandler" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="pri_91" URI="http://www.infineon.com/0.1.29/peripheral/cpu/0/nvic/interrupt/91/ipr_pri" maxValue="255" minValue="0" startPos="24" stopPos="31" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.33"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="fc"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="fc"/>
+    <toolTipHelpDescription>Priority of interrupt 91</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="USIC1_1_IRQHandler" description="USIC1_1_IRQHandler" URI="http://www.infineon.com/0.1.29/peripheral/cpu/0/nvic/interrupt/91/signal_in" signalType="INTERRUPT" interruptVectorAddress="106" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.46"/>
+  </provided>
   <categoryDescription description="v0.7 - 04_10_2011 - Sheshadri - default values" name="CPU"/>
 </ResourceModel:Peripheral>

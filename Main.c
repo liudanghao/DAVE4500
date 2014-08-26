@@ -23,8 +23,8 @@ osThreadDef(threadB, osPriorityNormal, 1, 0);
 #define LED0 IO004_Handle0
 #define LED1 IO004_Handle1
 
-uint8_t Data[13] = {'H','E','L','L','O',' ','W','O','R','L','D','\n','\r'};
-uint8_t Data1[13] = {'h','e','l','l','o',' ','w','o','r','l','d','\n','\r'};
+uint8_t rxbuf[16];
+uint8_t txbuf[13] = {'h','e','\r','\n'};
 
 
 
@@ -32,29 +32,29 @@ void threadA(void const *argument)
 {
 
 	status_t Status = UART002_FAIL;
-	UART002_LocalStructType TxChn1;
-	UART002_LocalStructureInit(&UART002_Handle0,&TxChn1,0x0001);
-	TxChn1.DataLen = 13;
-	TxChn1.pBuffer = &Data1[0];
+	UART002_LocalStructType TxChn;
+	UART002_LocalStructureInit(&UART002_Handle0,&TxChn,0x0001);
+	TxChn.DataLen = 4;
+	TxChn.pBuffer = &txbuf[0];
 
     while(1)
     {
 
-    	osDelay(1000);
+    	osDelay(500);
     	IO004_TogglePin(LED0);
 
-		Status = UART002_StartTransmission(&TxChn1,10000);
+		Status = UART002_StartTransmission(&TxChn,10000);
 		if(Status == UART002_TIMEOUT)
 		{
 			Status = UART002_FAIL;
 		}
 		else
 		{
-			Status = UART002_WaitForCompletion(&TxChn1,10000);
+			Status = UART002_WaitForCompletion(&TxChn,5000);
 			if(Status != UART002_TIMEOUT)
 			{
 
-				Status = UART002_GetStatus(&TxChn1);
+				Status = UART002_GetStatus(&TxChn);
 				if(Status != UART002_TRANSFER_SUCCESS)
 				{
 						Status = UART002_FAIL;
@@ -69,37 +69,41 @@ void threadA(void const *argument)
 void threadB(void const *argument)
 {
 
-    status_t Status = UART002_FAIL;
-    UART002_LocalStructType TxChn;
-    UART002_LocalStructureInit(&UART002_Handle0,&TxChn,0x0001);
-    TxChn.DataLen = 13;
-    TxChn.pBuffer = &Data[0];
+	status_t Status = UART002_FAIL;
+	UART002_LocalStructType RxChn;
+	UART002_LocalStructureInit(&UART002_Handle1,&RxChn,0x0001);
+	RxChn.DataLen=4;
+	RxChn.pBuffer=&rxbuf[0];
 
-    osDelay(500);
     while(1)
      {
-        IO004_TogglePin(LED1);
-        osDelay(1000);
+        Status = UART002_StartReception(&RxChn,10000);
+        if(Status == UART002_TIMEOUT)
+        {
+        	Status = UART002_FAIL;
+        }
 
-    	Status = UART002_StartTransmission(&TxChn,10000);
-    	if(Status == UART002_TIMEOUT)
-    	{
-    		Status = UART002_FAIL;
-    	}
-    	else
-    	{
-    		Status = UART002_WaitForCompletion(&TxChn,10000);
-    		if(Status != UART002_TIMEOUT)
-    		{
+        else
+        {
+        	Status = UART002_WaitForCompletion(&RxChn,10000);
+        	if(Status != UART002_TIMEOUT)
+        	{
+        		Status = UART002_GetStatus(&RxChn);
+        		if(Status != UART002_TRANSFER_SUCCESS)
+        		{
+        			Status = UART002_FAIL;
+        		}
+        		else IO004_TogglePin(LED1);
+        	}
+        }
 
-    			Status = UART002_GetStatus(&TxChn);
-    			if(Status != UART002_TRANSFER_SUCCESS)
-    			{
-    					Status = UART002_FAIL;
-    			}
-    		}
-    	}
+   //     if(Status != UART002_FAIL)
+    //    {
+     //   	IO004_TogglePin(LED1);
+      //  }
 
+//    	osDelay(1000);
+ //   	IO004_TogglePin(LED1);
      }
 
 }

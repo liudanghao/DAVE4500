@@ -6,6 +6,7 @@
     <ResourceReserve/>
     <Solver>
         <SolverBndMap>
+            <BindMap MUri="port/p/0/pad/1" Proxy="app/uart002/1/uart_txpin"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/perbridge" Proxy="app/clk001/0/perbridge"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/ccu" Proxy="app/clk001/0/ccu"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/pll" Proxy="app/clk001/0/pll"/>
@@ -30,7 +31,9 @@
             <BindMap MUri="peripheral/scu/0/clkctrl/0/ebu" Proxy="app/clk001/0/ebu"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/dsdreset" Proxy="app/reset001/0/dsdreset"/>
             <BindMap MUri="peripheral/scu/0/rtcclksel" Proxy="app/clk001/0/rtcclksel"/>
+            <BindMap MUri="peripheral/cpu/0/nvic/interrupt/90" Proxy="app/uart002/1/nvicstbinode"/>
             <BindMap MUri="port/p/5/pad/1" Proxy="app/uart002/0/uart_txpin"/>
+            <BindMap MUri="port/p/0/pad/0" Proxy="app/uart002/1/uart_rxpin"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/sys" Proxy="app/clk001/0/sys"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/mmcreset" Proxy="app/reset001/0/mmcreset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/usbreset" Proxy="app/reset001/0/usbreset"/>
@@ -48,10 +51,12 @@
             <BindMap MUri="peripheral/scu/0/rstctrl/0/posifreset/1" Proxy="app/reset001/0/posifreset1"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/ethreset" Proxy="app/reset001/0/ethreset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/posifreset/0" Proxy="app/reset001/0/posifreset0"/>
+            <BindMap MUri="peripheral/usic/1/channel/1" Proxy="app/uart002/1/channel"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/cpu" Proxy="app/clk001/0/cpu"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/wdt" Proxy="app/clk001/0/wdt"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/dmareset/1" Proxy="app/reset001/0/dmareset1"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/dmareset/0" Proxy="app/reset001/0/dmareset0"/>
+            <BindMap MUri="peripheral/cpu/0/nvic/interrupt/91" Proxy="app/uart002/1/nvicsrbinode"/>
             <BindMap MUri="peripheral/cpu/0/exception/pendsv" Proxy="app/rtos001/0/pendsv"/>
             <BindMap MUri="peripheral/cpu/0/fpu" Proxy="app/rtos001/0/fpu"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/fcereset" Proxy="app/reset001/0/fcereset"/>

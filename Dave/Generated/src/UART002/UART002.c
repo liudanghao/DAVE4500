@@ -204,6 +204,8 @@ void  UART002_lInit(const UART002_HandleType* Handle);
 
 
 osSemaphoreDef(UART002_ChannelSemHandle0);
+
+osSemaphoreDef(UART002_ChannelSemHandle1);
 /*******************************************************************************
 **                      Private Constant Definitions                          **
 *******************************************************************************/
@@ -441,7 +443,25 @@ void UART002_Init(void)
   PORT5->PDR0  &= (~(PORT5_PDR0_PD1_Msk));  
   /* Configuration of RX Pin 5.0 based on User configuration */
 
- /* RXPIN instance (no.0) is not mapped to any port pin. */
+ /* RXPIN instance (no.0) is not mapped to any port pin. */  
+  /* Reset the Peripheral*/
+  RESET001_DeassertReset(PER1_USIC1);  
+  
+  UART002_lInit(&UART002_Handle1); 
+  NVIC_SetPriority((IRQn_Type)90,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),\
+		                          63U,0U));
+  NVIC_SetPriority((IRQn_Type)91,NVIC_EncodePriority(NVIC_GetPriorityGrouping(),\
+		                          63U,0U));  
+  NVIC_EnableIRQ((IRQn_Type)90);
+  NVIC_EnableIRQ((IRQn_Type)91);
+  UART002_Handle1.DynamicData->ChannelSemId = \
+        osSemaphoreCreate(osSemaphore(UART002_ChannelSemHandle1),1);      
+    
+  /* Configuration of TX Pin 0.1 based on User configuration */
+  PORT0->PDR0  &= (~(PORT0_PDR0_PD1_Msk));  
+  /* Configuration of RX Pin 0.0 based on User configuration */
+
+ /* RXPIN instance (no.1) is not mapped to any port pin. */
 }
 
 /* Function will reset the App to default values */
@@ -817,6 +837,116 @@ void IRQ_Hdlr_87(void)
 		  UART002_Handle0.UartRegs->RBCTR &= ~((uint32_t)USIC_CH_RBCTR_LIMIT_Msk);
 		  UART002_Handle0.UartRegs->RBCTR |= \
 		        	            ((((UART002_Handle0.DynamicData->DataLen)-1UL)  << \
+		        	                        USIC_CH_RBCTR_LIMIT_Pos) & USIC_CH_RBCTR_LIMIT_Msk);
+
+	  }
+  } 
+}
+
+
+/* Standard transmit buffer event handler */
+void IRQ_Hdlr_90(void)
+{
+   UART002_LocalStructType* CurrentLocalStruct = \
+   UART002_Handle1.DynamicData->CurrentTaskStruct;
+  /* <<<DD_UART002_non_API_3>>>*/
+  /* Clear standard transmit buffer Event bit */
+  UART002_Handle1.UartRegs->TRBSCR |= (uint32_t)USIC_CH_TRBSCR_CSTBI_Msk;
+    
+  /* If not in DMA mode */
+  if((UART002_Handle1.DMAMode == UART002_DMA_NONE) || \
+      (UART002_Handle1.DMAMode == UART002_RX_DMA) ) 
+  {
+	if(UART002_Handle1.DynamicData->DataLen == 0U)
+	{
+        /* Transfer Success release the semaphore */
+        CurrentLocalStruct->Status = UART002_TRANSFER_SUCCESS;
+        /* Disable standard transmit and error event interrupt */
+        UART002_Handle1.UartRegs->TBCTR &= \
+                       ~(((uint32_t)USIC_CH_TBCTR_STBIEN_Msk) | \
+                       ((uint32_t)USIC_CH_TBCTR_TBERIEN_Msk));
+		/* Signal the task that Job is complete */
+		osSignalSet(CurrentLocalStruct->ThreadID,CurrentLocalStruct->SignalId);
+        /* Release channel semaphore */
+		osSemaphoreRelease(UART002_Handle1.DynamicData->ChannelSemId);
+	}
+    /* Write to FIFO till Fifo is full */
+    while((USIC_IsTxFIFOfull(UART002_Handle1.UartRegs) != 1U)&& \
+                       (UART002_Handle1.DynamicData->DataLen != 0U) )
+    {
+      while(USIC_IsTxFIFObusy(UART002_Handle1.UartRegs))
+      {}
+      UART002_Handle1.UartRegs->IN[0] = \
+            *(UART002_Handle1.DynamicData->pBuffer);
+      UART002_Handle1.DynamicData->pBuffer++;
+      UART002_Handle1.DynamicData->DataLen--;
+      /* Check if all data is transmitted */
+      if(UART002_Handle1.DynamicData->DataLen == 0U)
+      {
+    	break;
+      }
+    }
+  }
+      
+}
+
+/* Standard Receive buffer event handler */
+void IRQ_Hdlr_91(void)
+{
+  UART002_LocalStructType* CurrentLocalStruct = \
+    UART002_Handle1.DynamicData->CurrentTaskStruct;
+	  /* <<<DD_UART002_non_API_4>>>*/
+  /* Clear standard receive buffer Event bit */
+  UART002_Handle1.UartRegs->TRBSCR |= (uint32_t)USIC_CH_TRBSCR_CSRBI_Msk;
+    
+  if((UART002_Handle1.DMAMode == UART002_DMA_NONE) || \
+                                (UART002_Handle1.DMAMode == UART002_TX_DMA) ) 
+  {
+    while(USIC_ubIsRxFIFOempty(UART002_Handle1.UartRegs) != 1U)
+    {
+      while(USIC_IsRxFIFObusy(UART002_Handle1.UartRegs))
+      {}
+      *(UART002_Handle1.DynamicData->pBuffer) = \
+                           (uint8_t)UART002_Handle1.UartRegs->OUTR;
+      UART002_Handle1.DynamicData->pBuffer++;
+      UART002_Handle1.DynamicData->DataLen--;
+      if(UART002_Handle1.DynamicData->DataLen == 0U)
+      {
+        /* Transfer Success release the semaphore */
+        CurrentLocalStruct->Status = UART002_TRANSFER_SUCCESS;
+        /* Disable standard receive buffer and error event */
+        UART002_Handle1.UartRegs->RBCTR &= \
+                ~((uint32_t)(USIC_CH_RBCTR_SRBIEN_Msk) | \
+                 (uint32_t)(USIC_CH_RBCTR_ARBIEN_Msk));
+        USIC_FlushRxFIFO(UART002_Handle1.UartRegs);
+        /* Signal the task that Job is complete */
+		    osSignalSet(CurrentLocalStruct->ThreadID,CurrentLocalStruct->SignalId);
+        /* Release channel semaphore */
+		    osSemaphoreRelease(UART002_Handle1.DynamicData->ChannelSemId);
+        break;
+      }
+    }
+    if((UART002_Handle1.DynamicData->DataLen < \
+    		  (uint16_t)UART002_Handle1.RxFIFOTrigger) \
+              && (UART002_Handle1.DynamicData->DataLen > 0U) )
+    {
+      UART002_Handle1.UartRegs->RBCTR &= (uint32_t)~USIC_CH_RBCTR_LIMIT_Msk;
+      UART002_Handle1.UartRegs->RBCTR |= 
+    		                    ((((UART002_Handle1.DynamicData->DataLen) - 1)  << \
+                                            USIC_CH_RBCTR_LIMIT_Pos) & USIC_CH_RBCTR_LIMIT_Msk);
+    }	
+  }                                
+  else
+  {
+	  UART002_Handle1.DynamicData->DataLen = \
+      UART002_Handle1.DynamicData->DataLen - UART002_Handle1.DynamicData->Msize;
+	  if((UART002_Handle1.DynamicData->DataLen < \
+       UART002_Handle1.DynamicData->Msize) && \
+       (UART002_Handle1.DynamicData->DataLen > 0U))
+	  {
+		  UART002_Handle1.UartRegs->RBCTR &= ~((uint32_t)USIC_CH_RBCTR_LIMIT_Msk);
+		  UART002_Handle1.UartRegs->RBCTR |= \
+		        	            ((((UART002_Handle1.DynamicData->DataLen)-1UL)  << \
 		        	                        USIC_CH_RBCTR_LIMIT_Pos) & USIC_CH_RBCTR_LIMIT_Msk);
 
 	  }
