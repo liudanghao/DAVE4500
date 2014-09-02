@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
 <ResourceModel:App xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" name="RTOS001" description="The CMSIS-RTOS API is a generic&#xA;RTOS interface for Cortex-M &#xA;processor-based devices." descriptionURL="/doc/html/group___r_t_o_s001_app.html" mode="SHARABLE" URI="http://www.infineon.com/1.0.24/app/rtos001/0">
-  <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../UART002/1.0.14/uart002_0.app#//@consumed.11"/>
-  <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../UART002/1.0.14/uart002_1.app#//@consumed.11"/>
   <provided xsi:type="ResourceModel:IntegerParameter" name="Dummy UI Param to avoid infinite loop" evalFunction="&#x9;&#x9;&#x9;    &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;function ForwardMapping()&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;{&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var PRIVCNT_RES = SCM.getResource(&quot;dummypricnt&quot;); &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var PRIVCNT_VAL = SCM.getIntValue(PRIVCNT_RES);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var TASKCNT_RES = SCM.getResource(&quot;dummytaskcnt&quot;); &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var PRIVCNT_VAL = SCM.getIntValue(TASKCNT_RES);&#xD;&#xA;             &#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;function BackwardMapping()&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;{&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var PRIVCNT_RES = SCM.getResource(&quot;dummypricnt&quot;); &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var PRIVCNT_VAL = SCM.getIntValue(PRIVCNT_RES);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var TASKCNT_RES = SCM.getResource(&quot;dummytaskcnt&quot;); &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var TASKCNT_VAL = SCM.getIntValue(TASKCNT_RES);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if(PRIVCNT_VAL > TASKCNT_VAL)&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;{&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;SCM.setIntValue(PRIVCNT_RES, TASKCNT_VAL);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;                }&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;" URI="http://www.infineon.com/1.0.24/app/rtos001/0/rtos001_irwnonrecursive" maxValue="FA" minValue="0">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="6"/>
     <localValue xsi:type="ResourceModel:StringValue" value="6"/>
@@ -258,27 +256,27 @@ Parameter 'error_code' holds the runtime error code.
     </item>
   </provided>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.24/app/rtos001/0/systick">
-    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.0"/>
+    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.18"/>
     <requiredResource uriString="peripheral/cpu/0/systick" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" evalFunction="function resourceCondition() {&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var value1 = Solver.getSoftwareId().substring(0,1).compareTo(&quot;4&quot;);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if((value1  == 0 )) {&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;  &#x9;return true;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;return false;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}" URI="http://www.infineon.com/1.0.24/app/rtos001/0/fpu">
-    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.1"/>
+    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.19"/>
     <requiredResource uriString="peripheral/cpu/0/fpu" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" evalFunction="function resourceCondition() {&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var value1 = Solver.getSoftwareId().substring(0,1).compareTo(&quot;4&quot;);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if((value1  == 0 )) {&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;  return true;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;return false;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}" URI="http://www.infineon.com/1.0.24/app/rtos001/0/memory_protection">
-    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.2"/>
+    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.20"/>
     <requiredResource uriString="peripheral/cpu/0/memory_protection" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.24/app/rtos001/0/exceptionsystick">
-    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.3"/>
+    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.21"/>
     <requiredResource uriString="peripheral/cpu/0/exception/systick" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.24/app/rtos001/0/pendsv">
-    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.4"/>
+    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.22"/>
     <requiredResource uriString="peripheral/cpu/0/exception/pendsv" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.24/app/rtos001/0/svcall">
-    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.5"/>
+    <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../CPU/CPU_0.dd#//@provided.23"/>
     <requiredResource uriString="peripheral/cpu/0/exception/svcall" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" evalFunction="function resourceCondition() {&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var value1 = Solver.getSoftwareId().substring(0,1).compareTo(&quot;4&quot;);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;if((value1  == 0 )) {&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;  return true;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;return false;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}" URI="http://www.infineon.com/1.0.24/app/rtos001/0/clkapp">

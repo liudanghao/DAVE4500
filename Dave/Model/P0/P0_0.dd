@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ASCII"?>
 <ResourceModel:Peripheral xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" name="P0" description="Port 0" URI="http://www.infineon.com/0.1.40/port/p/0">
   <provided xsi:type="ResourceModel:ResourceGroup" name="P0.0 / #2" URI="http://www.infineon.com/0.1.40/port/p/0/pad/0">
-    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.6"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART001/1.0.24/uart001_2.app#//@consumed.5"/>
     <resourcesList name="out_p" requiredResourceUri="http://www.infineon.com/0.1.40/port/p/0/out/p0" isResolved="true"/>
     <resourcesList name="omr_ps" requiredResourceUri="http://www.infineon.com/0.1.40/port/p/0/omr/ps0" isResolved="true"/>
     <resourcesList name="omr_pr" requiredResourceUri="http://www.infineon.com/0.1.40/port/p/0/omr/pr0" isResolved="true"/>
@@ -25,16 +25,16 @@
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="PC0_2_0" URI="http://www.infineon.com/0.1.40/port/p/0/pad/0/iocr_pcr" maxValue="7" minValue="0" startPos="3" stopPos="5" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.31"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART001/1.0.24/uart001_2.app#//@consumed.48"/>
     <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <toolTipHelpDescription>Port Control for Port n Pin 0 to 3</toolTipHelpDescription>
   </provided>
   <provided xsi:type="ResourceModel:SignalDeclaration" name="PAD" URI="http://www.infineon.com/0.1.40/port/p/0/pad/0/pad" padClass="A1Plus" isVisible="true">
-    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.49"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART001/1.0.24/uart001_2.app#//@consumed.49"/>
   </provided>
   <provided xsi:type="ResourceModel:ResourceGroup" name="P0.1 / #1" URI="http://www.infineon.com/0.1.40/port/p/0/pad/1">
-    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.7"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART001/1.0.24/uart001_2.app#//@consumed.6"/>
     <resourcesList name="out_p" requiredResourceUri="http://www.infineon.com/0.1.40/port/p/0/out/p1" isResolved="true"/>
     <resourcesList name="omr_ps" requiredResourceUri="http://www.infineon.com/0.1.40/port/p/0/omr/ps1" isResolved="true"/>
     <resourcesList name="omr_pr" requiredResourceUri="http://www.infineon.com/0.1.40/port/p/0/omr/pr1" isResolved="true"/>
@@ -58,13 +58,13 @@
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="PD1" URI="http://www.infineon.com/0.1.40/port/p/0/pad/1/pdr_pd" maxValue="7" minValue="0" startPos="4" stopPos="6" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="2"/>
-    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.30"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART001/1.0.24/uart001_2.app#//@consumed.47"/>
     <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <toolTipHelpDescription>Pad Driver Mode for Pn.1</toolTipHelpDescription>
   </provided>
   <provided xsi:type="ResourceModel:SignalDeclaration" name="PAD" URI="http://www.infineon.com/0.1.40/port/p/0/pad/1/pad" padClass="A1Plus" isVisible="true">
-    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART002/1.0.14/uart002_1.app#//@consumed.47"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../UART001/1.0.24/uart001_2.app#//@consumed.50"/>
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="PC1_4" URI="http://www.infineon.com/0.1.40/port/p/0/pad/1/iocr_oe" maxValue="1" minValue="0" startPos="15" stopPos="15" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
