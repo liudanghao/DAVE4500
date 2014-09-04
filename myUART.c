@@ -98,47 +98,59 @@ void myUARTinit()
 void myUART0_Send(uint8_t* buf,uint8_t len)
 {
 	if(len>MAXCHAR) len=MAXCHAR;
+	NVIC002_DisableIRQ(&NVIC002_Handle0);
 	if(uart0tx.Sending==0)
 	{
 		UART001_WriteDataBytes(&UART001_Handle0,buf,len);
 		uart0tx.Sending=1;
-		return;
 	}
-	memcpy(uart0tx.ArrayBuf[uart0tx.WritePos],buf,len);
-	uart0tx.ArrayLen[uart0tx.WritePos]=len;
-	uart0tx.WritePos++;
-	uart0tx.WritePos&=(MAXLINE-1);
+	else
+	{
+		memcpy(uart0tx.ArrayBuf[uart0tx.WritePos],buf,len);
+		uart0tx.ArrayLen[uart0tx.WritePos]=len;
+		uart0tx.WritePos++;
+		uart0tx.WritePos&=(MAXLINE-1);
+	}
+	NVIC002_EnableIRQ(&NVIC002_Handle0);
 }
 
 
 void myUART1_Send(uint8_t* buf,uint8_t len)
 {
 	if(len>MAXCHAR) len=MAXCHAR;
+	NVIC002_DisableIRQ(&NVIC002_Handle1);
 	if(uart1tx.Sending==0)
 	{
 		UART001_WriteDataBytes(&UART001_Handle1,buf,len);
 		uart1tx.Sending=1;
-		return;
 	}
-	memcpy(uart1tx.ArrayBuf[uart1tx.WritePos],buf,len);
-	uart1tx.ArrayLen[uart1tx.WritePos]=len;
-	uart1tx.WritePos++;
-	uart1tx.WritePos&=(MAXLINE-1);
+	else
+	{
+		memcpy(uart1tx.ArrayBuf[uart1tx.WritePos],buf,len);
+		uart1tx.ArrayLen[uart1tx.WritePos]=len;
+		uart1tx.WritePos++;
+		uart1tx.WritePos&=(MAXLINE-1);
+	}
+	NVIC002_EnableIRQ(&NVIC002_Handle1);
 }
 
 void myUART2_Send(uint8_t* buf,uint8_t len)
 {
 	if(len>MAXCHAR) len=MAXCHAR;
+	NVIC002_DisableIRQ(&NVIC002_Handle2);
 	if(uart2tx.Sending==0)
 	{
 		UART001_WriteDataBytes(&UART001_Handle2,buf,len);
 		uart2tx.Sending=1;
-		return;
 	}
-	memcpy(uart2tx.ArrayBuf[uart2tx.WritePos],buf,len);
-	uart2tx.ArrayLen[uart2tx.WritePos]=len;
-	uart2tx.WritePos++;
-	uart2tx.WritePos&=(MAXLINE-1);
+	else
+	{
+		memcpy(uart2tx.ArrayBuf[uart2tx.WritePos],buf,len);
+		uart2tx.ArrayLen[uart2tx.WritePos]=len;
+		uart2tx.WritePos++;
+		uart2tx.WritePos&=(MAXLINE-1);
+	}
+	NVIC002_EnableIRQ(&NVIC002_Handle2);
 }
 
 
@@ -149,6 +161,7 @@ void Uart0RxFIFOBufferEventHandler()
 {
 	if(UART001_GetFlagStatus(&UART001_Handle0,UART001_FIFO_STD_RECV_BUF_FLAG) == UART001_SET)
 	{
+		IO004_TogglePin(LED1);
 		UART001_ClearFlag(&UART001_Handle0,UART001_FIFO_STD_RECV_BUF_FLAG);
 		/* Read the received data to the buffer */
 		uart0rx.ArrayLen[uart0rx.WritePos] = UART001_ReadDataBytes(&UART001_Handle0,uart0rx.ArrayBuf[uart0rx.WritePos],8);

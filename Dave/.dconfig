@@ -59,6 +59,7 @@
             <BindMap MUri="port/p/0/pad/1" Proxy="app/uart001/2/uart_txpin"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/wdt" Proxy="app/clk001/0/wdt"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/dmareset/1" Proxy="app/reset001/0/dmareset1"/>
+            <BindMap MUri="peripheral/cpu/0/nvic/interrupt/64" Proxy="app/nvic002/6/nvicnode"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/dmareset/0" Proxy="app/reset001/0/dmareset0"/>
             <BindMap MUri="peripheral/usic/1/channel/1" Proxy="app/uart001/2/channel"/>
             <BindMap MUri="peripheral/cpu/0/exception/pendsv" Proxy="app/rtos001/0/pendsv"/>

@@ -75,6 +75,9 @@
   <nodes xsi:type="DaveExpert:AppNode">
     <resource xsi:type="ResourceModel:App" href="NVIC002/1.0.26/nvic002_5.app#/"/>
   </nodes>
+  <nodes xsi:type="DaveExpert:AppNode">
+    <resource xsi:type="ResourceModel:App" href="NVIC002/1.0.26/nvic002_6.app#/"/>
+  </nodes>
   <nodes xsi:type="DaveExpert:PeripheralNode">
     <resource xsi:type="ResourceModel:Peripheral" href="CPU/CPU_0.dd#/"/>
   </nodes>
@@ -95,11 +98,12 @@
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.16" target="//@nodes.21"/>
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.17" target="//@nodes.20"/>
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.17" target="//@nodes.22"/>
-  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.14" target="//@nodes.25"/>
-  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.15" target="//@nodes.25"/>
-  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.18" target="//@nodes.25"/>
-  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.19" target="//@nodes.25"/>
-  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.23" target="//@nodes.25"/>
-  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.24" target="//@nodes.25"/>
-  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.7" target="//@nodes.25"/>
+  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.14" target="//@nodes.26"/>
+  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.15" target="//@nodes.26"/>
+  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.18" target="//@nodes.26"/>
+  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.19" target="//@nodes.26"/>
+  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.23" target="//@nodes.26"/>
+  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.24" target="//@nodes.26"/>
+  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.25" target="//@nodes.26"/>
+  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.7" target="//@nodes.26"/>
 </DaveExpert:ApplicationModelData>

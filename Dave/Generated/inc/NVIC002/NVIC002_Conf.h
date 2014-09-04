@@ -88,12 +88,15 @@ extern "C" {
 /* User defined function mapped to IRQ_Hdlr_93 */
 #define Uart2TxBufferEventHandler    IRQ_Hdlr_93 
 
+/* User defined function mapped to IRQ_Hdlr_64 */
+#define TestInterrupt    IRQ_Hdlr_64 
+
 
 /**
  * @ingroup NVIC002_constants
  * @{
  */
-#define NVIC002_NUM_INSTANCES 6U
+#define NVIC002_NUM_INSTANCES 7U
 /**
   * @}
   */

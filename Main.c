@@ -108,7 +108,6 @@ void thread_uart1_rx(void const *argument)
 			pFrame=MakeFrame(pRxLine,len,&uartRx1Frame);
 			if(pFrame!=NULL)
 			{
-				IO004_TogglePin(LED1);
 			}
 		}
     }
@@ -127,7 +126,6 @@ void thread_uart2_rx(void const *argument)
 			pFrame=MakeFrame(pRxLine,len,&uartRx2Frame);
 			if(pFrame!=NULL)
 			{
-				//IO004_TogglePin(LED1);
 			}
 		}
     }
@@ -140,9 +138,9 @@ void thread_idle(void const *argument)
 	{
 		osDelay(10);
 		IO004_TogglePin(LED0);
-		myUART0_Send(buf,8);
-		myUART1_Send(buf,8);
-		myUART2_Send(buf,8);
+		myUART0_Send(buf,3);
+		myUART0_Send(buf,4);
+		myUART0_Send(buf,5);
     }
 }
 
@@ -156,7 +154,10 @@ void thread_idle(void const *argument)
 
 
 
-
+void TestInterrupt()
+{
+	IO004_TogglePin(LED1);
+}
 
 
 
