@@ -27,21 +27,30 @@ my_UART_BUF uart0rx;
 my_UART_BUF uart1rx;
 my_UART_BUF uart2rx;
 
-osSemaphoreId uart0semaphore;
-osSemaphoreDef(uart0semaphore);
+osSemaphoreId uart0rx_semaphore_id;
+osSemaphoreDef(uart0rx_semaphore);
 
-osSemaphoreId uart1semaphore;
-osSemaphoreDef(uart1semaphore);
+osSemaphoreId uart1rx_semaphore_id;
+osSemaphoreDef(uart1rx_semaphore);
 
-osSemaphoreId uart2semaphore;
-osSemaphoreDef(uart2semaphore);
+osSemaphoreId uart2rx_semaphore_id;
+osSemaphoreDef(uart2rx_semaphore);
+
+osMutexId uart0tx_mutex_id;
+osMutexDef(uart0tx_mutex);
+
+osMutexId uart1tx_mutex_id;
+osMutexDef(uart1tx_mutex);
+
+osMutexId uart2tx_mutex_id;
+osMutexDef(uart2tx_mutex);
 
 uint8_t GetUart0RxLine(uint8_t** buf)
 {
 	uint8_t len;
 	if(uart0rx.WritePos == uart0rx.SendPos)
 	{
-		osSemaphoreWait(uart0semaphore,osWaitForever);
+		osSemaphoreWait(uart0rx_semaphore_id,osWaitForever);
 		//return 0;
 	}
 	*buf=uart0rx.ArrayBuf[uart0rx.SendPos];
@@ -56,7 +65,7 @@ uint8_t GetUart1RxLine(uint8_t** buf)
 	uint8_t len;
 	if(uart1rx.WritePos == uart1rx.SendPos)
 	{
-		osSemaphoreWait(uart1semaphore,osWaitForever);
+		osSemaphoreWait(uart1rx_semaphore_id,osWaitForever);
 		//return 0;
 	}
 	*buf=uart1rx.ArrayBuf[uart1rx.SendPos];
@@ -72,7 +81,7 @@ uint8_t GetUart2RxLine(uint8_t** buf)
 	uint8_t len;
 	if(uart2rx.WritePos == uart2rx.SendPos)
 	{
-		osSemaphoreWait(uart2semaphore,osWaitForever);
+		osSemaphoreWait(uart2rx_semaphore_id,osWaitForever);
 		//return 0;
 	}
 	*buf=uart2rx.ArrayBuf[uart2rx.SendPos];
@@ -85,9 +94,12 @@ uint8_t GetUart2RxLine(uint8_t** buf)
 
 void myUARTinit()
 {
-	uart0semaphore = osSemaphoreCreate(osSemaphore(uart0semaphore), 1);
-	uart1semaphore = osSemaphoreCreate(osSemaphore(uart1semaphore), 1);
-	uart2semaphore = osSemaphoreCreate(osSemaphore(uart2semaphore), 1);
+	uart0rx_semaphore_id = osSemaphoreCreate(osSemaphore(uart0rx_semaphore), 1);
+	uart1rx_semaphore_id = osSemaphoreCreate(osSemaphore(uart1rx_semaphore), 1);
+	uart2rx_semaphore_id = osSemaphoreCreate(osSemaphore(uart2rx_semaphore), 1);
+	uart0tx_mutex_id = osMutexCreate(osMutex(uart0tx_mutex));
+	uart1tx_mutex_id = osMutexCreate(osMutex(uart1tx_mutex));
+	uart2tx_mutex_id = osMutexCreate(osMutex(uart2tx_mutex));
 	memset(&uart0tx,0,sizeof(my_UART_BUF));
 	memset(&uart1tx,0,sizeof(my_UART_BUF));
 	memset(&uart2tx,0,sizeof(my_UART_BUF));
@@ -98,6 +110,7 @@ void myUARTinit()
 void myUART0_Send(uint8_t* buf,uint8_t len)
 {
 	if(len>MAXCHAR) len=MAXCHAR;
+	osMutexWait(uart0tx_mutex_id,osWaitForever);
 	NVIC002_DisableIRQ(&NVIC002_Handle0);
 	if(uart0tx.Sending==0)
 	{
@@ -112,12 +125,14 @@ void myUART0_Send(uint8_t* buf,uint8_t len)
 		uart0tx.WritePos&=(MAXLINE-1);
 	}
 	NVIC002_EnableIRQ(&NVIC002_Handle0);
+	osMutexRelease(uart0tx_mutex_id);
 }
 
 
 void myUART1_Send(uint8_t* buf,uint8_t len)
 {
 	if(len>MAXCHAR) len=MAXCHAR;
+	osMutexWait(uart1tx_mutex_id,osWaitForever);
 	NVIC002_DisableIRQ(&NVIC002_Handle1);
 	if(uart1tx.Sending==0)
 	{
@@ -132,11 +147,13 @@ void myUART1_Send(uint8_t* buf,uint8_t len)
 		uart1tx.WritePos&=(MAXLINE-1);
 	}
 	NVIC002_EnableIRQ(&NVIC002_Handle1);
+	osMutexRelease(uart1tx_mutex_id);
 }
 
 void myUART2_Send(uint8_t* buf,uint8_t len)
 {
 	if(len>MAXCHAR) len=MAXCHAR;
+	osMutexWait(uart2tx_mutex_id,osWaitForever);
 	NVIC002_DisableIRQ(&NVIC002_Handle2);
 	if(uart2tx.Sending==0)
 	{
@@ -151,6 +168,7 @@ void myUART2_Send(uint8_t* buf,uint8_t len)
 		uart2tx.WritePos&=(MAXLINE-1);
 	}
 	NVIC002_EnableIRQ(&NVIC002_Handle2);
+	osMutexRelease(uart2tx_mutex_id);
 }
 
 
@@ -161,13 +179,12 @@ void Uart0RxFIFOBufferEventHandler()
 {
 	if(UART001_GetFlagStatus(&UART001_Handle0,UART001_FIFO_STD_RECV_BUF_FLAG) == UART001_SET)
 	{
-		IO004_TogglePin(LED1);
 		UART001_ClearFlag(&UART001_Handle0,UART001_FIFO_STD_RECV_BUF_FLAG);
 		/* Read the received data to the buffer */
 		uart0rx.ArrayLen[uart0rx.WritePos] = UART001_ReadDataBytes(&UART001_Handle0,uart0rx.ArrayBuf[uart0rx.WritePos],8);
 		uart0rx.WritePos++;
 		uart0rx.WritePos&=(MAXLINE-1);
-		osSemaphoreRelease(uart0semaphore);
+		osSemaphoreRelease(uart0rx_semaphore_id);
 	}
 }
 
@@ -206,7 +223,7 @@ void Uart1RxFIFOBufferEventHandler()
 		uart1rx.ArrayLen[uart1rx.WritePos] = UART001_ReadDataBytes(&UART001_Handle1,uart1rx.ArrayBuf[uart1rx.WritePos],8);
 		uart1rx.WritePos++;
 		uart1rx.WritePos&=(MAXLINE-1);
-		osSemaphoreRelease(uart1semaphore);
+		osSemaphoreRelease(uart1rx_semaphore_id);
 	}
 }
 
@@ -241,7 +258,7 @@ void Uart2RxFIFOBufferEventHandler()
 		uart2rx.ArrayLen[uart2rx.WritePos] = UART001_ReadDataBytes(&UART001_Handle2,uart2rx.ArrayBuf[uart2rx.WritePos],8);
 		uart2rx.WritePos++;
 		uart2rx.WritePos&=(MAXLINE-1);
-		osSemaphoreRelease(uart2semaphore);
+		osSemaphoreRelease(uart2rx_semaphore_id);
 	}
 }
 
