@@ -4,6 +4,7 @@
   <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../UART001/1.0.24/uart001_0.app#//@consumed.3"/>
   <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../UART001/1.0.24/uart001_1.app#//@consumed.3"/>
   <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../UART001/1.0.24/uart001_2.app#//@consumed.3"/>
+  <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../CANGLOBAL/1.0.12/canglobal_0.app#//@consumed.3"/>
   <provided xsi:type="ResourceModel:VirtualSignal" name="Perbridge (fPB) Clock" URI="http://www.infineon.com/1.0.42/app/clk001/0/clk001_fpb_vs" requiredSignalResource="perbridge/fpb">
     <localValue xsi:type="ResourceModel:StringValue" value="-1"/>
     <globalValue xsi:type="ResourceModel:StringValue" value="-1"/>
@@ -444,6 +445,7 @@ Valid values of clock divide registers for fCCU , fCPU and fPERIPH clocks
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../UART001/1.0.24/uart001_0.app#//@consumed.45"/>
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../UART001/1.0.24/uart001_1.app#//@consumed.45"/>
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../UART001/1.0.24/uart001_2.app#//@consumed.45"/>
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../CANGLOBAL/1.0.12/canglobal_0.app#//@consumed.6"/>
     <localValue xsi:type="ResourceModel:IntegerValue" value="78"/>
     <globalValue xsi:type="ResourceModel:IntegerValue" value="78"/>
     <toolTipHelpDescription>Actual Peripheral Bus Freq</toolTipHelpDescription>

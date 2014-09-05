@@ -79,6 +79,8 @@ void SystemInit_DAVE3(void);
 	#include "../../inc/RESET001/RESET001.h" 
 	#include "../../inc/UART001/UART001.h" 
 	#include "../../inc/NVIC002/NVIC002.h" 
+	#include "../../inc/CANGLOBAL/CANGLOBAL.h" 
+	#include "../../inc/CAN001/CAN001.h" 
 
                          
 

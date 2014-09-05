@@ -10,6 +10,7 @@
 #include <string.h>
 #include "myGlobe.h"
 #include "myUART.h"
+#include "myCAN.h"
 
 
 typedef struct{
@@ -80,10 +81,6 @@ void thread_uart0_rx(void const *argument)
 					if(uartRx0Frame.cnt>=7)
 					{
 						//==================process frame here=====================
-						IO004_SetPin(LED1);
-						osDelay(1);
-						IO004_ResetPin(LED1);
-						osDelay(1);
 						//==================process frame end======================
 						uartRx0Frame.st=0;
 					}
@@ -126,9 +123,10 @@ void thread_idle(void const *argument)
 	while(1)
 	{
 		osDelay(50);
-		IO004_TogglePin(LED0);
 		myUART0_Send(buf,8);
 		myUART0_Send(buf,8);
+		myCAN0_Send(0,buf,8);
+
     }
 }
 
@@ -139,7 +137,6 @@ void thread_idle2(void const *argument)
 	while(1)
 	{
 		osDelay(100);
-		IO004_TogglePin(LED0);
 		myUART0_Send(buf,8);
 		myUART0_Send(buf,8);
     }
@@ -149,13 +146,6 @@ void thread_idle2(void const *argument)
 
 
 
-
-
-
-void TestInterrupt()
-{
-	IO004_TogglePin(LED1);
-}
 
 
 
@@ -176,6 +166,7 @@ int main(void)
 	memset(&uartRx1Frame,0,sizeof(myFrameDef));
 	memset(&uartRx2Frame,0,sizeof(myFrameDef));
 	myUARTinit();
+	myCANinit();
 
 
 //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)

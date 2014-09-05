@@ -91,6 +91,36 @@ void DAVE_MUX_Init(void)
             	         
                                      
        /*        SCU Macro definitions     */                        
+/*
+ * CAN peripheral configuration:
+ */                                   
+    //Node2 configuration:
+    
+    WR_REG(CAN_NODE2->NIPR, CAN_NODE_NIPR_ALINP_Msk, CAN_NODE_NIPR_ALINP_Pos, SRN1);
+                  
+    //Message object 0 configuration:
+    
+    WR_REG(CAN_MO0->MOIPR, CAN_MO_MOIPR_TXINP_Msk, CAN_MO_MOIPR_TXINP_Pos, SRN1);                   
+    //Message object 1 configuration:
+    
+    WR_REG(CAN_MO1->MOIPR, CAN_MO_MOIPR_RXINP_Msk, CAN_MO_MOIPR_RXINP_Pos, SRN1);
+                                       
+    //Message object 13 configuration:
+    
+    WR_REG(CAN_MO13->MOIPR, CAN_MO_MOIPR_TXINP_Msk, CAN_MO_MOIPR_TXINP_Pos, SRN1);                                                                                                         
+    /* Macros which makes the CAN peripheral to exit from the INITIALISATION mode to NORMAL mode */
+#ifdef CAN_NODE0_ENABLE
+    CAN_Handle0_NODE();
+#endif
+#ifdef CAN_NODE1_ENABLE    
+    CAN_Handle1_NODE();
+#endif    
+#ifdef CAN_NODE2_ENABLE    
+    CAN_Handle2_NODE(); 
+#endif 
+   	 
+            	         
+                                              
    	 
       
 //********* MODULE USIC CONFIGURATIONS *************************	        
@@ -204,6 +234,8 @@ void DAVE_MUX_Init(void)
 					                         
   WR_REG(PORT1->IOCR0, PORT_IOCR_PC1_OE_Msk, PORT_IOCR_PC1_OE_Pos, PORT_IOCR_OE1);                /*    P1.1 : PORT1_IOCR0_PC1_OE */					   
 					                         
+  WR_REG(PORT1->IOCR8, 0xb800U, PORT_IOCR_PC1_PCR_Pos, 0x12U);                /*P1.9 : PORT1_IOCR8_PC9_PCR and PORT1_IOCR8_PC9_OE */					   
+					                         
   WR_REG(PORT2->IOCR12, 0xb80000U, PORT_IOCR_PC2_PCR_Pos, 0x12U);                /*P2.14 : PORT2_IOCR12_PC14_PCR and PORT2_IOCR12_PC14_OE */					   
 					                         
   WR_REG(PORT5->IOCR0, 0xb800U, PORT_IOCR_PC1_PCR_Pos, 0x11U);                /*P5.1 : PORT5_IOCR0_PC1_PCR and PORT5_IOCR0_PC1_OE */					   
@@ -227,7 +259,7 @@ void DAVE_MUX_Init(void)
 *******************************************************************************/
  
 void DAVE_MUX_PreInit(void)
-{            
+{                
 
 /*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                   
 }
