@@ -55,14 +55,22 @@ void myCANinit()
 
 void myCAN0_Send(uint32_t msgid,uint8_t* buf,uint8_t len)
 {
-	osMutexWait(can0tx_mutex_id,osWaitForever);
 	//if(can0tx.Sending==0)
 	{
 		CAN001_UpdateMODataRegisters(&CAN001_Handle0,1,len,buf);
 		CAN001_SendDataFrame(&CAN001_Handle0,1);
 		//can0tx.Sending=1;
 	}
-	osMutexRelease(can0tx_mutex_id);
+}
+
+void myCAN1_Send(uint32_t msgid,uint8_t* buf,uint8_t len)
+{
+	//if(can0tx.Sending==0)
+	{
+		CAN001_UpdateMODataRegisters(&CAN001_Handle1,1,len,buf);
+		CAN001_SendDataFrame(&CAN001_Handle1,1);
+		//can0tx.Sending=1;
+	}
 }
 
 void EventHandlerCAN0()
@@ -91,12 +99,37 @@ void EventHandlerCAN0()
 	  {
 	    /* Clear the flag */
 	    CAN001_ClearNodeFlagStatus(&CAN001_Handle0,CAN001_ALERT_STATUS);
-	    IO004_TogglePin(LED1);
+	  //  IO004_TogglePin(LED1);
 	  }
 
 }
 
 void EventHandlerCAN1()
 {
+	  /* Check transmit pending status in LMO1 */
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle1,1,TRANSMIT_PENDING) == CAN_SET)
+	  {
+	    /* Clear the flag */
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle1,1,TRANSMIT_PENDING);
+	    can1tx.Sending=0;
+	   IO004_TogglePin(LED0);
+	  }
+	  /* Check receive pending status in LMO2 */
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle1,2,RECEIVE_PENDING) == CAN_SET)
+	  {
+	    /* Clear the flag */
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle1,2,RECEIVE_PENDING);
+	    /* Read the received Message object and stores in variable CanRecMsgObj */
+	    CAN001_ReadMsgObj(&CAN001_Handle1,&CanRecMsgObj,2);
+	    /* Switch on LED Pin 5.2  to indicate that the requested message is received*/
+	    IO004_TogglePin(LED1);
+	  }
+	  /* Check for Node error */
+	  if(CAN001_GetNodeFlagStatus(&CAN001_Handle1,CAN001_ALERT_STATUS) == CAN_SET)
+	  {
+	    /* Clear the flag */
+	    CAN001_ClearNodeFlagStatus(&CAN001_Handle1,CAN001_ALERT_STATUS);
+	    IO004_TogglePin(LED1);
+	  }
 
 }

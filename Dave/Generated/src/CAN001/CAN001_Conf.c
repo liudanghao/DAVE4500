@@ -70,7 +70,7 @@ const CAN001_HandleType CAN001_Handle0 =
 	             },
 	.CanNodeRegs = CAN_NODE2, /* Node register offset value */
 	.NodeID = 2,              /* Current node number */
-	.LoopBackModeEn = 0, /* Loop back mode selection*/
+	.LoopBackModeEn = 1, /* Loop back mode selection*/
 	.NodeMONo = 2, /* Total message object allocated to node list */   
 	.FirstMOMapping = 0
 };
@@ -78,7 +78,7 @@ const CAN001_HandleType CAN001_Handle0 =
 /* Node2 LMO1 handle structure */
 CAN001_MessageHandleType CAN001_MessageHandle0_1 =
 {
-  	.Identifier = 0x33,	
+  	.Identifier = 0x44,	
 	
 	
   	.IDMask = 0x7ff,
@@ -110,7 +110,7 @@ CAN001_MessageHandleType CAN001_MessageHandle0_2 =
 const CAN001_HandleType CAN001_Handle1 =
 {
 	.BaudRate = {0x17, /* Baud rate Prescaler value */
-	             0x1, /* Synchronization Jump Width */
+	             0x1100000, /* Synchronization Jump Width */
 	             0x6, /* Time segment 1 */
 	             0x1, /* Time segment 2 */
 	             0,  /* Divide prescaler by 8 */
@@ -125,7 +125,7 @@ const CAN001_HandleType CAN001_Handle1 =
 /* Node1 LMO1 handle structure */
 CAN001_MessageHandleType CAN001_MessageHandle1_1 =
 {
-  	.Identifier = 0x44,	
+  	.Identifier = 0x33,	
 	
 	
   	.IDMask = 0x7ff,

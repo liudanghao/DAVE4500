@@ -56,8 +56,8 @@
     <bitFields name="ALIE" URI="http://www.infineon.com/0.1.28/peripheral/can/0/node/2/ncr/alie" maxValue="1" minValue="0" startPos="3" stopPos="3" accessPermission="rw">
       <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
       <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CAN001/1.0.12/can001_0.app#//@consumed.23"/>
-      <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-      <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+      <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+      <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
       <toolTipHelpDescription>Alert Interrupt Enable</toolTipHelpDescription>
       <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Alert interrupt is disabled."/>
       <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Alert interrupt is enabled."/>
@@ -94,8 +94,8 @@
   <provided xsi:type="ResourceModel:BitField" name="LBM" URI="http://www.infineon.com/0.1.28/peripheral/can/0/node/2/npcr/lbm" maxValue="1" minValue="0" startPos="8" stopPos="8" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CAN001/1.0.12/can001_0.app#//@consumed.25"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
     <toolTipHelpDescription>Loop-Back Mode</toolTipHelpDescription>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Loop-Back Mode is disabled."/>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Loop-Back Mode is enabled. This node is connected to an internal (virtual) loop-back CAN bus. All CAN nodes which are in Loop-Back Mode are connected to this virtual CAN bus so that they can communicate with each other internally. The external transmit line is forced recessive in Loop-Back Mode."/>
@@ -291,8 +291,8 @@
     <bitFields name="ALIE" URI="http://www.infineon.com/0.1.28/peripheral/can/0/node/1/ncr/alie" maxValue="1" minValue="0" startPos="3" stopPos="3" accessPermission="rw">
       <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
       <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CAN001/1.0.12/can001_1.app#//@consumed.23"/>
-      <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-      <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+      <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+      <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
       <toolTipHelpDescription>Alert Interrupt Enable</toolTipHelpDescription>
       <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Alert interrupt is disabled."/>
       <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Alert interrupt is enabled."/>
@@ -361,8 +361,8 @@
   <provided xsi:type="ResourceModel:BitField" name="SJW" URI="http://www.infineon.com/0.1.28/peripheral/can/0/node/1/nbtr/sjw" maxValue="3" minValue="0" startPos="6" stopPos="7" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CAN001/1.0.12/can001_1.app#//@consumed.29"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="1100000"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="1100000"/>
     <toolTipHelpDescription>(Re) Synchronization Jump Width</toolTipHelpDescription>
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="BRP" URI="http://www.infineon.com/0.1.28/peripheral/can/0/node/1/nbtr/brp" maxValue="63" minValue="0" startPos="0" stopPos="5" accessPermission="rw">
@@ -539,8 +539,8 @@
     <bitFields name="RXIE" URI="http://www.infineon.com/0.1.28/peripheral/can/0/mo/14/mofcr/rxie" maxValue="1" minValue="0" startPos="16" stopPos="16" accessPermission="rw">
       <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
       <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CAN001/1.0.12/can001_1.app#//@consumed.52"/>
-      <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-      <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+      <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+      <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
       <toolTipHelpDescription>Receive Interrupt Enable</toolTipHelpDescription>
       <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Message receive interrupt is disabled."/>
       <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Message receive interrupt is enabled."/>
@@ -897,8 +897,8 @@
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="TXINP" URI="http://www.infineon.com/0.1.28/peripheral/can/0/mo/13/moipr_txinp" maxValue="7" minValue="0" startPos="4" stopPos="6" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <toolTipHelpDescription>Transmit Interrupt Node Pointer</toolTipHelpDescription>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b000" description="Interrupt output line INT_O0 is selected."/>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b001" description="Interrupt output line INT_O1 is selected."/>
@@ -1132,8 +1132,8 @@
   <provided xsi:type="ResourceModel:BitField" name="ID" URI="http://www.infineon.com/0.1.28/peripheral/can/0/mo/0/moar/id" maxValue="536870911" minValue="0" startPos="0" stopPos="28" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CAN001/1.0.12/can001_0.app#//@consumed.44"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="cc0000"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="cc0000"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="1100000"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="1100000"/>
     <toolTipHelpDescription>CAN Identifier of Message Object n</toolTipHelpDescription>
   </provided>
   <provided xsi:type="ResourceModel:RegisterParameter" name="MODATAL0" URI="http://www.infineon.com/0.1.28/peripheral/can/0/mo/0/modatal" accessPermission="rw" addressOffset="0x1010" resetValue="00000000" resetMask="0xFFFFFFFF">
@@ -1564,8 +1564,8 @@
     <bitFields name="TXIE" URI="http://www.infineon.com/0.1.28/peripheral/can/0/mo/13/mofcr/txie" maxValue="1" minValue="0" startPos="17" stopPos="17" accessPermission="rw">
       <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
       <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CAN001/1.0.12/can001_1.app#//@consumed.38"/>
-      <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-      <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+      <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+      <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
       <toolTipHelpDescription>Transmit Interrupt Enable</toolTipHelpDescription>
       <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Message transmit interrupt is disabled."/>
       <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Message transmit interrupt is enabled."/>
@@ -1678,8 +1678,8 @@
   <provided xsi:type="ResourceModel:BitField" name="ID" URI="http://www.infineon.com/0.1.28/peripheral/can/0/mo/13/moar/id" maxValue="536870911" minValue="0" startPos="0" stopPos="28" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CAN001/1.0.12/can001_1.app#//@consumed.44"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="1100000"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="1100000"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="cc0000"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="cc0000"/>
     <toolTipHelpDescription>CAN Identifier of Message Object n</toolTipHelpDescription>
   </provided>
   <provided xsi:type="ResourceModel:RegisterParameter" name="MODATAL13" URI="http://www.infineon.com/0.1.28/peripheral/can/0/mo/13/modatal" accessPermission="rw" addressOffset="0x11B0" resetValue="00000000" resetMask="0xFFFFFFFF">

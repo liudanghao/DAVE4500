@@ -163,12 +163,12 @@ const NVIC002_HandleType NVIC002_Handle6 = {
    
 const NVIC002_HandleType NVIC002_Handle7 = {
    /* Mapped NVIC Node */
-  .NodeID      = 64 , 
+  .NodeID      = 76 , 
   /* Node Interrupt Priority */
   .Priority    = 63,  
   /* Node Interrupt SubPriority */
   .SubPriority = 0,
-  /* Interrupt enable for Node64 */
+  /* Interrupt enable for Node76 */
   .InterruptEnable = 1
 }; 
 const NVIC002_HandleType * NVIC002_HandleArray[NVIC002_NUM_INSTANCES] =

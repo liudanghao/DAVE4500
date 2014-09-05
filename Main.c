@@ -126,6 +126,7 @@ void thread_idle(void const *argument)
 		myUART0_Send(buf,8);
 		myUART0_Send(buf,8);
 		myCAN0_Send(0,buf,8);
+		myCAN1_Send(0,buf,8);
 
     }
 }

@@ -10,5 +10,6 @@
 
 void myCANinit();
 void myCAN0_Send(uint32_t msgid,uint8_t* buf,uint8_t len);
+void myCAN1_Send(uint32_t msgid,uint8_t* buf,uint8_t len);
 
 #endif /* MYCAN_H_ */

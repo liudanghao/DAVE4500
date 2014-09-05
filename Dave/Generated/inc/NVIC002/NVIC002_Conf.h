@@ -91,8 +91,8 @@ extern "C" {
 /* User defined function mapped to IRQ_Hdlr_77 */
 #define EventHandlerCAN0    IRQ_Hdlr_77 
 
-/* User defined function mapped to IRQ_Hdlr_64 */
-#define EventHandlerCAN1    IRQ_Hdlr_64 
+/* User defined function mapped to IRQ_Hdlr_76 */
+#define EventHandlerCAN1    IRQ_Hdlr_76 
 
 
 /**

@@ -424,6 +424,8 @@ void CAN001_Init(void)
 
    /* Node2 initialization */
    CAN001_lNodeInit(&CAN001_Handle0);
+   /* Enable Node Alert interrupt */
+   EnableNodeInterrupt(CAN001_Handle0,(uint32_t)CAN_ALERT_INTERRUPT);
    /* LMO1 Initialization */
    (void)CAN001_ConfigMsgObj(&CAN001_Handle0,&CAN001_MessageHandle0_1,1U);
    /* Enable transmit interrupt */
@@ -434,10 +436,16 @@ void CAN001_Init(void)
    EnableMOInterrupt(CAN001_Handle0,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,2);
    /* Node1 initialization */
    CAN001_lNodeInit(&CAN001_Handle1);
+   /* Enable Node Alert interrupt */
+   EnableNodeInterrupt(CAN001_Handle1,(uint32_t)CAN_ALERT_INTERRUPT);
    /* LMO1 Initialization */
    (void)CAN001_ConfigMsgObj(&CAN001_Handle1,&CAN001_MessageHandle1_1,1U);
+   /* Enable transmit interrupt */
+   EnableMOInterrupt(CAN001_Handle1,(uint32_t)CAN_MO_TRANSMIT_INTERRUPT,1);
    /* LMO2 Initialization */
    (void)CAN001_ConfigMsgObj(&CAN001_Handle1,&CAN001_MessageHandle1_2,2U);
+   /* Enable receive interrupt */
+   EnableMOInterrupt(CAN001_Handle1,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,2);
   
 }
   
