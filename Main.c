@@ -126,12 +126,11 @@ void thread_uart2_rx(void const *argument)
 
 void thread_idle(void const *argument)
 {
-	uint8_t buf[8]={1,2,3,4,5,6,7,8};
+	uint8_t buf[32]={'a','b','c','d','e','f','a','b','c','d','e','f','\r','\n'};
 	while(1)
 	{
-		osDelay(50);
-		myUART0_Send(buf,8);
-		myUART0_Send(buf,8);
+		osDelay(100);
+		myUART0_Send(buf,14);
 
 		IO004_ResetPin(LED0);
 		IO004_ResetPin(LED1);

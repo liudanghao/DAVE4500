@@ -9,7 +9,7 @@
 #include <string.h>
 
 #define MAXCHAR 16 //WARNING!!! this must be less or equels to the TX FIFO size
-#define MAXLINE 8	//must be 4,8,16,32,64....
+#define MAXLINE 16	//must be 4,8,16,32,64....
 
 typedef struct{
 	uint8_t ArrayBuf[MAXLINE][MAXCHAR];

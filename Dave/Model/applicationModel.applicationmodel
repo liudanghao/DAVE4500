@@ -126,7 +126,7 @@
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.24" target="//@nodes.30"/>
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.28" target="//@nodes.30"/>
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.6" target="//@nodes.30"/>
+  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.26" target="//@nodes.31"/>
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.25" target="//@nodes.31"/>
   <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.27" target="//@nodes.31"/>
-  <connections xsi:type="DaveExpert:NodeConnection" source="//@nodes.26" target="//@nodes.31"/>
 </DaveExpert:ApplicationModelData>
