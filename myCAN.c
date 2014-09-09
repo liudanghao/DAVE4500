@@ -9,127 +9,202 @@
 #include "myGlobe.h"
 #include <string.h>
 
-#define MAXLINE 8	//must be 4,8,16,32,64....
+#define MAXLINE 16	//must be 4,8,16,32,64....
 
 typedef struct{
-	uint8_t ArrayBuf[MAXLINE][8];
-	uint8_t ArrayLen[MAXLINE];
-	uint32_t msgid[MAXLINE];
+	CAN001_MessageHandleType buf[MAXLINE];
 	uint8_t WritePos;
 	uint8_t SendPos;
-	uint8_t Sending;
 }my_CAN_BUF;
 
-my_CAN_BUF can0tx;
-my_CAN_BUF can1tx;
-my_CAN_BUF can0rx;
-my_CAN_BUF can1rx;
 
+//CAN0RX=======================================================
+my_CAN_BUF can0rx;
 osSemaphoreId can0rx_semaphore_id;
 osSemaphoreDef(can0rx_semaphore);
 
+//CAN1RX=======================================================
+my_CAN_BUF can1rx;
 osSemaphoreId can1rx_semaphore_id;
 osSemaphoreDef(can1rx_semaphore);
 
 
-osMutexId can0tx_mutex_id;
-osMutexDef(can0tx_mutex);
-
-osMutexId can1tx_mutex_id;
-osMutexDef(can1tx_mutex);
-
-
-CAN001_MessageHandleType CanRecMsgObj;
+CAN001_MessageHandleType test;
 
 void myCANinit()
 {
 	can0rx_semaphore_id = osSemaphoreCreate(osSemaphore(can0rx_semaphore), 1);
+	memset(&can0rx,0,sizeof(my_CAN_BUF));
+
 	can1rx_semaphore_id = osSemaphoreCreate(osSemaphore(can1rx_semaphore), 1);
-	can0tx_mutex_id = osMutexCreate(osMutex(can0tx_mutex));
-	can1tx_mutex_id = osMutexCreate(osMutex(can1tx_mutex));
-	memset(&can0tx,0,sizeof(my_CAN_BUF));
-	memset(&can1tx,0,sizeof(my_CAN_BUF));
+	memset(&can1rx,0,sizeof(my_CAN_BUF));
 }
 
 
-
-void myCAN0_Send(uint32_t msgid,uint8_t* buf,uint8_t len)
+CAN001_MessageHandleType* myCAN0_Get()
 {
-	//if(can0tx.Sending==0)
-	{
-		CAN001_UpdateMODataRegisters(&CAN001_Handle0,1,len,buf);
-		CAN001_SendDataFrame(&CAN001_Handle0,1);
-		//can0tx.Sending=1;
-	}
+	CAN001_MessageHandleType* pmsg;
+	if(can0rx.SendPos==can0rx.SendPos) osSemaphoreWait(can0rx_semaphore_id,osWaitForever);
+	pmsg=&can0rx.buf[can0rx.SendPos];
+	can0rx.SendPos++;
+	can0rx.SendPos&=(MAXLINE-1);
+	return pmsg;
 }
 
-void myCAN1_Send(uint32_t msgid,uint8_t* buf,uint8_t len)
+
+CAN001_MessageHandleType* myCAN1_Get()
 {
-	//if(can0tx.Sending==0)
-	{
-		CAN001_UpdateMODataRegisters(&CAN001_Handle1,1,len,buf);
-		CAN001_SendDataFrame(&CAN001_Handle1,1);
-		//can0tx.Sending=1;
-	}
+	CAN001_MessageHandleType* pmsg;
+	if(can1rx.SendPos==can1rx.SendPos) osSemaphoreWait(can1rx_semaphore_id,osWaitForever);
+	pmsg=&can1rx.buf[can1rx.SendPos];
+	can1rx.SendPos++;
+	can1rx.SendPos&=(MAXLINE-1);
+	return pmsg;
+}
+
+//if multi thread call this function, must think...
+void myCAN0_Send(uint8_t msgbox,uint8_t* buf,uint8_t len)
+{
+	CAN001_UpdateMODataRegisters(&CAN001_Handle0,msgbox,len,buf);
+	CAN001_SendDataFrame(&CAN001_Handle0,msgbox);
+}
+
+//if multi thread call this function, must think...
+void myCAN1_Send(uint8_t msgbox,uint8_t* buf,uint8_t len)
+{
+	CAN001_UpdateMODataRegisters(&CAN001_Handle1,msgbox,len,buf);
+	CAN001_SendDataFrame(&CAN001_Handle1,msgbox);
 }
 
 void EventHandlerCAN0()
 {
-
-	  /* Check transmit pending status in LMO1 */
+/*
 	  if(CAN001_GetMOFlagStatus(&CAN001_Handle0,1,TRANSMIT_PENDING) == CAN_SET)
 	  {
-	    /* Clear the flag */
 	    CAN001_ClearMOFlagStatus(&CAN001_Handle0,1,TRANSMIT_PENDING);
-	    can0tx.Sending=0;
-	   IO004_TogglePin(LED0);
 	  }
-	  /* Check receive pending status in LMO2 */
-	  if(CAN001_GetMOFlagStatus(&CAN001_Handle0,2,RECEIVE_PENDING) == CAN_SET)
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle0,2,TRANSMIT_PENDING) == CAN_SET)
 	  {
-	    /* Clear the flag */
-	    CAN001_ClearMOFlagStatus(&CAN001_Handle0,2,RECEIVE_PENDING);
-	    /* Read the received Message object and stores in variable CanRecMsgObj */
-	    CAN001_ReadMsgObj(&CAN001_Handle0,&CanRecMsgObj,2);
-	    /* Switch on LED Pin 5.2  to indicate that the requested message is received*/
-	    IO004_TogglePin(LED1);
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle0,2,TRANSMIT_PENDING);
 	  }
-	  /* Check for Node error */
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle0,3,TRANSMIT_PENDING) == CAN_SET)
+	  {
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle0,3,TRANSMIT_PENDING);
+	  }
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle0,4,TRANSMIT_PENDING) == CAN_SET)
+	  {
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle0,4,TRANSMIT_PENDING);
+	  }
+*/
+
+
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle0,5,RECEIVE_PENDING) == CAN_SET)
+	  {
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle0,5,RECEIVE_PENDING);
+	    CAN001_ReadMsgObj(&CAN001_Handle0,&can0rx.buf[can0rx.WritePos],5);
+	    can0rx.WritePos++;
+	    can0rx.WritePos&=(MAXLINE-1);
+	    osSemaphoreRelease(can0rx_semaphore_id);
+	  }
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle0,6,RECEIVE_PENDING) == CAN_SET)
+	  {
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle0,6,RECEIVE_PENDING);
+	    CAN001_ReadMsgObj(&CAN001_Handle0,&can0rx.buf[can0rx.WritePos],6);
+	    can0rx.WritePos++;
+	    can0rx.WritePos&=(MAXLINE-1);
+	    osSemaphoreRelease(can0rx_semaphore_id);
+	  }
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle0,7,RECEIVE_PENDING) == CAN_SET)
+	  {
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle0,7,RECEIVE_PENDING);
+	    CAN001_ReadMsgObj(&CAN001_Handle0,&can0rx.buf[can0rx.WritePos],7);
+	    can0rx.WritePos++;
+	    can0rx.WritePos&=(MAXLINE-1);
+	    osSemaphoreRelease(can0rx_semaphore_id);
+	  }
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle0,8,RECEIVE_PENDING) == CAN_SET)
+	  {
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle0,8,RECEIVE_PENDING);
+	    CAN001_ReadMsgObj(&CAN001_Handle0,&can0rx.buf[can0rx.WritePos],8);
+	    can0rx.WritePos++;
+	    can0rx.WritePos&=(MAXLINE-1);
+	    osSemaphoreRelease(can0rx_semaphore_id);
+	  }
+
+
 	  if(CAN001_GetNodeFlagStatus(&CAN001_Handle0,CAN001_ALERT_STATUS) == CAN_SET)
 	  {
-	    /* Clear the flag */
 	    CAN001_ClearNodeFlagStatus(&CAN001_Handle0,CAN001_ALERT_STATUS);
-	  //  IO004_TogglePin(LED1);
 	  }
 
 }
 
 void EventHandlerCAN1()
 {
-	  /* Check transmit pending status in LMO1 */
+/*
 	  if(CAN001_GetMOFlagStatus(&CAN001_Handle1,1,TRANSMIT_PENDING) == CAN_SET)
 	  {
-	    /* Clear the flag */
 	    CAN001_ClearMOFlagStatus(&CAN001_Handle1,1,TRANSMIT_PENDING);
-	    can1tx.Sending=0;
-	   IO004_TogglePin(LED0);
 	  }
-	  /* Check receive pending status in LMO2 */
-	  if(CAN001_GetMOFlagStatus(&CAN001_Handle1,2,RECEIVE_PENDING) == CAN_SET)
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle1,2,TRANSMIT_PENDING) == CAN_SET)
 	  {
-	    /* Clear the flag */
-	    CAN001_ClearMOFlagStatus(&CAN001_Handle1,2,RECEIVE_PENDING);
-	    /* Read the received Message object and stores in variable CanRecMsgObj */
-	    CAN001_ReadMsgObj(&CAN001_Handle1,&CanRecMsgObj,2);
-	    /* Switch on LED Pin 5.2  to indicate that the requested message is received*/
-	    IO004_TogglePin(LED1);
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle1,2,TRANSMIT_PENDING);
 	  }
-	  /* Check for Node error */
-	  if(CAN001_GetNodeFlagStatus(&CAN001_Handle1,CAN001_ALERT_STATUS) == CAN_SET)
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle1,3,TRANSMIT_PENDING) == CAN_SET)
 	  {
-	    /* Clear the flag */
-	    CAN001_ClearNodeFlagStatus(&CAN001_Handle1,CAN001_ALERT_STATUS);
-	    IO004_TogglePin(LED1);
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle1,3,TRANSMIT_PENDING);
+	  }
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle1,4,TRANSMIT_PENDING) == CAN_SET)
+	  {
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle1,4,TRANSMIT_PENDING);
+	  }
+*/
+
+
+
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle1,5,RECEIVE_PENDING) == CAN_SET)
+	  {
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle1,5,RECEIVE_PENDING);
+	    CAN001_ReadMsgObj(&CAN001_Handle1,&can1rx.buf[can1rx.WritePos],5);
+	    can1rx.WritePos++;
+	    can1rx.WritePos&=(MAXLINE-1);
+	    osSemaphoreRelease(can1rx_semaphore_id);
+	  }
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle1,6,RECEIVE_PENDING) == CAN_SET)
+	  {
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle1,6,RECEIVE_PENDING);
+	    CAN001_ReadMsgObj(&CAN001_Handle1,&can1rx.buf[can1rx.WritePos],6);
+	    can1rx.WritePos++;
+	    can1rx.WritePos&=(MAXLINE-1);
+	    osSemaphoreRelease(can1rx_semaphore_id);
+	  }
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle1,7,RECEIVE_PENDING) == CAN_SET)
+	  {
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle1,7,RECEIVE_PENDING);
+	    CAN001_ReadMsgObj(&CAN001_Handle1,&can1rx.buf[can1rx.WritePos],7);
+	    can1rx.WritePos++;
+	    can1rx.WritePos&=(MAXLINE-1);
+	    osSemaphoreRelease(can1rx_semaphore_id);
+	  }
+	  if(CAN001_GetMOFlagStatus(&CAN001_Handle1,8,RECEIVE_PENDING) == CAN_SET)
+	  {
+	    CAN001_ClearMOFlagStatus(&CAN001_Handle1,8,RECEIVE_PENDING);
+	    CAN001_ReadMsgObj(&CAN001_Handle1,&can1rx.buf[can1rx.WritePos],8);
+	    can1rx.WritePos++;
+	    can1rx.WritePos&=(MAXLINE-1);
+	    osSemaphoreRelease(can1rx_semaphore_id);
 	  }
 
+
+
+
+
+
+
+
+
+	  if(CAN001_GetNodeFlagStatus(&CAN001_Handle1,CAN001_ALERT_STATUS) == CAN_SET)
+	  {
+	    CAN001_ClearNodeFlagStatus(&CAN001_Handle1,CAN001_ALERT_STATUS);
+	  }
 }

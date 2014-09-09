@@ -7,10 +7,15 @@
     <Solver>
         <SolverBndMap>
             <BindMap MUri="peripheral/usic/0/channel/0" Proxy="app/uart001/0/channel"/>
+            <BindMap MUri="peripheral/can/0/mo/36" Proxy="app/can001/0/message6"/>
+            <BindMap MUri="peripheral/can/0/mo/37" Proxy="app/can001/0/message7"/>
+            <BindMap MUri="peripheral/can/0/mo/34" Proxy="app/can001/0/message4"/>
+            <BindMap MUri="peripheral/can/0/mo/35" Proxy="app/can001/0/message5"/>
+            <BindMap MUri="peripheral/can/0/mo/32" Proxy="app/can001/0/message2"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/perbridge" Proxy="app/clk001/0/perbridge"/>
-            <BindMap MUri="peripheral/can/0/mo/1" Proxy="app/can001/0/message2"/>
+            <BindMap MUri="peripheral/can/0/mo/33" Proxy="app/can001/0/message3"/>
+            <BindMap MUri="peripheral/can/0/mo/31" Proxy="app/can001/0/message1"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/ccu" Proxy="app/clk001/0/ccu"/>
-            <BindMap MUri="peripheral/can/0/mo/0" Proxy="app/can001/0/message1"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/pll" Proxy="app/clk001/0/pll"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/usb" Proxy="app/clk001/0/usb"/>
             <BindMap MUri="port/p/5/pad/1" Proxy="app/uart001/0/uart_txpin"/>
@@ -26,6 +31,7 @@
             <BindMap MUri="peripheral/scu/0/rstctrl/0/ebureset" Proxy="app/reset001/0/ebureset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/wdtreset" Proxy="app/reset001/0/wdtreset"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/sdmmc" Proxy="app/clk001/0/mmc"/>
+            <BindMap MUri="peripheral/can/0/mo/38" Proxy="app/can001/0/message8"/>
             <BindMap MUri="peripheral/scu/0/pwrctrl/0/hibernate" Proxy="app/clk001/0/hibernate"/>
             <BindMap MUri="peripheral/usic/1/channel/0" Proxy="app/uart001/1/channel"/>
             <BindMap MUri="peripheral/can/0/global" Proxy="app/canglobal/0/canglobal"/>
@@ -41,24 +47,30 @@
             <BindMap MUri="peripheral/cpu/0/nvic/interrupt/93" Proxy="app/nvic002/5/nvicnode"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/sys" Proxy="app/clk001/0/sys"/>
             <BindMap MUri="peripheral/cpu/0/nvic/interrupt/92" Proxy="app/nvic002/4/nvicnode"/>
-            <BindMap MUri="peripheral/scu/0/rstctrl/0/mmcreset" Proxy="app/reset001/0/mmcreset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/usbreset" Proxy="app/reset001/0/usbreset"/>
+            <BindMap MUri="peripheral/scu/0/rstctrl/0/mmcreset" Proxy="app/reset001/0/mmcreset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/ccu8reset/1" Proxy="app/reset001/0/ccu8reset1"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/dacreset" Proxy="app/reset001/0/dacreset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/ccu8reset/0" Proxy="app/reset001/0/ccu8reset0"/>
-            <BindMap MUri="peripheral/scu/0/rstctrl/0/ledtsreset" Proxy="app/reset001/0/ledtsreset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/pportreset" Proxy="app/reset001/0/pportreset"/>
+            <BindMap MUri="peripheral/scu/0/rstctrl/0/ledtsreset" Proxy="app/reset001/0/ledtsreset"/>
             <BindMap MUri="peripheral/cpu/0/memory_protection" Proxy="app/rtos001/0/memory_protection"/>
             <BindMap MUri="peripheral/cpu/0/nvic/interrupt/91" Proxy="app/nvic002/3/nvicnode"/>
             <BindMap MUri="peripheral/cpu/0/systick" Proxy="app/rtos001/0/systick"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/usicreset/2" Proxy="app/reset001/0/usicreset2"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/usicreset/1" Proxy="app/reset001/0/usicreset1"/>
-            <BindMap MUri="peripheral/can/0/mo/13" Proxy="app/can001/1/message1"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/usicreset/0" Proxy="app/reset001/0/usicreset0"/>
-            <BindMap MUri="peripheral/can/0/mo/14" Proxy="app/can001/1/message2"/>
+            <BindMap MUri="peripheral/can/0/mo/5" Proxy="app/can001/1/message1"/>
+            <BindMap MUri="peripheral/can/0/mo/6" Proxy="app/can001/1/message2"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/ethreset" Proxy="app/reset001/0/ethreset"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/posifreset/1" Proxy="app/reset001/0/posifreset1"/>
+            <BindMap MUri="peripheral/can/0/mo/7" Proxy="app/can001/1/message3"/>
             <BindMap MUri="peripheral/scu/0/rstctrl/0/posifreset/0" Proxy="app/reset001/0/posifreset0"/>
+            <BindMap MUri="peripheral/can/0/mo/8" Proxy="app/can001/1/message4"/>
+            <BindMap MUri="peripheral/can/0/mo/9" Proxy="app/can001/1/message5"/>
+            <BindMap MUri="peripheral/can/0/mo/10" Proxy="app/can001/1/message6"/>
+            <BindMap MUri="peripheral/can/0/mo/11" Proxy="app/can001/1/message7"/>
+            <BindMap MUri="peripheral/can/0/mo/12" Proxy="app/can001/1/message8"/>
             <BindMap MUri="peripheral/scu/0/clkctrl/0/cpu" Proxy="app/clk001/0/cpu"/>
             <BindMap MUri="port/p/2/pad/14" Proxy="app/uart001/1/uart_txpin"/>
             <BindMap MUri="peripheral/can/0/node/2" Proxy="app/can001/0/node"/>

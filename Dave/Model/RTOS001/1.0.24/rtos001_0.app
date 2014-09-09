@@ -9,8 +9,8 @@
   </provided>
   <provided xsi:type="ResourceModel:IntegerParameter" name="Number of concurrent running threads" evalFunction="&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;function ForwardMapping()&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;{&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var Res0 = SCM.getResource(&quot;dummytaskcnt&quot;);&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var value0 = SCM.getIntValue(currentResource);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;SCM.setIntValue(Res0,value0);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;function BackwardMapping()&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;{&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var Res0 = SCM.getResource(&quot;dummytaskcnt&quot;);&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var value0 = SCM.getIntValue(Res0);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;SCM.setIntValue(currentResource,value0);&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;" URI="http://www.infineon.com/1.0.24/app/rtos001/0/rtos001_irwtaskcnt" downWardmappedList="//@consumed.16" maxValue="FA" minValue="0">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="6"/>
-    <localValue xsi:type="ResourceModel:StringValue" value="6"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="6"/>
+    <localValue xsi:type="ResourceModel:StringValue" value="8"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="8"/>
     <toolTipHelpDescription>Defines max. number of threads that will run at the same time.</toolTipHelpDescription>
   </provided>
   <provided xsi:type="ResourceModel:IntegerParameter" name="Number of threads with user-provided stack size" evalFunction="&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;function ForwardMapping()&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;{&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var Res0 = SCM.getResource(&quot;dummypricnt&quot;);&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var value0 = SCM.getIntValue(currentResource);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;SCM.setIntValue(Res0,value0);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;function BackwardMapping()&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;{&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var Res0 = SCM.getResource(&quot;dummypricnt&quot;);&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var value0 = SCM.getIntValue(Res0);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;SCM.setIntValue(currentResource,value0);&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;" URI="http://www.infineon.com/1.0.24/app/rtos001/0/rtos001_irwpricnt" downWardmappedList="//@consumed.15" maxValue="FA" minValue="0">
@@ -325,8 +325,8 @@ Parameter 'error_code' holds the runtime error code.
     <requiredResource uriString="" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.24/app/rtos001/0/dummytaskcnt" upWardMappingList="//@provided.0 //@provided.1" isSystemDefined="true">
-    <localValue xsi:type="ResourceModel:IntegerValue" value="6"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="6"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="8"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="8"/>
     <requiredResource uriString="" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.24/app/rtos001/0/clkapp/clk001_iroactualfreqcpu" upWardMappingList="//@provided.7" isSystemDefined="true">

@@ -62,7 +62,7 @@
 /* Node2 Handle structure */
 const CAN001_HandleType CAN001_Handle0 =
 {
-	.BaudRate = {0x17, /* Baud rate Prescaler value */
+	.BaudRate = {0x2f, /* Baud rate Prescaler value */
 	             0x1, /* Synchronization Jump Width */
 	             0x6, /* Time segment 1 */
 	             0x1, /* Time segment 2 */
@@ -71,14 +71,14 @@ const CAN001_HandleType CAN001_Handle0 =
 	.CanNodeRegs = CAN_NODE2, /* Node register offset value */
 	.NodeID = 2,              /* Current node number */
 	.LoopBackModeEn = 1, /* Loop back mode selection*/
-	.NodeMONo = 2, /* Total message object allocated to node list */   
-	.FirstMOMapping = 0
+	.NodeMONo = 8, /* Total message object allocated to node list */   
+	.FirstMOMapping = 31
 };
 
 /* Node2 LMO1 handle structure */
 CAN001_MessageHandleType CAN001_MessageHandle0_1 =
 {
-  	.Identifier = 0x44,	
+  	.Identifier = 0x11,	
 	
 	
   	.IDMask = 0x7ff,
@@ -93,7 +93,97 @@ CAN001_MessageHandleType CAN001_MessageHandle0_1 =
 /* Node2 LMO2 handle structure */
 CAN001_MessageHandleType CAN001_MessageHandle0_2 =
 {
+  	.Identifier = 0x22,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 1,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)1
+};
+
+/* Node2 LMO3 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle0_3 =
+{
   	.Identifier = 0x33,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 1,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)1
+};
+
+/* Node2 LMO4 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle0_4 =
+{
+  	.Identifier = 0x44,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 1,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)1
+};
+
+/* Node2 LMO5 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle0_5 =
+{
+  	.Identifier = 0x55,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 1,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)0
+};
+
+/* Node2 LMO6 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle0_6 =
+{
+  	.Identifier = 0x66,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 1,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)0
+};
+
+/* Node2 LMO7 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle0_7 =
+{
+  	.Identifier = 0x77,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 1,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)0
+};
+
+/* Node2 LMO8 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle0_8 =
+{
+  	.Identifier = 0x88,	
 	
 	
   	.IDMask = 0x7ff,
@@ -109,8 +199,8 @@ CAN001_MessageHandleType CAN001_MessageHandle0_2 =
 /* Node1 Handle structure */
 const CAN001_HandleType CAN001_Handle1 =
 {
-	.BaudRate = {0x17, /* Baud rate Prescaler value */
-	             0x1100000, /* Synchronization Jump Width */
+	.BaudRate = {0x2f, /* Baud rate Prescaler value */
+	             0x440000, /* Synchronization Jump Width */
 	             0x6, /* Time segment 1 */
 	             0x1, /* Time segment 2 */
 	             0,  /* Divide prescaler by 8 */
@@ -118,14 +208,14 @@ const CAN001_HandleType CAN001_Handle1 =
 	.CanNodeRegs = CAN_NODE1, /* Node register offset value */
 	.NodeID = 1,              /* Current node number */
 	.LoopBackModeEn = 1, /* Loop back mode selection*/
-	.NodeMONo = 2, /* Total message object allocated to node list */   
-	.FirstMOMapping = 13
+	.NodeMONo = 8, /* Total message object allocated to node list */   
+	.FirstMOMapping = 5
 };
 
 /* Node1 LMO1 handle structure */
 CAN001_MessageHandleType CAN001_MessageHandle1_1 =
 {
-  	.Identifier = 0x33,	
+  	.Identifier = 0x55,	
 	
 	
   	.IDMask = 0x7ff,
@@ -139,6 +229,96 @@ CAN001_MessageHandleType CAN001_MessageHandle1_1 =
 
 /* Node1 LMO2 handle structure */
 CAN001_MessageHandleType CAN001_MessageHandle1_2 =
+{
+  	.Identifier = 0x66,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 8912896,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)1
+};
+
+/* Node1 LMO3 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle1_3 =
+{
+  	.Identifier = 0x77,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 1,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)1
+};
+
+/* Node1 LMO4 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle1_4 =
+{
+  	.Identifier = 0x88,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 1,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)1
+};
+
+/* Node1 LMO5 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle1_5 =
+{
+  	.Identifier = 0x11,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 1,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)0
+};
+
+/* Node1 LMO6 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle1_6 =
+{
+  	.Identifier = 0x22,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 1,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)0
+};
+
+/* Node1 LMO7 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle1_7 =
+{
+  	.Identifier = 0x33,	
+	
+	
+  	.IDMask = 0x7ff,
+		
+	.IDEMask = 1,	
+	.IDExten = 0, /* Message identifier Type */
+	.DataLength = 0,
+	.MsgObjEN = CAN001_ENABLE,
+	.MsgObjType = (CAN_MsgType)0
+};
+
+/* Node1 LMO8 handle structure */
+CAN001_MessageHandleType CAN001_MessageHandle1_8 =
 {
   	.Identifier = 0x44,	
 	

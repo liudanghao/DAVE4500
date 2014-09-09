@@ -13,8 +13,10 @@
 #include "myCAN.h"
 
 
+
+
 typedef struct{
-	uint8_t buf[6];
+	uint8_t buf[16];
 	uint8_t cnt;
 	uint8_t st;
 }myFrameDef;
@@ -29,10 +31,15 @@ void thread_idle (void const *argument);
 osThreadId thread_idle_id;
 osThreadDef(thread_idle, osPriorityNormal, 1, 0);
 
-//thread_idle2 define
-void thread_idle2 (void const *argument);
-osThreadId thread_idle2_id;
-osThreadDef(thread_idle2, osPriorityNormal, 1, 0);
+//thread_can0_rx define
+void thread_can0_rx (void const *argument);
+osThreadId thread_can0_rx_id;
+osThreadDef(thread_can0_rx, osPriorityNormal, 1, 0);
+
+//thread_can1_rx define
+void thread_can1_rx (void const *argument);
+osThreadId thread_can1_rx_id;
+osThreadDef(thread_can1_rx, osPriorityNormal, 1, 0);
 
 //thread_uart0_rx define
 void thread_uart0_rx (void const *argument);
@@ -119,32 +126,54 @@ void thread_uart2_rx(void const *argument)
 
 void thread_idle(void const *argument)
 {
-	uint8_t buf[16]={0xff,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	uint8_t buf[8]={1,2,3,4,5,6,7,8};
 	while(1)
 	{
 		osDelay(50);
 		myUART0_Send(buf,8);
 		myUART0_Send(buf,8);
-		myCAN0_Send(0,buf,8);
-		myCAN1_Send(0,buf,8);
+
+		IO004_ResetPin(LED0);
+		IO004_ResetPin(LED1);
+		osDelay(10);
+		IO004_SetPin(LED0);
+		osDelay(1);
+		IO004_ResetPin(LED0);
+		myCAN0_Send(1,buf,8);
+		myCAN0_Send(2,buf,8);
+		myCAN0_Send(3,buf,8);
+		myCAN0_Send(4,buf,8);
+		osDelay(4);
+		myCAN1_Send(1,buf,8);
+		myCAN1_Send(2,buf,8);
+		myCAN1_Send(3,buf,8);
+		myCAN1_Send(4,buf,8);
+
+
 
     }
 }
 
 
-void thread_idle2(void const *argument)
+void thread_can0_rx(void const *argument)
 {
-	uint8_t buf[16]={0xff,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 	while(1)
 	{
-		osDelay(100);
-		myUART0_Send(buf,8);
-		myUART0_Send(buf,8);
+		myCAN0_Get();
+		IO004_TogglePin(LED1);
     }
 }
 
 
 
+void thread_can1_rx(void const *argument)
+{
+	while(1)
+	{
+		myCAN1_Get();
+		IO004_TogglePin(LED1);
+    }
+}
 
 
 
@@ -175,7 +204,8 @@ int main(void)
 
 
 	thread_idle_id = osThreadCreate(osThread(thread_idle), NULL);
-	thread_idle2_id = osThreadCreate(osThread(thread_idle2), NULL);
+	thread_can0_rx_id = osThreadCreate(osThread(thread_can0_rx), NULL);
+	thread_can1_rx_id = osThreadCreate(osThread(thread_can1_rx), NULL);
 	thread_uart0_rx_id = osThreadCreate(osThread(thread_uart0_rx), NULL);
 	thread_uart1_rx_id = osThreadCreate(osThread(thread_uart1_rx), NULL);
 	thread_uart2_rx_id = osThreadCreate(osThread(thread_uart2_rx), NULL);

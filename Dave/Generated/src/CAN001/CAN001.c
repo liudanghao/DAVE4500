@@ -428,24 +428,56 @@ void CAN001_Init(void)
    EnableNodeInterrupt(CAN001_Handle0,(uint32_t)CAN_ALERT_INTERRUPT);
    /* LMO1 Initialization */
    (void)CAN001_ConfigMsgObj(&CAN001_Handle0,&CAN001_MessageHandle0_1,1U);
-   /* Enable transmit interrupt */
-   EnableMOInterrupt(CAN001_Handle0,(uint32_t)CAN_MO_TRANSMIT_INTERRUPT,1);
    /* LMO2 Initialization */
    (void)CAN001_ConfigMsgObj(&CAN001_Handle0,&CAN001_MessageHandle0_2,2U);
+   /* LMO3 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle0,&CAN001_MessageHandle0_3,3U);
+   /* LMO4 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle0,&CAN001_MessageHandle0_4,4U);
+   /* LMO5 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle0,&CAN001_MessageHandle0_5,5U);
    /* Enable receive interrupt */
-   EnableMOInterrupt(CAN001_Handle0,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,2);
+   EnableMOInterrupt(CAN001_Handle0,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,5);
+   /* LMO6 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle0,&CAN001_MessageHandle0_6,6U);
+   /* Enable receive interrupt */
+   EnableMOInterrupt(CAN001_Handle0,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,6);
+   /* LMO7 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle0,&CAN001_MessageHandle0_7,7U);
+   /* Enable receive interrupt */
+   EnableMOInterrupt(CAN001_Handle0,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,7);
+   /* LMO8 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle0,&CAN001_MessageHandle0_8,8U);
+   /* Enable receive interrupt */
+   EnableMOInterrupt(CAN001_Handle0,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,8);
    /* Node1 initialization */
    CAN001_lNodeInit(&CAN001_Handle1);
    /* Enable Node Alert interrupt */
    EnableNodeInterrupt(CAN001_Handle1,(uint32_t)CAN_ALERT_INTERRUPT);
    /* LMO1 Initialization */
    (void)CAN001_ConfigMsgObj(&CAN001_Handle1,&CAN001_MessageHandle1_1,1U);
-   /* Enable transmit interrupt */
-   EnableMOInterrupt(CAN001_Handle1,(uint32_t)CAN_MO_TRANSMIT_INTERRUPT,1);
    /* LMO2 Initialization */
    (void)CAN001_ConfigMsgObj(&CAN001_Handle1,&CAN001_MessageHandle1_2,2U);
+   /* LMO3 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle1,&CAN001_MessageHandle1_3,3U);
+   /* LMO4 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle1,&CAN001_MessageHandle1_4,4U);
+   /* LMO5 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle1,&CAN001_MessageHandle1_5,5U);
    /* Enable receive interrupt */
-   EnableMOInterrupt(CAN001_Handle1,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,2);
+   EnableMOInterrupt(CAN001_Handle1,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,5);
+   /* LMO6 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle1,&CAN001_MessageHandle1_6,6U);
+   /* Enable receive interrupt */
+   EnableMOInterrupt(CAN001_Handle1,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,6);
+   /* LMO7 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle1,&CAN001_MessageHandle1_7,7U);
+   /* Enable receive interrupt */
+   EnableMOInterrupt(CAN001_Handle1,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,7);
+   /* LMO8 Initialization */
+   (void)CAN001_ConfigMsgObj(&CAN001_Handle1,&CAN001_MessageHandle1_8,8U);
+   /* Enable receive interrupt */
+   EnableMOInterrupt(CAN001_Handle1,(uint32_t)CAN_MO_RECEIVE_INTERRUPT,8);
   
 }
   

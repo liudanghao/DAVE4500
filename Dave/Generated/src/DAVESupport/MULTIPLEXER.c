@@ -97,14 +97,23 @@ void DAVE_MUX_Init(void)
     //Node2 configuration:
     
     WR_REG(CAN_NODE2->NIPR, CAN_NODE_NIPR_ALINP_Msk, CAN_NODE_NIPR_ALINP_Pos, SRN1);
+                                                                                         
+    //Message object 35 configuration:
+    
+    WR_REG(CAN_MO35->MOIPR, CAN_MO_MOIPR_RXINP_Msk, CAN_MO_MOIPR_RXINP_Pos, SRN1);
                   
-    //Message object 0 configuration:
+    //Message object 36 configuration:
     
-    WR_REG(CAN_MO0->MOIPR, CAN_MO_MOIPR_TXINP_Msk, CAN_MO_MOIPR_TXINP_Pos, SRN1);                   
-    //Message object 1 configuration:
+    WR_REG(CAN_MO36->MOIPR, CAN_MO_MOIPR_RXINP_Msk, CAN_MO_MOIPR_RXINP_Pos, SRN1);
+                  
+    //Message object 37 configuration:
     
-    WR_REG(CAN_MO1->MOIPR, CAN_MO_MOIPR_RXINP_Msk, CAN_MO_MOIPR_RXINP_Pos, SRN1);
-                                                                                                                                
+    WR_REG(CAN_MO37->MOIPR, CAN_MO_MOIPR_RXINP_Msk, CAN_MO_MOIPR_RXINP_Pos, SRN1);
+                  
+    //Message object 38 configuration:
+    
+    WR_REG(CAN_MO38->MOIPR, CAN_MO_MOIPR_RXINP_Msk, CAN_MO_MOIPR_RXINP_Pos, SRN1);
+                                                      
     /* Macros which makes the CAN peripheral to exit from the INITIALISATION mode to NORMAL mode */
 #ifdef CAN_NODE0_ENABLE
     CAN_Handle0_NODE();

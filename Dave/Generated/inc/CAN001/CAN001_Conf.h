@@ -55,10 +55,22 @@ extern "C" {
 
 extern const CAN001_HandleType CAN001_Handle0;
 extern CAN001_MessageHandleType CAN001_MessageHandle0_1;
-extern CAN001_MessageHandleType CAN001_MessageHandle0_2;               
+extern CAN001_MessageHandleType CAN001_MessageHandle0_2;
+extern CAN001_MessageHandleType CAN001_MessageHandle0_3;
+extern CAN001_MessageHandleType CAN001_MessageHandle0_4;
+extern CAN001_MessageHandleType CAN001_MessageHandle0_5;
+extern CAN001_MessageHandleType CAN001_MessageHandle0_6;
+extern CAN001_MessageHandleType CAN001_MessageHandle0_7;
+extern CAN001_MessageHandleType CAN001_MessageHandle0_8;               
 extern const CAN001_HandleType CAN001_Handle1;
 extern CAN001_MessageHandleType CAN001_MessageHandle1_1;
-extern CAN001_MessageHandleType CAN001_MessageHandle1_2;               
+extern CAN001_MessageHandleType CAN001_MessageHandle1_2;
+extern CAN001_MessageHandleType CAN001_MessageHandle1_3;
+extern CAN001_MessageHandleType CAN001_MessageHandle1_4;
+extern CAN001_MessageHandleType CAN001_MessageHandle1_5;
+extern CAN001_MessageHandleType CAN001_MessageHandle1_6;
+extern CAN001_MessageHandleType CAN001_MessageHandle1_7;
+extern CAN001_MessageHandleType CAN001_MessageHandle1_8;               
 
 
 /* Macro to enable node2 initialisation exit macro */
@@ -66,18 +78,42 @@ extern CAN001_MessageHandleType CAN001_MessageHandle1_2;
 /* Macro to access node2 registers */
 #define CAN001_Handle0_NODE   CAN_NODE2
 /* Macro to access Node2 LMO1 register */
-#define CAN001_Handle0_NODE_LMO1 CAN_MO0 
+#define CAN001_Handle0_NODE_LMO1 CAN_MO31 
 /* Macro to access Node2 LMO2 register */
-#define CAN001_Handle0_NODE_LMO2 CAN_MO1 
+#define CAN001_Handle0_NODE_LMO2 CAN_MO32 
+/* Macro to access Node2 LMO3 register */
+#define CAN001_Handle0_NODE_LMO3 CAN_MO33 
+/* Macro to access Node2 LMO4 register */
+#define CAN001_Handle0_NODE_LMO4 CAN_MO34 
+/* Macro to access Node2 LMO5 register */
+#define CAN001_Handle0_NODE_LMO5 CAN_MO35 
+/* Macro to access Node2 LMO6 register */
+#define CAN001_Handle0_NODE_LMO6 CAN_MO36 
+/* Macro to access Node2 LMO7 register */
+#define CAN001_Handle0_NODE_LMO7 CAN_MO37 
+/* Macro to access Node2 LMO8 register */
+#define CAN001_Handle0_NODE_LMO8 CAN_MO38 
 
 /* Macro to enable node1 initialisation exit macro */
 #define CAN_NODE1_ENABLE
 /* Macro to access node1 registers */
 #define CAN001_Handle1_NODE   CAN_NODE1
 /* Macro to access Node1 LMO1 register */
-#define CAN001_Handle1_NODE_LMO1 CAN_MO13 
+#define CAN001_Handle1_NODE_LMO1 CAN_MO5 
 /* Macro to access Node1 LMO2 register */
-#define CAN001_Handle1_NODE_LMO2 CAN_MO14 
+#define CAN001_Handle1_NODE_LMO2 CAN_MO6 
+/* Macro to access Node1 LMO3 register */
+#define CAN001_Handle1_NODE_LMO3 CAN_MO7 
+/* Macro to access Node1 LMO4 register */
+#define CAN001_Handle1_NODE_LMO4 CAN_MO8 
+/* Macro to access Node1 LMO5 register */
+#define CAN001_Handle1_NODE_LMO5 CAN_MO9 
+/* Macro to access Node1 LMO6 register */
+#define CAN001_Handle1_NODE_LMO6 CAN_MO10 
+/* Macro to access Node1 LMO7 register */
+#define CAN001_Handle1_NODE_LMO7 CAN_MO11 
+/* Macro to access Node1 LMO8 register */
+#define CAN001_Handle1_NODE_LMO8 CAN_MO12 
 
 /* Support for C++ codebase */
 #ifdef __cplusplus
