@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ResourceModel:Peripheral xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" name="CCU40" description="Capture/Compare Unit 4 (CAPCOM4)" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0">
+  <provided xsi:type="ResourceModel:ResourceGroup" name="global" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/global">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CCU4GLOBAL/1.0.20/ccu4global_0.app#//@consumed.0"/>
+    <resourcesList name="gctrl" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gctrl" isResolved="true"/>
+    <resourcesList name="gctrl_pcis" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gctrl/pcis" isResolved="true"/>
+    <resourcesList name="gstat" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gstat" isResolved="true"/>
+    <resourcesList name="gidlc_sprb" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gidlc/sprb" isResolved="true"/>
+    <resourcesList name="gidls_psic" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gidls/psic" isResolved="true"/>
+    <resourcesList name="gidls_cprb" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gidls/cprb" isResolved="true"/>
+    <resourcesList name="ecrd" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/ecrd" isResolved="true"/>
+    <resourcesList name="midr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/midr" isResolved="true"/>
+    <resourcesList name="clk" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/clk" isResolved="true"/>
+    <resourcesList name="global_signal" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/global_signal" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="clk" description="clk" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/global/clk" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CCU4GLOBAL/1.0.20/ccu4global_0.app#//@consumed.4"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="global_signal" description="global_signal" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/global/global_signal" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CCU4GLOBAL/1.0.20/ccu4global_0.app#//@consumed.5"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="1" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.28"/>
+    <resourcesList name="ins" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41ins" isResolved="true"/>
+    <resourcesList name="cc41ins_ev0is" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41ins/ev0is" isResolved="true"/>
+    <resourcesList name="cc41ins_ev1is" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41ins/ev1is" isResolved="true"/>
+    <resourcesList name="cc41ins_ev2is" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41ins/ev2s" isResolved="true"/>
+    <resourcesList name="srs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41srs" isResolved="true"/>
+    <resourcesList name="cc41srs_posr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41srs/posr" isResolved="true"/>
+    <resourcesList name="cc41srs_cmsr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41srs/cmsr" isResolved="true"/>
+    <resourcesList name="cc41srs_e0sr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41srs/e0sr" isResolved="true"/>
+    <resourcesList name="cc41srs_e1sr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41srs/e1sr" isResolved="true"/>
+    <resourcesList name="cc41srs_e2sr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41srs/e2sr" isResolved="true"/>
+    <resourcesList name="cmc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41cmc" isResolved="true"/>
+    <resourcesList name="tcst" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41tcst" isResolved="true"/>
+    <resourcesList name="tcset" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41tcset" isResolved="true"/>
+    <resourcesList name="tcclr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41tcclr" isResolved="true"/>
+    <resourcesList name="tc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41tc" isResolved="true"/>
+    <resourcesList name="psl" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41psl" isResolved="true"/>
+    <resourcesList name="dit" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41dit" isResolved="true"/>
+    <resourcesList name="dits" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41dits" isResolved="true"/>
+    <resourcesList name="psc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41psc" isResolved="true"/>
+    <resourcesList name="fpc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41fpc" isResolved="true"/>
+    <resourcesList name="fpcs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41fpcs" isResolved="true"/>
+    <resourcesList name="pr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41pr" isResolved="true"/>
+    <resourcesList name="prs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41prs" isResolved="true"/>
+    <resourcesList name="cr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41cr" isResolved="true"/>
+    <resourcesList name="crs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41crs" isResolved="true"/>
+    <resourcesList name="timer" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41timer" isResolved="true"/>
+    <resourcesList name="c0v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41c0v" isResolved="true"/>
+    <resourcesList name="c1v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41c1v" isResolved="true"/>
+    <resourcesList name="c2v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41c2v" isResolved="true"/>
+    <resourcesList name="c3v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41c3v" isResolved="true"/>
+    <resourcesList name="ints" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41ints" isResolved="true"/>
+    <resourcesList name="inte" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41inte" isResolved="true"/>
+    <resourcesList name="sws" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41sws" isResolved="true"/>
+    <resourcesList name="swr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41swr" isResolved="true"/>
+    <resourcesList name="gctrl_mse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gctrl/mse1" isResolved="true"/>
+    <resourcesList name="gstat_si" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gstat/s1i" isResolved="true"/>
+    <resourcesList name="gidls_ssi" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gidls/ss1i" isResolved="true"/>
+    <resourcesList name="gidlc_csi" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gidlc/cs1i" isResolved="true"/>
+    <resourcesList name="gcss_sse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s1se" isResolved="true"/>
+    <resourcesList name="gcss_sdse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s1dse" isResolved="true"/>
+    <resourcesList name="gcss_spse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s1pse" isResolved="true"/>
+    <resourcesList name="gcss_ssts" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s1sts" isResolved="true"/>
+    <resourcesList name="gcsc_ssc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s1sc" isResolved="true"/>
+    <resourcesList name="gcsc_sdsc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s1dsc" isResolved="true"/>
+    <resourcesList name="gcsc_spsc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s1psc" isResolved="true"/>
+    <resourcesList name="gcsc_sstc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s1stc" isResolved="true"/>
+    <resourcesList name="gcst_sss" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/s1ss" isResolved="true"/>
+    <resourcesList name="gcst_sdss" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/s1dss" isResolved="true"/>
+    <resourcesList name="gcst_spss" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/s1pss" isResolved="true"/>
+    <resourcesList name="gcst_cc4st" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/cc41st" isResolved="true"/>
+    <resourcesList name="concat_bus_in" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/concat_bus_in1" isResolved="true"/>
+    <resourcesList name="global_signal" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/global_signal1" isResolved="true"/>
+    <resourcesList name="gp0_unsync" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp10_unsync" isResolved="true"/>
+    <resourcesList name="gp1_unsync" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp11_unsync" isResolved="true"/>
+    <resourcesList name="gp2_unsync" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp12_unsync" isResolved="true"/>
+    <resourcesList name="st" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/st1" isResolved="true"/>
+    <resourcesList name="ps" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/ps1" isResolved="true"/>
+    <resourcesList name="gp0" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp10" isResolved="true"/>
+    <resourcesList name="gp1" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp11" isResolved="true"/>
+    <resourcesList name="gp2" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp12" isResolved="true"/>
+    <resourcesList name="mci" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/mci1" isResolved="true"/>
+    <resourcesList name="concat_bus_out" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/concat_bus_out1" isResolved="true"/>
+    <resourcesList name="out" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/out1" isResolved="true"/>
+    <resourcesList name="pmus_omds" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41_pmus_omds" isResolved="true"/>
+    <resourcesList name="e0as" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41_e0as" isResolved="true"/>
+    <resourcesList name="e1as" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41_e1as" isResolved="true"/>
+    <resourcesList name="e2as" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41_e2as" isResolved="true"/>
+    <resourcesList name="cmds_cmus" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc41_cmds_cmus" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc41_pmus_omds" description="cc41_pmus_omds" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/pmus_omds" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.40"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc41_e2as" description="cc41_e2as" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/e2as" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.50"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="global_signal1" description="global_signal1" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/global_signal" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.55"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="gp12_unsync" description="gp12_unsync" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/gp2_unsync" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.68"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="gp10_unsync" description="gp10_unsync" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/gp0_unsync" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.71"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc41_e0as" description="cc41_e0as" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/e0as" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.76"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="st1" description="st1" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/st" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.78"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="gp11_unsync" description="gp11_unsync" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/gp1_unsync" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.85"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc41_e1as" description="cc41_e1as" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/e1as" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.88"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc41_cmds_cmus" description="cc41_cmds_cmus" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cmds_cmus" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.103"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="2" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.31"/>
+    <resourcesList name="ins" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42ins" isResolved="true"/>
+    <resourcesList name="cc42ins_ev0is" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42ins/ev0is" isResolved="true"/>
+    <resourcesList name="cc42ins_ev1is" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42ins/ev1is" isResolved="true"/>
+    <resourcesList name="cc42ins_ev2is" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42ins/ev2s" isResolved="true"/>
+    <resourcesList name="srs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42srs" isResolved="true"/>
+    <resourcesList name="cc42srs_posr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42srs/posr" isResolved="true"/>
+    <resourcesList name="cc42srs_cmsr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42srs/cmsr" isResolved="true"/>
+    <resourcesList name="cc42srs_e0sr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42srs/e0sr" isResolved="true"/>
+    <resourcesList name="cc42srs_e1sr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42srs/e1sr" isResolved="true"/>
+    <resourcesList name="cc42srs_e2sr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42srs/e2sr" isResolved="true"/>
+    <resourcesList name="cmc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42cmc" isResolved="true"/>
+    <resourcesList name="tcst" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42tcst" isResolved="true"/>
+    <resourcesList name="tcset" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42tcset" isResolved="true"/>
+    <resourcesList name="tcclr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42tcclr" isResolved="true"/>
+    <resourcesList name="tc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42tc" isResolved="true"/>
+    <resourcesList name="psl" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42psl" isResolved="true"/>
+    <resourcesList name="dit" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42dit" isResolved="true"/>
+    <resourcesList name="dits" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42dits" isResolved="true"/>
+    <resourcesList name="psc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42psc" isResolved="true"/>
+    <resourcesList name="fpc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42fpc" isResolved="true"/>
+    <resourcesList name="fpcs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42fpcs" isResolved="true"/>
+    <resourcesList name="pr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42pr" isResolved="true"/>
+    <resourcesList name="prs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42prs" isResolved="true"/>
+    <resourcesList name="cr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42cr" isResolved="true"/>
+    <resourcesList name="crs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42crs" isResolved="true"/>
+    <resourcesList name="timer" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42timer" isResolved="true"/>
+    <resourcesList name="c0v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42c0v" isResolved="true"/>
+    <resourcesList name="c1v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42c1v" isResolved="true"/>
+    <resourcesList name="c2v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42c2v" isResolved="true"/>
+    <resourcesList name="c3v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42c3v" isResolved="true"/>
+    <resourcesList name="ints" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42ints" isResolved="true"/>
+    <resourcesList name="inte" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42inte" isResolved="true"/>
+    <resourcesList name="sws" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42sws" isResolved="true"/>
+    <resourcesList name="swr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42swr" isResolved="true"/>
+    <resourcesList name="gctrl_mse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gctrl/mse2" isResolved="true"/>
+    <resourcesList name="gstat_si" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gstat/s2i" isResolved="true"/>
+    <resourcesList name="gidls_ssi" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gidls/ss2i" isResolved="true"/>
+    <resourcesList name="gidlc_csi" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gidlc/cs2i" isResolved="true"/>
+    <resourcesList name="gcss_sse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s2se" isResolved="true"/>
+    <resourcesList name="gcss_sdse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s2dse" isResolved="true"/>
+    <resourcesList name="gcss_spse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s2pse" isResolved="true"/>
+    <resourcesList name="gcss_ssts" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s2sts" isResolved="true"/>
+    <resourcesList name="gcsc_ssc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s2sc" isResolved="true"/>
+    <resourcesList name="gcsc_sdsc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s2dsc" isResolved="true"/>
+    <resourcesList name="gcsc_spsc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s2psc" isResolved="true"/>
+    <resourcesList name="gcsc_sstc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s2stc" isResolved="true"/>
+    <resourcesList name="gcst_sss" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/s2ss" isResolved="true"/>
+    <resourcesList name="gcst_sdss" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/s2dss" isResolved="true"/>
+    <resourcesList name="gcst_spss" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/s2pss" isResolved="true"/>
+    <resourcesList name="gcst_cc4st" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/cc42st" isResolved="true"/>
+    <resourcesList name="concat_bus_in" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/concat_bus_in2" isResolved="true"/>
+    <resourcesList name="global_signal" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/global_signal2" isResolved="true"/>
+    <resourcesList name="gp0_unsync" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp20_unsync" isResolved="true"/>
+    <resourcesList name="gp1_unsync" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp21_unsync" isResolved="true"/>
+    <resourcesList name="gp2_unsync" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp22_unsync" isResolved="true"/>
+    <resourcesList name="st" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/st2" isResolved="true"/>
+    <resourcesList name="ps" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/ps2" isResolved="true"/>
+    <resourcesList name="gp0" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp20" isResolved="true"/>
+    <resourcesList name="gp1" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp21" isResolved="true"/>
+    <resourcesList name="gp2" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp22" isResolved="true"/>
+    <resourcesList name="mci" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/mci2" isResolved="true"/>
+    <resourcesList name="concat_bus_out" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/concat_bus_out2" isResolved="true"/>
+    <resourcesList name="out" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/out2" isResolved="true"/>
+    <resourcesList name="pmus_omds" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42_pmus_omds" isResolved="true"/>
+    <resourcesList name="e0as" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42_e0as" isResolved="true"/>
+    <resourcesList name="e1as" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42_e1as" isResolved="true"/>
+    <resourcesList name="e2as" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42_e2as" isResolved="true"/>
+    <resourcesList name="cmds_cmus" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42_cmds_cmus" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="global_signal2" description="global_signal2" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/global_signal" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.48"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="gp20_unsync" description="gp20_unsync" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/gp0_unsync" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.73"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="gp21_unsync" description="gp21_unsync" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/gp1_unsync" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.74"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc42_pmus_omds" description="cc42_pmus_omds" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/pmus_omds" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.75"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="gp22_unsync" description="gp22_unsync" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/gp2_unsync" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.81"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc42_cmds_cmus" description="cc42_cmds_cmus" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/cmds_cmus" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.83"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="st2" description="st2" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/st" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.87"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc42_e2as" description="cc42_e2as" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/e2as" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.97"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc42_e1as" description="cc42_e1as" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/e1as" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.100"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc42_e0as" description="cc42_e0as" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/e0as" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.106"/>
+  </provided>
+  <provided xsi:type="ResourceModel:ResourceGroup" name="0" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.32"/>
+    <resourcesList name="ins" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40ins" isResolved="true"/>
+    <resourcesList name="cc40ins_ev0is" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40ins/ev0is" isResolved="true"/>
+    <resourcesList name="cc40ins_ev1is" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40ins/ev1is" isResolved="true"/>
+    <resourcesList name="cc40ins_ev2is" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40ins/ev2s" isResolved="true"/>
+    <resourcesList name="srs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40srs" isResolved="true"/>
+    <resourcesList name="cc40srs_posr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40srs/posr" isResolved="true"/>
+    <resourcesList name="cc40srs_cmsr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40srs/cmsr" isResolved="true"/>
+    <resourcesList name="cc40srs_e0sr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40srs/e0sr" isResolved="true"/>
+    <resourcesList name="cc40srs_e1sr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40srs/e1sr" isResolved="true"/>
+    <resourcesList name="cc40srs_e2sr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40srs/e2sr" isResolved="true"/>
+    <resourcesList name="cmc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40cmc" isResolved="true"/>
+    <resourcesList name="tcst" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40tcst" isResolved="true"/>
+    <resourcesList name="tcset" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40tcset" isResolved="true"/>
+    <resourcesList name="tcclr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40tcclr" isResolved="true"/>
+    <resourcesList name="tc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40tc" isResolved="true"/>
+    <resourcesList name="psl" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40psl" isResolved="true"/>
+    <resourcesList name="dit" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40dit" isResolved="true"/>
+    <resourcesList name="dits" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40dits" isResolved="true"/>
+    <resourcesList name="psc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40psc" isResolved="true"/>
+    <resourcesList name="fpc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40fpc" isResolved="true"/>
+    <resourcesList name="fpcs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40fpcs" isResolved="true"/>
+    <resourcesList name="pr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40pr" isResolved="true"/>
+    <resourcesList name="prs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40prs" isResolved="true"/>
+    <resourcesList name="cr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40cr" isResolved="true"/>
+    <resourcesList name="crs" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40crs" isResolved="true"/>
+    <resourcesList name="timer" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40timer" isResolved="true"/>
+    <resourcesList name="c0v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40c0v" isResolved="true"/>
+    <resourcesList name="c1v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40c1v" isResolved="true"/>
+    <resourcesList name="c2v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40c2v" isResolved="true"/>
+    <resourcesList name="c3v" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40c3v" isResolved="true"/>
+    <resourcesList name="ints" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40ints" isResolved="true"/>
+    <resourcesList name="inte" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40inte" isResolved="true"/>
+    <resourcesList name="sws" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40sws" isResolved="true"/>
+    <resourcesList name="swr" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40swr" isResolved="true"/>
+    <resourcesList name="gctrl_mse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gctrl/mse0" isResolved="true"/>
+    <resourcesList name="gstat_si" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gstat/s0i" isResolved="true"/>
+    <resourcesList name="gidls_ssi" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gidls/ss0i" isResolved="true"/>
+    <resourcesList name="gidlc_csi" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gidlc/cs0i" isResolved="true"/>
+    <resourcesList name="gcss_sse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s0se" isResolved="true"/>
+    <resourcesList name="gcss_sdse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s0dse" isResolved="true"/>
+    <resourcesList name="gcss_spse" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s0pse" isResolved="true"/>
+    <resourcesList name="gcss_ssts" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcss/s0sts" isResolved="true"/>
+    <resourcesList name="gcsc_ssc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s0sc" isResolved="true"/>
+    <resourcesList name="gcsc_sdsc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s0dsc" isResolved="true"/>
+    <resourcesList name="gcsc_spsc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s0psc" isResolved="true"/>
+    <resourcesList name="gcsc_sstc" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcsc/s0stc" isResolved="true"/>
+    <resourcesList name="gcst_sss" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/s0ss" isResolved="true"/>
+    <resourcesList name="gcst_sdss" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/s0dss" isResolved="true"/>
+    <resourcesList name="gcst_spss" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/s0pss" isResolved="true"/>
+    <resourcesList name="gcst_cc4st" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gcst/cc40st" isResolved="true"/>
+    <resourcesList name="concat_bus_in" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/concat_bus_in0" isResolved="true"/>
+    <resourcesList name="global_signal" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/global_signal0" isResolved="true"/>
+    <resourcesList name="gp0_unsync" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp00_unsync" isResolved="true"/>
+    <resourcesList name="gp1_unsync" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp01_unsync" isResolved="true"/>
+    <resourcesList name="gp2_unsync" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp02_unsync" isResolved="true"/>
+    <resourcesList name="st" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/st0" isResolved="true"/>
+    <resourcesList name="ps" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/ps0" isResolved="true"/>
+    <resourcesList name="gp0" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp00" isResolved="true"/>
+    <resourcesList name="gp1" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp01" isResolved="true"/>
+    <resourcesList name="gp2" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/gp02" isResolved="true"/>
+    <resourcesList name="mci" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/mci0" isResolved="true"/>
+    <resourcesList name="concat_bus_out" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/concat_bus_out0" isResolved="true"/>
+    <resourcesList name="out" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/out0" isResolved="true"/>
+    <resourcesList name="pmus_omds" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40_pmus_omds" isResolved="true"/>
+    <resourcesList name="e0as" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40_e0as" isResolved="true"/>
+    <resourcesList name="e1as" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40_e1as" isResolved="true"/>
+    <resourcesList name="e2as" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40_e2as" isResolved="true"/>
+    <resourcesList name="cmds_cmus" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc40_cmds_cmus" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc40_e0as" description="cc40_e0as" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/e0as" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.42"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc40_e1as" description="cc40_e1as" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/e1as" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.47"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="gp00_unsync" description="gp00_unsync" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/gp0_unsync" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.52"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc40_cmds_cmus" description="cc40_cmds_cmus" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/cmds_cmus" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.59"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="global_signal0" description="global_signal0" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/global_signal" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.84"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="gp02_unsync" description="gp02_unsync" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/gp2_unsync" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.86"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc40_e2as" description="cc40_e2as" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/e2as" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.96"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="st0" description="st0" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/st" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.98"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cc40_pmus_omds" description="cc40_pmus_omds" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/pmus_omds" signalType="INTERRUPT" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.99"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="gp01_unsync" description="gp01_unsync" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/gp1_unsync" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.104"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="PCIS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/global/gctrl_pcis" maxValue="3" minValue="0" startPos="4" stopPos="5" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Prescaler Input Clock Selection</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Module clock"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="CCU4xECLK[A]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="CCU4xECLK[B]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="CCU4xECLK[C]"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV1IS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41ins_ev1is" maxValue="15" minValue="0" startPos="4" stopPos="7" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="5"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="5"/>
+    <toolTipHelpDescription>Event 1 signal selection</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV2S" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41ins_ev2is" maxValue="15" minValue="0" startPos="8" stopPos="11" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 2 signal selection</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV0IS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41ins_ev0is" maxValue="15" minValue="0" startPos="0" stopPos="3" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="4"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="4"/>
+    <toolTipHelpDescription>Event 0 signal selection</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0000" description="CCU4xINy[A]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0001" description="CCU4xINy[B]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0010" description="CCU4xINy[C]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0011" description="CCU4xINy[D]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0100" description="CCU4xINy[E]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0101" description="CCU4xINy[F]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0110" description="CCU4xINy[G]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0111" description="CCU4xINy[H]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1000" description="CCU4xINy[I]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1001" description="CCU4xINy[J]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1010" description="CCU4xINy[K]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1011" description="CCU4xINy[L]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1100" description="CCU4xINy[M]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1101" description="CCU4xINy[N]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1110" description="CCU4xINy[O]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1111" description="CCU4xINy[P]"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="POSR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_posr" maxValue="3" minValue="0" startPos="0" stopPos="1" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Period/One match Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E1SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_e1sr" maxValue="3" minValue="0" startPos="10" stopPos="11" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 1 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E0SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_e0sr" maxValue="3" minValue="0" startPos="8" stopPos="9" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 0 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="CMSR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_cmsr" maxValue="3" minValue="0" startPos="2" stopPos="3" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="2"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="2"/>
+    <toolTipHelpDescription>Compare match Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E2SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_e2sr" maxValue="3" minValue="0" startPos="12" stopPos="13" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 2 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV0IS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/cc40ins_ev0is" maxValue="15" minValue="0" startPos="0" stopPos="3" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 0 signal selection</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0000" description="CCU4xINy[A]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0001" description="CCU4xINy[B]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0010" description="CCU4xINy[C]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0011" description="CCU4xINy[D]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0100" description="CCU4xINy[E]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0101" description="CCU4xINy[F]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0110" description="CCU4xINy[G]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0111" description="CCU4xINy[H]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1000" description="CCU4xINy[I]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1001" description="CCU4xINy[J]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1010" description="CCU4xINy[K]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1011" description="CCU4xINy[L]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1100" description="CCU4xINy[M]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1101" description="CCU4xINy[N]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1110" description="CCU4xINy[O]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1111" description="CCU4xINy[P]"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV2S" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/cc40ins_ev2is" maxValue="15" minValue="0" startPos="8" stopPos="11" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 2 signal selection</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV1IS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/cc40ins_ev1is" maxValue="15" minValue="0" startPos="4" stopPos="7" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 1 signal selection</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E0SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/cc40srs_e0sr" maxValue="3" minValue="0" startPos="8" stopPos="9" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 0 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E1SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/cc40srs_e1sr" maxValue="3" minValue="0" startPos="10" stopPos="11" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 1 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E2SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/cc40srs_e2sr" maxValue="3" minValue="0" startPos="12" stopPos="13" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 2 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="POSR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/cc40srs_posr" maxValue="3" minValue="0" startPos="0" stopPos="1" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Period/One match Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="CMSR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/cc40srs_cmsr" maxValue="3" minValue="0" startPos="2" stopPos="3" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Compare match Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV0IS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/cc42ins_ev0is" maxValue="15" minValue="0" startPos="0" stopPos="3" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="5"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="5"/>
+    <toolTipHelpDescription>Event 0 signal selection</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0000" description="CCU4xINy[A]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0001" description="CCU4xINy[B]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0010" description="CCU4xINy[C]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0011" description="CCU4xINy[D]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0100" description="CCU4xINy[E]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0101" description="CCU4xINy[F]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0110" description="CCU4xINy[G]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0111" description="CCU4xINy[H]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1000" description="CCU4xINy[I]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1001" description="CCU4xINy[J]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1010" description="CCU4xINy[K]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1011" description="CCU4xINy[L]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1100" description="CCU4xINy[M]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1101" description="CCU4xINy[N]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1110" description="CCU4xINy[O]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1111" description="CCU4xINy[P]"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV1IS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/cc42ins_ev1is" maxValue="15" minValue="0" startPos="4" stopPos="7" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="12"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="12"/>
+    <toolTipHelpDescription>Event 1 signal selection</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV2S" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/cc42ins_ev2is" maxValue="15" minValue="0" startPos="8" stopPos="11" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 2 signal selection</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="POSR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/cc42srs_posr" maxValue="3" minValue="0" startPos="0" stopPos="1" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Period/One match Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E1SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/cc42srs_e1sr" maxValue="3" minValue="0" startPos="10" stopPos="11" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 1 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E0SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/cc42srs_e0sr" maxValue="3" minValue="0" startPos="8" stopPos="9" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 0 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E2SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/cc42srs_e2sr" maxValue="3" minValue="0" startPos="12" stopPos="13" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 2 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="CMSR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2/cc42srs_cmsr" maxValue="3" minValue="0" startPos="2" stopPos="3" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Compare match Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <categoryDescription description="Capture/Compare Unit 4 (CAPCOM4)" name="CAPCOM4"/>
+</ResourceModel:Peripheral>

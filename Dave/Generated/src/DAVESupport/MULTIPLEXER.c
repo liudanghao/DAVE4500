@@ -127,6 +127,22 @@ void DAVE_MUX_Init(void)
    	 
             	         
                                               
+/*
+ * POSIF0 peripheral configuration:
+ */                      
+    //POSIF0 configuration:
+    
+    WR_REG(POSIF0->PCONF, POSIF_PCONF_INSEL0_Msk, POSIF_PCONF_INSEL0_Pos, INSIGNAL1);
+                 
+    WR_REG(POSIF0->PCONF, POSIF_PCONF_INSEL1_Msk, POSIF_PCONF_INSEL1_Pos, INSIGNAL1);
+                           
+
+/*
+ * POSIF1 peripheral configuration:
+ */                                  
+   	 
+            	         
+                                              
    	 
       
 //********* MODULE USIC CONFIGURATIONS *************************	        
@@ -226,6 +242,26 @@ void DAVE_MUX_Init(void)
    WR_REG(USIC1_CH1->CCR, USIC_CH_CCR_MODE_Msk, USIC_CH_CCR_MODE_Pos,UsicCcrMode[3]);
                	         
                                               
+        //********* Capture/Compare Unit 4 (CAPCOM4) CONFIGURATIONS ************************* 
+                       
+    // Configuring CCU40 CC41INS - Input Selector Configuration
+
+    WR_REG(CCU40_CC41->INS, CCU4_CC4_INS_EV0IS_Msk, CCU4_CC4_INS_EV0IS_Pos, CCU4xINyE);                   
+
+    WR_REG(CCU40_CC41->INS, CCU4_CC4_INS_EV1IS_Msk, CCU4_CC4_INS_EV1IS_Pos, CCU4xINyF);                   
+                       
+    // Configuring CCU40 CC42INS - Input Selector Configuration
+
+    WR_REG(CCU40_CC42->INS, CCU4_CC4_INS_EV0IS_Msk, CCU4_CC4_INS_EV0IS_Pos, CCU4xINyF);                   
+
+    WR_REG(CCU40_CC42->INS, CCU4_CC4_INS_EV1IS_Msk, CCU4_CC4_INS_EV1IS_Pos, CCU4xINyM);                   
+                       
+    // Configuring CCU40_CC41SRS  =  Service Request Selector
+
+    WR_REG(CCU40_CC41->SRS, CCU4_CC4_SRS_CMSR_Msk, CCU4_CC4_SRS_CMSR_Pos, CCU_SR2);    
+   	 
+            	         
+                                              
    	 
             	         
                                               
@@ -263,8 +299,12 @@ void DAVE_MUX_Init(void)
 *******************************************************************************/
  
 void DAVE_MUX_PreInit(void)
-{                
+{                        
 
-/*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */                   
+/*        PORT Macro definitions for IOCR_OE, IOCR_PCR & HWSEL_HW     */               
+           
+  WR_REG(PORT14->PDISC, PORT14_PDISC_PDIS6_Msk, PORT14_PDISC_PDIS6_Pos, PORT_PDISC_PDIS0);            /*    P14.6 : PORT14_PDISC_PDIS6 */
+           
+  WR_REG(PORT14->PDISC, PORT14_PDISC_PDIS7_Msk, PORT14_PDISC_PDIS7_Pos, PORT_PDISC_PDIS0);            /*    P14.7 : PORT14_PDISC_PDIS7 */    
 }
 

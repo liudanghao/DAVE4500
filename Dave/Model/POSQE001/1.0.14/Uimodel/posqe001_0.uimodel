@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<com.ifx.davex.uimodel:UIDataModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:com.ifx.davex.uimodel="com.ifx.davex.uimodel">
+  <controls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="DefaultPage" displayName="Quadrature Encoder" className="IfxGroupBox" controlId="1321259186776">
+    <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group75" displayName="Quadrature Encoder Configurations" className="IfxGroupBox" controlId="1321259348199">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwencodertype" displayName="Encoder type selection" className="EnumerationType" paramName="app/posqe001/0/posqe001_erwencodertype:Encoder type selection" controlId="1344865426125">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwtickperrevolutionforindex" displayName="Ticks Per Revolution for Index I" className="IntegerType" paramName="app/posqe001/0/posqe001_irwtickperrevolutionforindex:Ticks per revolution for index I" controlId="1344855677031">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwdirection" displayName="Clockwise Direction Definition" className="EnumerationType" paramName="app/posqe001/0/posqe001_erwdirection:Clockwise Direction Definiation" controlId="1344855694640">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwlpf" displayName="Low Pass Filter" className="EnumerationType" paramName="app/posqe001/0/posqe001_erwlpf:Low Pass Filter" controlId="1344855705421">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwinitpositioncounter" displayName="Start" className="EnumerationType" paramName="app/posqe001/0/posqe001_erwinitpositioncounter:Position Counter initilization" controlId="1345532000687">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+  </controls>
+  <controls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Page69" displayName="Positioning" className="IfxGroupBox" controlId="1344856194156">
+    <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group23" displayName="Position Counter Setting" className="IfxGroupBox" controlId="1344856398859">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwpositioncounteroverflow" displayName="Position Counter Overflow Event" className="EnumerationType" paramName="app/posqe001/0/posqe001_erwpositioncounteroverflow:Position Counter Overflow Event" controlId="1345531846203">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwcounteroverflowvalue" displayName="Counter Overflow Value" className="IntegerType" paramName="app/posqe001/0/posqe001_irwcounteroverflowvalue:Counter Overflow Value" controlId="1345532033437">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwdirectionchangeevent" displayName="Direction Change Event" className="EnumerationType" constraint="if(CM.getParamValue(&quot;app/posqe001/0/posqe001_erwencodertype/3&quot;) == &quot;1&quot;)&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}" paramName="app/posqe001/0/posqe001_erwdirectionchangeevent:Direction Change Event" controlId="1345532087203">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group19" displayName="Revolution Counter Setting" className="IfxGroupBox" constraint="" controlId="1344867503000">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwuserevolutioncounter" displayName="Revolution Counter" className="EnumerationType" constraint="if( (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwencodertype/0&quot;) == &quot;0&quot;)        &#xD;&#xA;  )&#xD;&#xA; {&#xD;&#xA;      CM.setEnable(false);&#xD;&#xA;&#x9;&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}" paramName="app/posqe001/0/posqe001_erwuserevolutioncounter:Revolution Counter" controlId="1345532549875">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwrevolutioncounteroverflowvalue" displayName="Revolution Counter Overflow Value" className="IntegerType" constraint="if(CM.getParamValue(&quot;app/posqe001/0/posqe001_erwuserevolutioncounter/0&quot;) == &quot;1&quot;)&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(false);&#xD;&#xA;}" paramName="app/posqe001/0/posqe001_irwrevolutioncounteroverflowvalue:Revolution Counter Overflow Value" controlId="1345532252890">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData" horizontalAlignment="LEFT"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout" numColumns="2"/>
+  </controls>
+  <controls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Page35" displayName="Velocity" className="IfxGroupBox" controlId="1344868523234">
+    <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData" verticalAlignment="LEFT"/>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group30" displayName="Velocity Calculation Schemes" className="IfxGroupBox" controlId="1346155659859">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwprofiles" displayName="Profiles" className="EnumerationType" paramName="app/posqe001/0/posqe001_erwprofiles:Profiles" controlId="1346247571468">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData" verticalAlignment="LEFT"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group47" displayName="Low Speed Measurement" className="IfxGroupBox" constraint="" controlId="1346392430781">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwmeasuretimebetweenticks" displayName="Measure Time Between Ticks" className="IntegerType" constraint="if(CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/0&quot;) == &quot;0&quot;)&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_irwmeasuretimebetweenticks:Measure Time Between Ticks" controlId="1346157580953">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData" verticalAlignment="LEFT"/>
+          <conversionType>dec</conversionType>
+        </subControls>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwlowspeedindication" displayName="Low Speed Indication" className="EnumerationType" constraint="if(CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/0&quot;) == &quot;0&quot;)&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwlowspeedindication:Low Speed Indication" controlId="1346418523093">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        </subControls>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwlowspeedlimit" displayName="Low Speed Limit RPM" className="IntegerType" constraint="if( (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/0&quot;) == &quot;0&quot;)||&#xD;&#xA;    (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwlowspeedindication/0&quot;) == &quot;0&quot;)&#xD;&#xA;  )&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_irwlowspeedlimit:Low Speed Limit" controlId="1346157593687">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+          <conversionType>dec</conversionType>
+        </subControls>
+        <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group8" displayName="High Speed Measurement" className="IfxGroupBox" constraint="" controlId="1346392487468">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwtimewindow" displayName="Time Window" className="IntegerType" constraint="if( (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/0&quot;) == &quot;1&quot;)&#xD;&#xA;     || (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/4&quot;) == &quot;1&quot;)          &#xD;&#xA;   )&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_irwtimewindow:Time Window" controlId="1346161590156" defaultType="nsec" customControl="true">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+          <conversionType>nsec</conversionType>
+          <conversionType>usec</conversionType>
+          <conversionType>msec</conversionType>
+        </subControls>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwhighspeedindication" displayName="High Speed Indication" className="EnumerationType" constraint="if(  (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/0&quot;) == &quot;1&quot;) ||&#xD;&#xA;     (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/4&quot;) == &quot;1&quot;)  ||&#xD;&#xA;     (  (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/2&quot;) == &quot;1&quot;)  &amp;&amp; &#xD;&#xA;        (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwpositioncounterforcounterzero/0&quot;) == &quot;1&quot;) &#xD;&#xA;     ) ||  &#xD;&#xA;    (  (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/3&quot;) == &quot;1&quot;)  &amp;&amp; &#xD;&#xA;       (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwpositioncounterforcounterzero/0&quot;) == &quot;1&quot;)&#xD;&#xA;    )&#xD;&#xA;  )&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwhighspeedindication:High Speed Indication" controlId="1346418583390">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        </subControls>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwhighspeedlimit" displayName="High Speed Limit RPM" className="IntegerType" constraint="if( (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/0&quot;) == &quot;1&quot;)||&#xD;&#xA;    (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwhighspeedindication/0&quot;) == &quot;0&quot;)||&#xD;&#xA;    (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/4&quot;) == &quot;1&quot;)&#xD;&#xA;  )&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_irwhighspeedlimit:High Speed Limit" controlId="1346161251171">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+          <conversionType>dec</conversionType>
+        </subControls>
+        <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwpositioncounterforcounterzero" displayName="Use Position Counter For Counter0" className="EnumerationType" constraint="if(  (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/0&quot;) == &quot;1&quot;) ||&#xD;&#xA;     (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/4&quot;) == &quot;1&quot;)  ||&#xD;&#xA;     (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/1&quot;) == &quot;1&quot;)    &#xD;&#xA;   )&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwpositioncounterforcounterzero:Position Counter For Counter0" controlId="1346247817500">
+          <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+        </subControls>
+        <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group22" displayName="Resolution Configuration" className="IfxGroupBox" controlId="1346162344671">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData" verticalAlignment="LEFT"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwtimerresolution" displayName="Timer Resolution" className="IntegerType" constraint="if( (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwhighspeedindication/0&quot;) == &quot;0&quot;)||&#xD;&#xA;    (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwlowspeedindication/0&quot;) == &quot;0&quot;)&#xD;&#xA;  )&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(true);&#xD;&#xA;        CM.setVisible(true);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA;{&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;      CM.setVisible(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_irwtimerresolution:Timer Resolution" controlId="1346163210843" defaultType="nsec" customControl="true">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData" horizontalAlignment="RIGHT"/>
+        <conversionType>nsec</conversionType>
+        <conversionType>usec</conversionType>
+        <conversionType>msec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwactualtimerresolution" displayName="Actual Timer Resolution" readonly="true" className="IntegerType" constraint="" paramName="app/posqe001/0/posqe001_irwactualtimerresolution:Actual Timer Resolution" controlId="1346163165125" defaultType="nsec" customControl="true">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData" horizontalAlignment="RIGHT"/>
+        <conversionType>nsec</conversionType>
+        <conversionType>usec</conversionType>
+        <conversionType>msec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwactualtimewindow" displayName="Actual Time Window" readonly="true" className="IntegerType" constraint="" paramName="app/posqe001/0/posqe001_irwactualtimewindow:Actual Time Window" controlId="1346163195640" defaultType="nsec" customControl="true">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData" horizontalAlignment="RIGHT"/>
+        <conversionType>nsec</conversionType>
+        <conversionType>usec</conversionType>
+        <conversionType>msec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwactuallowspeedlimit" displayName="Actual Low Speed Limit RPM" readonly="true" className="IntegerType" constraint="" paramName="app/posqe001/0/posqe001_irwactuallowspeedlimit:Actual Low Speed Limit" controlId="1346163154609">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData" horizontalAlignment="RIGHT"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_irwactualhighspeedlimit" displayName="Actual High Speed Limit RPM" readonly="true" className="IntegerType" constraint="" paramName="app/posqe001/0/posqe001_irwactualhighspeedlimit:Actual High Speed Limit " controlId="1346163144578">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData" horizontalAlignment="RIGHT"/>
+        <conversionType>dec</conversionType>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout" numColumns="2"/>
+  </controls>
+  <controls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Page44" displayName="Signal Configurations" className="IfxGroupBox" controlId="1346146187281">
+    <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group29" displayName="Position Counter External Event" className="IfxGroupBox" controlId="1346246321968">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwpositioncounter" displayName="External Event" className="EnumerationType" constraint="if(CM.getParamValue(&quot;app/posqe001/0/posqe001_erwpositioncounterforcounterzero/0&quot;) == &quot;1&quot;)&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwpositioncounter:Position Counter" controlId="1346246362343">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwindexsignal" displayName="Index Signal" className="EnumerationType" constraint="if( CM.getParamValue(&quot;app/posqe001/0/posqe001_erwpositioncounter/3&quot;) == &quot;1&quot; )&#xD;&#xA;  &#xD;&#xA;{&#xD;&#xA;        CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwindexsignal:Index Signal" controlId="1346246392125">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwPosCounterEvent2edgeselection" displayName="Active Edge" className="EnumerationType" constraint="if(  CM.getParamValue(&quot;app/posqe001/0/posqe001_erwpositioncounter/0&quot;) == &quot;1&quot;)&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwPosCounterEvent2edgeselection:Position Counter Event2 Edge Selection" controlId="1346590597854">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group70" displayName="Revolution Counter" className="IfxGroupBox" controlId="1346500156140">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwrevcounterevent1edgesel" displayName="External Capture" className="EnumerationType" constraint="if(CM.getParamValue(&quot;app/posqe001/0/posqe001_erwuserevolutioncounter/0&quot;) == &quot;0&quot;)&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwrevcounterevent1edgesel:Revolution Counter Event1 Edge Selection" controlId="1346591472254">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwrevcounterevent2edgesel" displayName="External Start" className="EnumerationType" constraint="if(CM.getParamValue(&quot;app/posqe001/0/posqe001_erwuserevolutioncounter/0&quot;) == &quot;0&quot;)&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwrevcounterevent2edgesel:Revolution Counter Event2 Edge Selection" controlId="1346599805406">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group92" displayName="Velocity Counter0" className="IfxGroupBox" controlId="1346500204203">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwvelcounter0event1edgesel" displayName="External Capture" className="EnumerationType" constraint="if(  ( CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/4&quot;) == &quot;1&quot;) ||&#xD;&#xA;     ( CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/1&quot;) == &quot;1&quot;) ||&#xD;&#xA;     ( CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/2&quot;) == &quot;1&quot;) ||&#xD;&#xA;     ( CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/3&quot;) == &quot;1&quot;)&#xD;&#xA;  &#xD;&#xA;  )&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwvelcounter0event1edgesel:Velocity Counter0 Event1 Edge Selection" controlId="1346606608000">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwPosCounterEvent2edgeselection" displayName="External Start" className="EnumerationType" constraint="if(  &#xD;&#xA;     ( &#xD;&#xA;         (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwpositioncounterforcounterzero/0&quot;) == &quot;1&quot;)&#xD;&#xA;      ) ||&#xD;&#xA;     (&#xD;&#xA;        (CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/4&quot;) == &quot;1&quot;)        &#xD;&#xA;     )&#xD;&#xA;  )&#xD;&#xA; {&#xD;&#xA;      CM.setEnable(false);&#xD;&#xA;&#x9;&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}" paramName="app/posqe001/0/posqe001_erwPosCounterEvent2edgeselection:Position Counter Event2 Edge Selection" controlId="1346663957864">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group69" displayName="Velocity Timer0" className="IfxGroupBox" controlId="1346500683046">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwveltimer0event1edgesel" displayName="External Capture" className="EnumerationType" constraint="if(  ( CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/4&quot;) == &quot;1&quot;) ||&#xD;&#xA;     ( CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/0&quot;) == &quot;1&quot;) &#xD;&#xA;  )&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwveltimer0event1edgesel:Velocity Timer0 Event1 Edge Selection" controlId="1346657264734">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwveltimer0event2edgesel" displayName="External Start" className="EnumerationType" constraint="if( CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/4&quot;) == &quot;1&quot;) &#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwveltimer0event2edgesel:Velocity Timer0 Event2 Edge Selection" controlId="1346657306906">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group21" displayName="Velocity Timer1" className="IfxGroupBox" controlId="1346500698593">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_erwveltimer1event2edgesel" displayName="External Start" className="EnumerationType" constraint="if(CM.getParamValue(&quot;app/posqe001/0/posqe001_erwprofiles/3&quot;) == &quot;0&quot;)&#xD;&#xA;{&#xD;&#xA;        CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}&#xD;&#xA;" paramName="app/posqe001/0/posqe001_erwveltimer1event2edgesel:Velocity Timer1 Event2 Edge Selection" controlId="1346657330812">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout" numColumns="3"/>
+  </controls>
+  <controls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Page7" displayName="Pin Configuration" className="IfxGroupBox" controlId="1342082774327">
+    <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+    <subControls xsi:type="com.ifx.davex.uimodel:CompoundWidget" propertyId="Group33" displayName="Input Pin Characteristics" className="IfxGroupBox" controlId="1342082818498">
+      <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_input1char" displayName="Phase A (Clock)" className="EnumerationType" paramName="app/posqe001/0/posqe001_input1char:Quadrature Encoder Phase A Pin characteristics" controlId="1342082793592">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_input2char" displayName="Phase B (Direction)" className="EnumerationType" constraint="if(CM.getParamValue(&quot;app/posqe001/0/posqe001_erwencodertype/3&quot;) == &quot;1&quot;)&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}" paramName="app/posqe001/0/posqe001_input2char:Quadrature Encoder Phase B Pin characteristics" controlId="1342082796045">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <subControls xsi:type="com.ifx.davex.uimodel:SimpleWidget" propertyId="app/posqe001/0/posqe001_input3char" displayName="Index" className="EnumerationType" constraint="if(CM.getParamValue(&quot;app/posqe001/0/posqe001_erwencodertype/0&quot;) == &quot;0&quot;)&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(false);&#xD;&#xA;}&#xD;&#xA;else&#xD;&#xA; {&#xD;&#xA;&#x9;CM.setEnable(true);&#xD;&#xA;}" paramName="app/posqe001/0/posqe001_input3char:Quadrature Encoder Index Pin characteristics" controlId="1342082798983">
+        <layoutData xsi:type="com.ifx.davex.uimodel:IfxGridData"/>
+      </subControls>
+      <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+    </subControls>
+    <layout xsi:type="com.ifx.davex.uimodel:IfxGridLayout"/>
+  </controls>
+</com.ifx.davex.uimodel:UIDataModel>

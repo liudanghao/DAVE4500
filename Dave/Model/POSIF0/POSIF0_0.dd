@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="ASCII"?>
+<ResourceModel:Peripheral xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ResourceModel="http://www.infineon.com/Davex/Resource.ecore" name="POSIF0" description="Position Interface Unit 0" URI="http://www.infineon.com/0.1.29/peripheral/posif/0">
+  <provided xsi:type="ResourceModel:ResourceGroup" name="posif" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.27"/>
+    <resourcesList name="clk" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/clk" isResolved="true"/>
+    <resourcesList name="ipos0" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/ipos0" isResolved="true"/>
+    <resourcesList name="ipos1" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/ipos1" isResolved="true"/>
+    <resourcesList name="ipos2" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/ipos2" isResolved="true"/>
+    <resourcesList name="hsd" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/hsd" isResolved="true"/>
+    <resourcesList name="ewhe" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/ewhe" isResolved="true"/>
+    <resourcesList name="mset" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mset" isResolved="true"/>
+    <resourcesList name="msync" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/msync" isResolved="true"/>
+    <resourcesList name="out0" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/out0" isResolved="true"/>
+    <resourcesList name="out1" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/out1" isResolved="true"/>
+    <resourcesList name="out2" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/out2" isResolved="true"/>
+    <resourcesList name="out3" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/out3" isResolved="true"/>
+    <resourcesList name="out4" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/out4" isResolved="true"/>
+    <resourcesList name="out5" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/out5" isResolved="true"/>
+    <resourcesList name="out6" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/out6" isResolved="true"/>
+    <resourcesList name="chee" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/chee" isResolved="true"/>
+    <resourcesList name="whee" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/whee" isResolved="true"/>
+    <resourcesList name="hiee" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/hiee" isResolved="true"/>
+    <resourcesList name="mste" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mste" isResolved="true"/>
+    <resourcesList name="indxe" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/indxe" isResolved="true"/>
+    <resourcesList name="erre" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/erre" isResolved="true"/>
+    <resourcesList name="cnte" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/cnte" isResolved="true"/>
+    <resourcesList name="dire" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/dire" isResolved="true"/>
+    <resourcesList name="pcle" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pcle" isResolved="true"/>
+    <resourcesList name="mout0" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout0" isResolved="true"/>
+    <resourcesList name="mout1" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout1" isResolved="true"/>
+    <resourcesList name="mout2" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout2" isResolved="true"/>
+    <resourcesList name="mout3" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout3" isResolved="true"/>
+    <resourcesList name="mout4" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout4" isResolved="true"/>
+    <resourcesList name="mout5" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout5" isResolved="true"/>
+    <resourcesList name="mout6" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout6" isResolved="true"/>
+    <resourcesList name="mout7" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout7" isResolved="true"/>
+    <resourcesList name="mout8" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout8" isResolved="true"/>
+    <resourcesList name="mout9" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout9" isResolved="true"/>
+    <resourcesList name="mout10" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout10" isResolved="true"/>
+    <resourcesList name="mout11" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout11" isResolved="true"/>
+    <resourcesList name="mout12" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout12" isResolved="true"/>
+    <resourcesList name="mout13" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout13" isResolved="true"/>
+    <resourcesList name="mout14" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout14" isResolved="true"/>
+    <resourcesList name="mout15" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/mout15" isResolved="true"/>
+    <resourcesList name="pconf_insel0" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pconf/insel0" isResolved="true"/>
+    <resourcesList name="pconf_insel1" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pconf/insel1" isResolved="true"/>
+    <resourcesList name="pconf_insel2" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pconf/insel2" isResolved="true"/>
+    <resourcesList name="pconf_dsel" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pconf/dsel" isResolved="true"/>
+    <resourcesList name="pconf_ewis" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pconf/ewis" isResolved="true"/>
+    <resourcesList name="pconf_msets" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pconf/msets" isResolved="true"/>
+    <resourcesList name="pconf_msyns" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pconf/msyns" isResolved="true"/>
+    <resourcesList name="pflge_ewhe" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/ewhe" isResolved="true"/>
+    <resourcesList name="pflge_ehie" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/ehie" isResolved="true"/>
+    <resourcesList name="pflge_emst" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/emst" isResolved="true"/>
+    <resourcesList name="pflge_eindx" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/eindx" isResolved="true"/>
+    <resourcesList name="pflge_eerr" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/eerr" isResolved="true"/>
+    <resourcesList name="pflge_ecnt" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/ecnt" isResolved="true"/>
+    <resourcesList name="pflge_edir" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/edir" isResolved="true"/>
+    <resourcesList name="pflge_epclk" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/epclk" isResolved="true"/>
+    <resourcesList name="pflge_chesel" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/chesel" isResolved="true"/>
+    <resourcesList name="pflge_whesel" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/whesel" isResolved="true"/>
+    <resourcesList name="pflge_hiesel" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/hiesel" isResolved="true"/>
+    <resourcesList name="pflge_mstsel" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/mstsel" isResolved="true"/>
+    <resourcesList name="pflge_indsel" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/indsel" isResolved="true"/>
+    <resourcesList name="pflge_errsel" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/errsel" isResolved="true"/>
+    <resourcesList name="pflge_cntsel" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/cntsel" isResolved="true"/>
+    <resourcesList name="pflge_dirsel" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/dirsel" isResolved="true"/>
+    <resourcesList name="pflge_pclsel" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/pclsel" isResolved="true"/>
+    <resourcesList name="pflge_eche" requiredResourceUri="http://www.infineon.com/0.1.29/peripheral/posif/0/pflge/eche" isResolved="true"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="ipos0" description="ipos0" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/ipos0" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.38"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="out2" description="out2" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/out2" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.41"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="ipos2" description="ipos2" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/ipos2" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.43"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="erre" description="erre" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/erre" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.44"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="out4" description="out4" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/out4" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.45"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="cnte" description="cnte" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/cnte" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.46"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="indxe" description="indxe" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/indxe" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.49"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="out1" description="out1" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/out1" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.53"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="dire" description="dire" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/dire" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.70"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="pcle" description="pcle" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pcle" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.77"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="out3" description="out3" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/out3" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.80"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="out0" description="out0" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/out0" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.82"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="ipos1" description="ipos1" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/ipos1" signalType="SINGAL" direction="IN" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.108"/>
+  </provided>
+  <provided xsi:type="ResourceModel:SignalDeclaration" name="out5" description="out5" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/out5" signalType="SINGAL" direction="OUT" isVisible="true">
+    <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.109"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EPCLK" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_epclk" maxValue="1" minValue="0" startPos="12" stopPos="12" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Quadrature Period CLK interrupt Enable</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Quadrature Period CLK event interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Quadrature Period CLK event interrupt enabled"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="PCLSEL" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_pclsel" maxValue="1" minValue="0" startPos="28" stopPos="28" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Quadrature Period clock Event Service Request Selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Quadrature Period clock Event interrupt forward to POSIFx.SR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Quadrature Period clock Event interrupt forward to POSIFx.SR1"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EMST" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_emst" maxValue="1" minValue="0" startPos="4" stopPos="4" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Multi-Channel pattern shadow transfer enable</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Shadow transfer event interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Shadow transfer event interrupt enabled"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="MSTSEL" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_mstsel" maxValue="1" minValue="0" startPos="20" stopPos="20" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Multi-Channel pattern Update Event Service Request Selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Multi-Channel pattern Update Event interrupt forward to POSIFx.SR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Multi-Channel pattern Update Event interrupt forward to POSIFx.SR1"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="ECNT" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_ecnt" maxValue="1" minValue="0" startPos="10" stopPos="10" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Quadrature CLK interrupt Enable</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Quadrature CLK event interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Quadrature CLK event interrupt enabled"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="CNTSEL" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_cntsel" maxValue="1" minValue="0" startPos="26" stopPos="26" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Quadrature Clock Event Service Request Selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Quadrature Clock Event interrupt forward to POSIFx.SR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Quadrature Clock Event interrupt forward to POSIFx.SR1"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EWHE" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_ewhe" maxValue="1" minValue="0" startPos="1" stopPos="1" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Wrong Hall Event Enable</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Wrong Hall Event interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Wrong Hall Event interrupt enabled"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="WHESEL" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_whesel" maxValue="1" minValue="0" startPos="17" stopPos="17" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Wrong Hall Event Service Request Selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Wrong Hall Event interrupt forward to POSIFx.SR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Wrong Hall Event interrupt forward to POSIFx.SR1"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EDIR" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_edir" maxValue="1" minValue="0" startPos="11" stopPos="11" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Quadrature direction change interrupt Enable</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Direction change event interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Direction change event interrupt enabled"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="DIRSEL" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_dirsel" maxValue="1" minValue="0" startPos="27" stopPos="27" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Quadrature Direction Update Event Service Request Selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Quadrature Direction Update Event interrupt forward to POSIFx.SR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Quadrature Direction Update Event interrupt forward to POSIFx.SR1"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EHIE" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_ehie" maxValue="1" minValue="0" startPos="2" stopPos="2" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Hall Input Update Enable</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Update of the Hall Inputs interrupt is disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Update of the Hall Inputs interrupt is enabled"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="HIESEL" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_hiesel" maxValue="1" minValue="0" startPos="18" stopPos="18" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Hall Inputs Update Event Service Request Selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Hall Inputs Update Event interrupt forward to POSIFx.SR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Hall Inputs Update Event interrupt forward to POSIFx.SR1"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="ECHE" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_eche" maxValue="1" minValue="0" startPos="0" stopPos="0" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Correct Hall Event Enable</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Correct Hall Event interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Correct Hall Event interrupt enabled"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="CHESEL" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_chesel" maxValue="1" minValue="0" startPos="16" stopPos="16" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Correct Hall Event Service Request Selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Correct Hall Event interrupt forward to POSIFx.SR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Correct Hall Event interrupt forward to POSIFx.SR1"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EERR" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_eerr" maxValue="1" minValue="0" startPos="9" stopPos="9" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Quadrature Phase Error Enable</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Phase error event interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Phase error event interrupt enabled"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="ERRSEL" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_errsel" maxValue="1" minValue="0" startPos="25" stopPos="25" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Quadrature Phase Error Event Service Request Selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Quadrature Phase error Event interrupt forward to POSIFx.SR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Quadrature Phase error Event interrupt forward to POSIFx.SR1"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EINDX" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_eindx" maxValue="1" minValue="0" startPos="8" stopPos="8" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Quadrature Index Event Enable</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Index event interrupt disabled"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Index event interrupt enabled"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="INDSEL" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pflge_indsel" maxValue="1" minValue="0" startPos="24" stopPos="24" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Quadrature Index Event Service Request Selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="Quadrature Index Event interrupt forward to POSIFx.SR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="Quadrature Index Event interrupt forward to POSIFx.SR1"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="INSEL2" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pconf_insel2" maxValue="3" minValue="0" startPos="12" stopPos="13" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Index/Hall input 3 selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="POSIFx.IN2A"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="POSIFx.IN2B"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="POSIFx.IN2C"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="POSIFx.IN2D"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="MSETS" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pconf_msets" maxValue="7" minValue="0" startPos="18" stopPos="20" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Pattern update signal select</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b000" description="POSIFx.MSETA"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b001" description="POSIFx.MSETB"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b010" description="POSIFx.MSETC"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b011" description="POSIFx.MSETD"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b100" description="POSIFx.MSETE"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b101" description="POSIFx.MSETF"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b110" description="POSIFx.MSETG"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b111" description="POSIFx.MSETH"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EWIS" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pconf_ewis" maxValue="3" minValue="0" startPos="24" stopPos="25" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Wrong Hall Event selection</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="POSIFx.EWHEA"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="POSIFx.EWHEB"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="POSIFx.EWHEC"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="POSIFx.EWHED"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="INSEL1" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pconf_insel1" maxValue="3" minValue="0" startPos="10" stopPos="11" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <toolTipHelpDescription>PhaseB/Hall input 2 selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="POSIFx.IN1A"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="POSIFx.IN1B"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="POSIFx.IN1C"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="POSIFx.IN1D"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="INSEL0" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pconf_insel0" maxValue="3" minValue="0" startPos="8" stopPos="9" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <toolTipHelpDescription>PhaseA/Hal input 1 selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="POSIFx.IN0A"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="POSIFx.IN0B"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="POSIFx.IN0C"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="POSIFx.IN0D"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="MSYNS" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pconf_msyns" maxValue="3" minValue="0" startPos="22" stopPos="23" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>PWM synchronization signal selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="POSIFx.MSYNCA"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="POSIFx.MSYNCB"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="POSIFx.MSYNCC"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="POSIFx.MSYNCD"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="DSEL" URI="http://www.infineon.com/0.1.29/peripheral/posif/0/posif/pconf_dsel" maxValue="1" minValue="0" startPos="16" stopPos="16" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Delay Pin selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="POSIFx.HSDA"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="POSIFx.HSDB"/>
+  </provided>
+  <categoryDescription description="Position Interface Unit 0" name="POSIF0"/>
+</ResourceModel:Peripheral>

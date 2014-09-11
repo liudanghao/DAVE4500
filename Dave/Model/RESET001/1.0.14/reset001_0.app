@@ -4,6 +4,7 @@
   <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../UART001/1.0.24/uart001_1.app#//@consumed.7"/>
   <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../UART001/1.0.24/uart001_2.app#//@consumed.7"/>
   <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../CANGLOBAL/1.0.12/canglobal_0.app#//@consumed.2"/>
+  <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../../CCU4GLOBAL/1.0.20/ccu4global_0.app#//@consumed.3"/>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.14/app/reset001/0/rcurst">
     <downWardmappedList xsi:type="ResourceModel:ResourceGroup" href="../../SCU/SCU_0.dd#//@provided.28"/>
     <requiredResource uriString="peripheral/scu/0/rstctrl/0/rcurst" uriType="LOCALTYPE"/>

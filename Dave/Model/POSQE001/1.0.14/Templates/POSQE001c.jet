@@ -1,0 +1,2091 @@
+<%@ jet package="CodeGenerator" class="posqe001conf_cTemplate" 
+imports="java.util.* com.ifx.davex.appjetinteract.App2JetInterface" %>
+<% App2JetInterface app = (App2JetInterface) argument; %>
+
+/*CODE_BLOCK_BEGIN[POSQE001.c]*/
+/*******************************************************************************
+ Copyright (c) 2014, Infineon Technologies AG                                 **
+ All rights reserved.                                                         **
+                                                                              **
+ Redistribution and use in source and binary forms, with or without           **
+ modification,are permitted provided that the following conditions are met:   **
+                                                                              **
+ *Redistributions of source code must retain the above copyright notice,      **
+ this list of conditions and the following disclaimer.                        **
+ *Redistributions in binary form must reproduce the above copyright notice,   **
+ this list of conditions and the following disclaimer in the documentation    **
+ and/or other materials provided with the distribution.                       **
+ *Neither the name of the copyright holders nor the names of its contributors **
+ may be used to endorse or promote products derived from this software without**
+ specific prior written permission.                                           **
+                                                                              **
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"  **
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    **
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   **
+ ARE  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   **
+ LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         **
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         **
+ SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    **
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      **
+ CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)       **
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   **
+ POSSIBILITY OF SUCH DAMAGE.                                                  **
+                                                                              **
+ To improve the quality of the software, users are encouraged to share        **
+ modifications, enhancements or bug fixes with Infineon Technologies AG       **
+ dave@infineon.com).                                                          **
+                                                                              **
+********************************************************************************
+**                                                                            **
+**                                                                            **
+** PLATFORM : Infineon XMC4000 Series                                         **
+**                                                                            **
+** COMPILER : Compiler Independent                                            **
+**                                                                            **
+** AUTHOR   : App Developer                                                   **
+**                                                                            **
+** MAY BE CHANGED BY USER [yes/no]: Yes                                       **
+**                                                                            **
+** MODIFICATION DATE : April 25, 2014                                            **
+**                                                                            **
+*******************************************************************************/
+
+/*******************************************************************************
+**                       Author(s) Identity                                   **
+********************************************************************************
+**                                                                            **
+** Initials     Name                                                          **
+** PM           App Developer
+   RG         
+** ---------------------------------------------------------------------------**
+**                                                                            **
+*******************************************************************************/
+
+
+/**
+ * @file POSQE001.c
+ *
+ * @brief  The header file contains POSIF_QuadratureEncoder_POSQE001 API definitions.
+ * This App finds the speed, position and direction of rotation using quadrature encoder sensor.
+ *
+ * Revision History
+ * 25 April 2014 v1.0.14 Initial Version
+ */
+
+/*******************************************************************************
+ ** INCLUDE FILES                                                             **
+ ******************************************************************************/
+#include <DAVE3.h>
+
+
+/*******************************************************************************
+**                      Private Type Definitions                              **
+*******************************************************************************/
+
+/*******************************************************************************
+**                 Private Function Declarations:
+*******************************************************************************/
+
+/**
+ * @cond INTERNAL_DOCS
+ */
+#define APP_GID DBG002_GID_POSQE001
+<% String TempApps = null;
+   String MyAppName = null;
+   ArrayList<String> apps;
+   String TempLowerApps = null; 
+   boolean DBGApp = false;   
+   apps=(ArrayList<String>)(app.getApps());
+        for (int k = 0; k < apps.size(); k++) {
+              TempApps = apps.get(k);
+//            if(app.isAppInitProvider(apps.get(k)) == true) {
+              MyAppName = TempApps.substring(TempApps.indexOf("/app/") + 5, TempApps.lastIndexOf("/"));
+              TempLowerApps = MyAppName.toLowerCase();
+              if (TempLowerApps.equalsIgnoreCase("dbg002")) {DBGApp = true;}   
+//   }  
+  } %>
+
+<% if (!DBGApp) { %>  
+/*****************************************************************************
+              DUMMY DEFINTIONS OF DEBUG LOG MACROS
+*****************************************************************************/
+/*These definitions are included here to avoid compilation errors,
+ since the DBG002 app is not part of the project. All the macros are defined
+ as empty*/ 
+
+#ifndef _DBG002_H_
+
+#define DBG002_RegisterCallBack(A,B,C)
+#define DBG002_I(e) 
+#define DBG002_IG(e,g) 
+#define DBG002_IH(e,h) 
+#define DBG002_IP(e,p) 
+#define DBG002_IGH(e,g,h) 
+#define DBG002_IGP(e,g,p) 
+#define DBG002_IHP(e,h,p) 
+#define DBG002_IGHP(e,g,h,p) 
+#define DBG002_N(e) 
+#define DBG002_NG(e,g) 
+#define DBG002_NH(e,h) 
+#define DBG002_NP(e,p) 
+#define DBG002_NGH(e,g,h) 
+#define DBG002_NGP(e,g,p) 
+#define DBG002_NHP(e,h,p) 
+#define DBG002_NGHP(e,g,h,p) 
+#define DBG002_ID(e) 
+#define DBG002_IS(e) 
+#define DBG002_ISG(e,g) 
+#define DBG002_SAFETY_CRITICAL(groupid,messageid,length,value)
+#define DBG002_CRITICAL(groupid,messageid,length,value)
+#define DBG002_ERROR(groupid,messageid,length,value)
+#define DBG002_WARNING(groupid,messageid,length,value)
+#define DBG002_INFO(groupid,messageid,length,value)
+#define DBG002_TRACE(groupid,messageid,length,value)
+#define DBG002_FUNCTION_ENTRY(GID, Status) 
+#define DBG002_FUNCTION_EXIT(GID, Status) 
+
+#endif/* End of defintions of dummy Debug Log macros*/
+<% } %>                  
+
+
+<% int Is44Device = -1; %>
+
+<% int Is42Device = -1; %>
+
+<% int Is45Device = -1; %>
+
+<% Is45Device = ((app.getSoftwareId().substring(0,2).compareTo("45")==0)?1:0); %>
+
+<% Is44Device = ((app.getSoftwareId().substring(0,2).compareTo("44")==0)?1:0); %>
+
+<% Is42Device = ((app.getSoftwareId().substring(0,2).compareTo("42")==0)?1:0); %>
+
+
+
+
+/**
+ * @ingroup POSQE001_privatefunc
+ * @{
+ */
+
+static status_t POSQE001_lInit(const POSQE001_HandleType* HandlePtr);
+
+/**
+ * @}
+ */
+
+/*******************************************************************************
+**                      Global Constant Definitions                           **
+*******************************************************************************/
+
+/*******************************************************************************
+**                      Global Variable Definitions                           **
+*******************************************************************************/
+
+/*******************************************************************************
+**                      Private Constant Definitions                          **
+*******************************************************************************/
+/**
+ * @ingroup POSQE001_privateparam
+ * @{
+ */
+
+/**
+ * @}
+ */
+/*******************************************************************************
+**                 Function like macro definitions                            **
+*******************************************************************************/
+
+/*******************************************************************************
+**                      Private Function Definitions                          **
+*******************************************************************************/
+
+<% String AppBaseuri = "app/posqe001/"; %>
+<% String appInst  = null; %>
+<% String PosifUri = null; %>
+<% String MappedUri = null; %>
+<% String NodeID = null; %>
+<% String Posif_number = null ;%>
+<% String pinUri1 = null; %>
+<% String pinUri2 = null; %>
+<% String pinUri3 = null; %>
+<% String portNo1 = null; %>
+<% String pinNo1 = null;%> 
+<% String portNo2 = null; %>
+<% String pinNo2 = null;%> 
+<% String portNo3 = null; %>
+<% String pinNo3 = null;%> 
+<% int Pin1 = 0; %>
+<% int Pin2 = 0; %>
+<% int Pin3 = 0; %>
+<% int IOCR_PCR = 0; %>
+
+<% ArrayList<String> appsList = (ArrayList<String>)(app.getApps("app/posqe001/"));%>
+
+/* This function calculates the speed with low speed measurement technique. */
+static void POSQE001_lInitCCUSlice
+(
+    const POSQE001_SliceConfigType* SliceConfigPtr
+)
+{
+  CCU4_CC4_TypeDef* CCU4SliceRegPtr;
+
+  if(SliceConfigPtr->SliceInUse)
+  {
+    /**
+     * Put the Slice in IDLE Mode
+     */
+    SliceConfigPtr->SliceGlobalAddress->GIDLS = ((uint32_t)0x01U << \
+                         ((uint32_t)CCU4_GIDLS_SS0I_Pos+(uint32_t)SliceConfigPtr->SliceNum));
+    /*
+     * Get the Base Address of the Slice Register
+     */
+    CCU4SliceRegPtr = SliceConfigPtr->SliceAddress;
+    /*
+     * Program the Slice INS Register
+     */
+    WR_REG( CCU4SliceRegPtr->INS,\
+            (uint32_t)CCU4_CC4_INS_EV0EM_Msk,\
+            (uint32_t)CCU4_CC4_INS_EV0EM_Pos,\
+            (uint32_t)SliceConfigPtr->Event0Cfg->ActiveEdge);
+
+    WR_REG( CCU4SliceRegPtr->INS,\
+            (uint32_t)CCU4_CC4_INS_EV1EM_Msk,\
+            (uint32_t)CCU4_CC4_INS_EV1EM_Pos,\
+            (uint32_t)SliceConfigPtr->Event1Cfg->ActiveEdge);
+
+
+    /*
+     * Program the Slice CMC Register
+     */
+    if(SliceConfigPtr->Event0Cfg->ActiveEdge)
+    {
+      WR_REG(CCU4SliceRegPtr->CMC,\
+             ((uint32_t)3U<<SliceConfigPtr->Event0Cfg->EventType),\
+             (uint32_t)(SliceConfigPtr->Event0Cfg->EventType),\
+             (uint32_t)POSQE001_EVENT0);
+    }
+    if(SliceConfigPtr->Event1Cfg->ActiveEdge)
+    {
+      if(SliceConfigPtr->Event1Cfg->EventType == POSQE001_EXT_UP_DOWN)
+      {
+        WR_REG( CCU4SliceRegPtr->INS,\
+                (uint32_t)CCU4_CC4_INS_EV1LM_Msk,\
+                (uint32_t)CCU4_CC4_INS_EV1LM_Pos,\
+                (uint32_t)1U);
+      }
+      WR_REG(CCU4SliceRegPtr->CMC,\
+             ((uint32_t)3U<<SliceConfigPtr->Event1Cfg->EventType),\
+             (uint32_t)SliceConfigPtr->Event1Cfg->EventType,\
+             (uint32_t)POSQE001_EVENT1);
+    }
+
+    /*
+     * Program the Slice TC Register
+     */
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_TCM_Msk,\
+           (uint32_t)CCU4_CC4_TC_TCM_Pos,\
+           (uint32_t)POSQE001_TIMER_COUNTING_MODE);
+
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_CMOD_Msk,\
+           (uint32_t)CCU4_CC4_TC_CMOD_Pos,\
+           (uint32_t)POSQE001_CAPTURE_MODE);
+
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_CAPC_Msk,\
+           (uint32_t)CCU4_CC4_TC_CAPC_Pos,\
+           (uint32_t)SliceConfigPtr->ClearOnCapture);
+
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_ENDM_Msk,\
+           (uint32_t)CCU4_CC4_TC_ENDM_Pos,\
+           (uint32_t)POSQE001_FLUSH_STOP);
+
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_STRM_Msk,\
+           (uint32_t)CCU4_CC4_TC_STRM_Pos,\
+           (uint32_t)POSQE001_FLUSH_START);
+
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_CCS_Msk,\
+           (uint32_t)CCU4_CC4_TC_CCS_Pos,\
+           (uint32_t)POSQE001_OVERWRITE_CAP);
+
+    /*
+     * Program the Slice Period and Compare Values
+     */
+    CCU4SliceRegPtr->PRS = SliceConfigPtr->PeriodVal;
+    CCU4SliceRegPtr->CRS = SliceConfigPtr->CompareVal;
+    /**
+     * Request a shadow Transfer
+     */
+    SliceConfigPtr->SliceGlobalAddress->GCSS |=\
+        ((uint32_t)0x01U<<((uint32_t)SliceConfigPtr->SliceNum*(uint32_t)4U));
+
+  }
+}
+
+static void POSQE001_lDeInitCCUSlice
+(
+    const POSQE001_SliceConfigType* SliceConfigPtr
+)
+{
+  CCU4_CC4_TypeDef* CCU4SliceRegPtr;
+
+  if(SliceConfigPtr->SliceInUse)
+  {
+    /**
+     * Put the Slice in IDLE Mode
+     */
+    SliceConfigPtr->SliceGlobalAddress->GIDLS = ((uint32_t)0x01U << \
+                         ((uint32_t)CCU4_GIDLS_SS0I_Pos+(uint32_t)SliceConfigPtr->SliceNum));
+    /*
+     * Get the Base Address of the Slice Register
+     */
+    CCU4SliceRegPtr = SliceConfigPtr->SliceAddress;
+    /*
+     * Program the Slice INS Register
+     */
+    WR_REG( CCU4SliceRegPtr->INS,\
+            (uint32_t)CCU4_CC4_INS_EV0EM_Msk,\
+            (uint32_t)CCU4_CC4_INS_EV0EM_Pos,\
+            (uint32_t)0U);
+
+    WR_REG( CCU4SliceRegPtr->INS,\
+            (uint32_t)CCU4_CC4_INS_EV1EM_Msk,\
+            (uint32_t)CCU4_CC4_INS_EV1EM_Pos,\
+            (uint32_t)0U);
+
+    WR_REG( CCU4SliceRegPtr->INS,\
+            (uint32_t)CCU4_CC4_INS_EV2EM_Msk,\
+            (uint32_t)CCU4_CC4_INS_EV2EM_Pos,\
+            (uint32_t)0U);
+
+    /*
+     * Program the Slice CMC Register
+     */
+    if(SliceConfigPtr->Event0Cfg->ActiveEdge)
+    {
+      WR_REG(CCU4SliceRegPtr->CMC,\
+             ((uint32_t)3<<SliceConfigPtr->Event0Cfg->EventType),\
+             (uint32_t)SliceConfigPtr->Event0Cfg->EventType,\
+             (uint32_t)0U);
+    }
+    if(SliceConfigPtr->Event1Cfg->ActiveEdge)
+    {
+      WR_REG(CCU4SliceRegPtr->CMC,\
+             ((uint32_t)3<<SliceConfigPtr->Event1Cfg->EventType),\
+             (uint32_t)SliceConfigPtr->Event1Cfg->EventType,\
+             (uint32_t)0U);
+    }
+    if(SliceConfigPtr->Event2Cfg->ActiveEdge)
+    {
+      WR_REG(CCU4SliceRegPtr->CMC,\
+             ((uint32_t)3U<<SliceConfigPtr->Event2Cfg->EventType),\
+             (uint32_t)SliceConfigPtr->Event2Cfg->EventType,\
+             (uint32_t)0U);
+    }
+
+    /*
+     * Program the Slice TC Register
+     */
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_TCM_Msk,\
+           (uint32_t)CCU4_CC4_TC_TCM_Pos,\
+           (uint32_t)0U);
+
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_CMOD_Msk,\
+           (uint32_t)CCU4_CC4_TC_CMOD_Pos,\
+           (uint32_t)0U);
+
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_CAPC_Msk,\
+           (uint32_t)CCU4_CC4_TC_CAPC_Pos,\
+           (uint32_t)0U);
+
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_ENDM_Msk,\
+           (uint32_t)CCU4_CC4_TC_ENDM_Pos,\
+           (uint32_t)0U);
+
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_STRM_Msk,\
+           (uint32_t)CCU4_CC4_TC_STRM_Pos,\
+           (uint32_t)0U);
+
+    WR_REG(CCU4SliceRegPtr->TC,\
+           (uint32_t)CCU4_CC4_TC_CCS_Msk,\
+           (uint32_t)CCU4_CC4_TC_CCS_Pos,\
+           (uint32_t)0U);
+
+    /*
+     * Program the Slice Prescalar Register
+     */
+    WR_REG(CCU4SliceRegPtr->PSC,\
+           (uint32_t)CCU4_CC4_PSC_PSIV_Msk,\
+           (uint32_t)CCU4_CC4_PSC_PSIV_Msk,\
+           (uint32_t)0U);
+    /**
+     * Request a shadow Transfer
+     */
+    SliceConfigPtr->SliceGlobalAddress->GCSS |=\
+        ((uint32_t)0x01U<<((uint32_t)2U+(SliceConfigPtr->SliceNum*(uint32_t)4U)));
+
+    /*
+     * Program the Slice Interrupt register
+     */
+    CCU4SliceRegPtr->INTE = (uint32_t)0U;
+    /*
+     * Program the Slice Period and Compare Values
+     */
+    CCU4SliceRegPtr->PRS = (uint32_t)0U;
+    CCU4SliceRegPtr->CRS = (uint32_t)0U;
+    /**
+     * Request a shadow Transfer
+     */
+    SliceConfigPtr->SliceGlobalAddress->GCSS |=\
+        ((uint32_t)0x01U<<(SliceConfigPtr->SliceNum*(uint32_t)4U));
+    /**
+     * Request a shadow Transfer
+     */
+    SliceConfigPtr->SliceGlobalAddress->GCSS |=\
+        ((uint32_t)0x01U<<((SliceConfigPtr->SliceNum*(uint32_t)4U)));
+
+  }
+}
+/*
+ * This function initializes the POSIF and CCU4x_CCy peripheral with the
+ * configured parameters to get the speed and position from quadrature encoder
+ * inputs.
+ */
+static status_t POSQE001_lInit
+(
+    const POSQE001_HandleType* HandlePtr
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  POSIF_GLOBAL_TypeDef* POSIFRegs = HandlePtr->PosifModulePtr;
+  uint32_t Index;
+
+  do
+  {
+    if(HandlePtr->DynamicHandlePtr->AppState != POSQE001_UNINITIALIZED)
+    {
+      DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+
+      break;
+    }
+
+    /*
+     * Clear the internal POSIF State Machine and Stop the POSIF
+     */
+    POSIFRegs->PRUNC = (POSIF_PRUNC_CRB_Msk|POSIF_PRUNC_CSM_Msk);
+
+    /*Set Quadrature Decoder mode and Low Pass Filter Configuration as per GUI*/
+    WR_REG( POSIFRegs->PCONF,\
+            (uint32_t)POSIF_PCONF_FSEL_Msk,\
+            (uint32_t)POSIF_PCONF_FSEL_Pos,\
+            (uint32_t)POSQE001_POSIF_MODE\
+           );
+    WR_REG( POSIFRegs->PCONF,\
+            (uint32_t)POSIF_PCONF_QDCM_Msk,\
+            (uint32_t)POSIF_PCONF_QDCM_Pos,\
+            (uint32_t)HandlePtr->PosifDecoderType\
+           );
+    WR_REG( POSIFRegs->PCONF,\
+            (uint32_t)POSIF_PCONF_LPC_Msk,\
+            (uint32_t)POSIF_PCONF_LPC_Pos,\
+            (uint32_t)HandlePtr->kLPF\
+           );
+
+    /*Set the leading phase for clockwise rotation.*/
+    WR_REG( POSIFRegs->QDC,\
+            (uint32_t)POSIF_QDC_PHS_Msk,\
+            (uint32_t)POSIF_QDC_PHS_Pos,\
+            (uint32_t)HandlePtr->LeadingEdge
+          );
+    WR_REG( POSIFRegs->QDC,\
+            (uint32_t)POSIF_QDC_ICM_Msk,\
+            (uint32_t)POSIF_QDC_ICM_Pos,\
+            (uint32_t)HandlePtr->IndexGenMode\
+          );
+
+  /**
+   * Now Program Each and Every slice consumed by the App
+   */
+    for(Index=0U;Index<5U;Index++)
+    {
+      POSQE001_lInitCCUSlice(HandlePtr->CCUSliceConfigPtr[Index]);
+    }
+    Status = (uint32_t)DAVEApp_SUCCESS;
+  }while(0);
+
+  HandlePtr->DynamicHandlePtr->AppState = POSQE001_INITIALIZED;
+  return (Status);
+}
+
+/*
+ * This function deinitializes the POSIF and CCU4x_CCy peripheral.
+ */
+static status_t POSQE001_lDeInit
+(
+    const POSQE001_HandleType* HandlePtr
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  POSIF_GLOBAL_TypeDef* POSIFRegs = HandlePtr->PosifModulePtr;
+  uint32_t Index;
+
+  do
+  {
+    if(HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+    {
+      DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+      break;
+    }
+
+    /*
+     * Clear the internal POSIF State Machine and Stop the POSIF
+     */
+    POSIFRegs->PRUNC = (POSIF_PRUNC_CRB_Msk|POSIF_PRUNC_CSM_Msk);
+    /*Set Quadrature Decoder mode and Low Pass Filter Configuration as per GUI*/
+    WR_REG( POSIFRegs->PCONF,\
+            (uint32_t)POSIF_PCONF_FSEL_Msk,\
+            (uint32_t)POSIF_PCONF_FSEL_Pos,\
+            (uint32_t)0U);
+    WR_REG( POSIFRegs->PCONF,\
+            (uint32_t)POSIF_PCONF_QDCM_Msk,\
+            (uint32_t)POSIF_PCONF_QDCM_Pos,\
+            (uint32_t)0U
+           );
+    WR_REG( POSIFRegs->PCONF,\
+            (uint32_t)POSIF_PCONF_FSEL_Pos,\
+            (uint32_t)POSIF_PCONF_FSEL_Pos,\
+            (uint32_t)0U
+           );
+
+    /*Set the leading phase for clockwise rotation.*/
+    WR_REG( POSIFRegs->QDC,\
+            (uint32_t)POSIF_QDC_PHS_Msk,\
+            (uint32_t)POSIF_QDC_PHS_Pos,\
+            (uint32_t)0U);
+    WR_REG( POSIFRegs->QDC,\
+            (uint32_t)POSIF_QDC_ICM_Msk,\
+            (uint32_t)POSIF_QDC_ICM_Pos,\
+            (uint32_t)0U);
+
+  /**
+   * Now Program Each and Every slice consumed by the App
+   */
+    for(Index=0U;Index<4U;Index++)
+    {
+      POSQE001_lDeInitCCUSlice(HandlePtr->CCUSliceConfigPtr[Index]);
+    }
+    Status = (uint32_t)DAVEApp_SUCCESS;
+  }while(0);
+  HandlePtr->DynamicHandlePtr->AppState = POSQE001_UNINITIALIZED;
+  return (Status);
+}
+static void POSQE001_lStartCCUSlice(const POSQE001_SliceConfigType* SliceConfigPtr)
+{
+
+  CCU4_CC4_TypeDef* CCU4SliceRegPtr;
+  if(SliceConfigPtr->SliceInUse)
+  {
+    /*
+     * Get the Base Address of the Slice Register
+     */
+    CCU4SliceRegPtr = SliceConfigPtr->SliceAddress;
+
+    WR_REG( CCU4SliceRegPtr->INS,\
+            (uint32_t)CCU4_CC4_INS_EV2EM_Msk,\
+            (uint32_t)CCU4_CC4_INS_EV2EM_Pos,\
+            (uint32_t)SliceConfigPtr->Event2Cfg->ActiveEdge);
+
+    if(SliceConfigPtr->Event2Cfg->ActiveEdge)
+    {
+      WR_REG(CCU4SliceRegPtr->CMC,\
+             ((uint32_t)3<<SliceConfigPtr->Event2Cfg->EventType),\
+             (uint32_t)SliceConfigPtr->Event2Cfg->EventType,\
+             (uint32_t)POSQE001_EVENT2);
+    }
+    /*
+     * Program the Slice Interrupt register
+     */
+    CCU4SliceRegPtr->INTE = SliceConfigPtr->InterruptMask;
+    /**
+     * Bring CCU Slice Out of IDLE Mode
+     */
+    SliceConfigPtr->SliceGlobalAddress->GIDLC = ((uint32_t)0x01U << \
+                         ((uint32_t)CCU4_GIDLC_CS0I_Pos+(uint32_t)SliceConfigPtr->SliceNum));
+    SliceConfigPtr->SliceGlobalAddress->GIDLC = (CCU4_GIDLC_SPRB_Msk);
+    /*
+     * Program the Slice Prescalar Register
+     */
+    WR_REG(CCU4SliceRegPtr->PSC,\
+           (uint32_t)CCU4_CC4_PSC_PSIV_Msk,\
+           (uint32_t)CCU4_CC4_PSC_PSIV_Pos,\
+           (uint32_t)SliceConfigPtr->PrescalarVal);
+    /**
+     * Request a shadow Transfer
+     */
+    SliceConfigPtr->SliceGlobalAddress->GCSS |=\
+        ((uint32_t)0x01U<<((uint32_t)2U+(SliceConfigPtr->SliceNum*(uint32_t)4U)));
+
+    if(!((SliceConfigPtr->Event2Cfg->EventType == POSQE001_EXT_START)&&\
+       (SliceConfigPtr->Event2Cfg->ActiveEdge != 0))
+      )
+    {
+      CCU4SliceRegPtr->TCSET = CCU4_CC4_TCSET_TRBS_Msk;
+    }
+
+  }
+}
+static void POSQE001_lStopCCUSlice(const POSQE001_SliceConfigType* SliceConfigPtr)
+{
+
+  CCU4_CC4_TypeDef* CCU4SliceRegPtr;
+  if(SliceConfigPtr->SliceInUse)
+  {
+    /*
+     * Get the Base Address of the Slice Register
+     */
+    CCU4SliceRegPtr = SliceConfigPtr->SliceAddress;
+
+    WR_REG( CCU4SliceRegPtr->INS,\
+            (uint32_t)CCU4_CC4_INS_EV2EM_Msk,\
+            (uint32_t)CCU4_CC4_INS_EV2EM_Pos,\
+            (uint32_t)0U);
+
+    if(SliceConfigPtr->Event2Cfg->ActiveEdge)
+    {
+      WR_REG(CCU4SliceRegPtr->CMC,\
+             ((uint32_t)3U<<SliceConfigPtr->Event2Cfg->EventType),\
+             (uint32_t)SliceConfigPtr->Event2Cfg->EventType,\
+             (uint32_t)0U);
+    }
+    /*
+     * Program the Slice Interrupt register
+     */
+    CCU4SliceRegPtr->INTE &= ~(SliceConfigPtr->InterruptMask);
+    /*
+     * Clear all the Pending Interrupts.
+     */
+    CCU4SliceRegPtr->SWR = 0xFFFFU;
+    /**
+     * PutSlice in Idle Mode
+     */
+    SliceConfigPtr->SliceGlobalAddress->GIDLS = ((uint32_t)0x01U << \
+                         ((uint32_t)CCU4_GIDLS_SS0I_Pos+(uint32_t)SliceConfigPtr->SliceNum));
+
+    CCU4SliceRegPtr->TCCLR = CCU4_CC4_TCCLR_TRBC_Msk;
+  }
+}
+
+/*******************************************************************************
+**                      Private Function Definitions                          **
+*******************************************************************************/
+void POSQE001_Init(void)
+{
+  status_t Status;
+  CCU4GLOBAL_Init();
+  <%for (String appIns : appsList ) {
+    appInst = appIns.substring(appIns.lastIndexOf("/")+1);%>
+    <% PosifUri = app.getMappedUri(AppBaseuri + appInst +"/posif"); %>
+    <% if ((PosifUri != null) && (PosifUri.trim() != "")) { %>
+      <% Posif_number = app.getUriSegment(PosifUri,4);%>
+    <%}%>   
+  <%if ((Is44Device==1)||(Is42Device==1))
+  {%>
+  /* Deassert the clock gating under SCU module to enable the Posif peripheral */
+  SET_BIT(SCU_CLK->CGATCLR0, SCU_CLK_CGATCLR0_POSIF<%=appInst%>_Pos);
+  <%}%>  
+  
+  /*de-assert POSIF peripheral */  
+  RESET001_DeassertReset(PER0_POSIF<%=Posif_number%>);  
+  Status = POSQE001_lInit(&POSQE001_Handle<%=appInst%>);
+  if(Status == (uint32_t)DAVEApp_SUCCESS)
+  {
+    if(POSQE001_Handle<%=appInst%>.StartDuringInit==1U)
+    {
+      Status = POSQE001_Start(&POSQE001_Handle<%=appInst%>);
+      Status &= (uint32_t)DAVEApp_SUCCESS; /* For misra */
+    }
+    <% MappedUri = app.getMappedUri(AppBaseuri + appInst + "/ccunvicnode"); %>
+    <% if((MappedUri != null) && (MappedUri != "")) { %>
+    /* Set the interrupt priority for the CCU4 interrupt node */
+    <% NodeID = MappedUri.substring(MappedUri.lastIndexOf('/')+ 1 );
+    int Offset = Integer.parseInt(NodeID);
+    int Priority = app.getIntegerValue(AppBaseuri + appInst +"/posqe001_ccunvicprio");
+    int SubPriority = app.getIntegerValue(AppBaseuri + appInst +"/posqe001_irwccuInterruptSubPriority"); %>
+    /* Clear pending interrupt */
+    NVIC_ClearPendingIRQ((IRQn_Type)<%=NodeID%>);
+    /* Set Interrupt Priority for NVIC <%=NodeID%> Node App Instance <%=appInst%>  */
+    NVIC_SetPriority((IRQn_Type)<%=NodeID%>, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),<%=Priority%>,<%=SubPriority%>));
+    /*Enable interrupt - CCU4 Capture*/
+    NVIC_EnableIRQ((IRQn_Type)<%=NodeID%>);
+    <%}%>
+    <% MappedUri = app.getMappedUri(AppBaseuri + appInst + "/posifnvicnode"); %>
+    <% if((MappedUri != null) && (MappedUri != "")) { %>
+    /* Set the interrupt priority for the POSIF interrupt node */
+    <% NodeID = MappedUri.substring(MappedUri.lastIndexOf('/')+ 1 );
+    int Offset = Integer.parseInt(NodeID);
+    int Priority = app.getIntegerValue(AppBaseuri + appInst +"/posqe001_posifnvicprio");
+    int SubPriority = app.getIntegerValue(AppBaseuri + appInst +"/posqe001_irwposifInterruptSubPriority"); %>
+    /* Clear pending interrupt */
+    NVIC_ClearPendingIRQ((IRQn_Type)<%=NodeID%>);  
+    /* Set Interrupt Priority for NVIC <%=NodeID%> Node App Instance <%=appInst%>  */
+    NVIC_SetPriority((IRQn_Type)<%=NodeID%>, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),<%=Priority%>,<%=SubPriority%>));
+    /*Enable interrupt - POSIF wrong phase pair*/
+    NVIC_EnableIRQ((IRQn_Type)<%=NodeID%>);
+    <%}%>
+    <% MappedUri = app.getMappedUri(AppBaseuri + appInst + "/periodmatchnvicnode"); %>
+    <% if((MappedUri != null) && (MappedUri != "")) { %>
+    /* Set the interrupt priority for the POSIF interrupt node */
+    <% NodeID = MappedUri.substring(MappedUri.lastIndexOf('/')+ 1 );
+    int Offset = Integer.parseInt(NodeID);
+    int Priority = app.getIntegerValue(AppBaseuri + appInst +"/posqe001_timeoutnvicprio");
+    int SubPriority = app.getIntegerValue(AppBaseuri + appInst +"/posqe001_irwtimeoutInterruptSubPriority"); %>
+    /* Clear pending interrupt */
+    NVIC_ClearPendingIRQ((IRQn_Type)<%=NodeID%>);  
+    /* Set Interrupt Priority for NVIC <%=NodeID%> Node App Instance <%=appInst%>  */
+    NVIC_SetPriority((IRQn_Type)<%=NodeID%>, NVIC_EncodePriority(NVIC_GetPriorityGrouping(),<%=Priority%>,<%=SubPriority%>));
+    /*Enable interrupt - CCU4 Timeout*/
+    NVIC_EnableIRQ((IRQn_Type)<%=NodeID%>);
+    <%}%>  
+  }
+   
+    <% pinUri1 = app.getMappedUri(AppBaseuri + appInst +"/phasea"); %>
+    <% if ((pinUri1 != null) && (pinUri1.trim() != "")) { %>
+    <% portNo1 = pinUri1.substring(pinUri1.indexOf("/port/p/")+8,pinUri1.indexOf("/pad/")); %>
+    <% pinNo1 = pinUri1.substring(pinUri1.indexOf("/pad/")+5,pinUri1.length());%> 
+  /* Configuration of QE Phase A Pin <%=portNo1%>.<%=pinNo1%> based on User configuration */
+      <% Pin1 = Integer.parseInt(pinNo1);%>
+      <% IOCR_PCR = app.getIntegerValue(AppBaseuri + appInst +"/posqe001_inputchar1dummy");%>
+      <% if(Pin1 < 4) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR0,
+          (uint32_t)PORT<%=portNo1%>_IOCR0_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR0_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%}else if (Pin1 >= 4 && Pin1 <= 7) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR4,
+          (uint32_t)PORT<%=portNo1%>_IOCR4_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR4_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%} else if (Pin1 >= 8 && Pin1 <= 11) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR8,
+          (uint32_t)PORT<%=portNo1%>_IOCR8_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR8_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%} else if (Pin1 >= 12 && Pin1 <= 15) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR12,
+          (uint32_t)PORT<%=portNo1%>_IOCR12_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR12_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%}%>     
+    <%} else { %>
+  /* Quadrature Encoder Phase A Pin instance (no.<%= appInst %>) is not mapped to any port pin. */
+    <%} %>
+ 
+    <% pinUri1 = app.getMappedUri(AppBaseuri + appInst +"/phaseb"); %>
+    <% if ((pinUri1 != null) && (pinUri1.trim() != "")) { %>
+        <% portNo1 = pinUri1.substring(pinUri1.indexOf("/port/p/")+8,pinUri1.indexOf("/pad/")); %>
+        <% pinNo1 = pinUri1.substring(pinUri1.indexOf("/pad/")+5,pinUri1.length());%> 
+  /* Configuration of QE Phase B Pin <%=portNo1%>.<%=pinNo1%> based on User configuration */
+      <% Pin1 = Integer.parseInt(pinNo1);%>
+      <% IOCR_PCR = app.getIntegerValue(AppBaseuri + appInst +"/posqe001_inputchar2dummy");%>
+      <% if(Pin1 < 4) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR0,
+          (uint32_t)PORT<%=portNo1%>_IOCR0_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR0_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%}else if (Pin1 >= 4 && Pin1 <= 7) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR4,
+          (uint32_t)PORT<%=portNo1%>_IOCR4_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR4_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%} else if (Pin1 >= 8 && Pin1 <= 11) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR8,
+          (uint32_t)PORT<%=portNo1%>_IOCR8_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR8_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%} else if (Pin1 >= 12 && Pin1 <= 15) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR12,
+          (uint32_t)PORT<%=portNo1%>_IOCR12_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR12_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%}%>     
+    <%} else { %>
+  /* Quadrature Encoder Phase B Pin instance (no.<%= appInst %>) is not mapped to any port pin. */
+    <%} %>
+ 
+    <% pinUri1 = app.getMappedUri(AppBaseuri + appInst +"/index"); %>
+    <% if ((pinUri1 != null) && (pinUri1.trim() != "")) { %>
+        <% portNo1 = pinUri1.substring(pinUri1.indexOf("/port/p/")+8,pinUri1.indexOf("/pad/")); %>
+        <% pinNo1 = pinUri1.substring(pinUri1.indexOf("/pad/")+5,pinUri1.length());%> 
+  /* Configuration of QE Index Pin <%=portNo1%>.<%=pinNo1%> based on User configuration */
+      <% Pin1 = Integer.parseInt(pinNo1);%>
+      <% IOCR_PCR = app.getIntegerValue(AppBaseuri + appInst +"/posqe001_inputchar3dummy");%>
+      <% if(Pin1 < 4) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR0,
+          (uint32_t)PORT<%=portNo1%>_IOCR0_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR0_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%}else if (Pin1 >= 4 && Pin1 <= 7) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR4,
+          (uint32_t)PORT<%=portNo1%>_IOCR4_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR4_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%} else if (Pin1 >= 8 && Pin1 <= 11) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR8,
+          (uint32_t)PORT<%=portNo1%>_IOCR8_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR8_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%} else if (Pin1 >= 12 && Pin1 <= 15) { %>
+  WR_REG( PORT<%=portNo1%>->IOCR12,
+          (uint32_t)PORT<%=portNo1%>_IOCR12_PC<%=Pin1%>_Msk,
+          (uint32_t)PORT<%=portNo1%>_IOCR12_PC<%=Pin1%>_Pos,
+          (uint32_t)<%=IOCR_PCR%>);
+      <%}%>     
+    <%} else { %>
+  /* Quadrature Encoder Index Pin instance (no.<%= appInst %>) is not mapped to any port pin. */
+    <%} %>
+  <%}%>  
+}
+
+/*
+ * This function will reset the App.
+ */
+
+void POSQE001_Deinit(void)
+{
+  status_t Status;
+  CCU4GLOBAL_Init();
+  <%for (String appIns : appsList ) {
+    appInst = appIns.substring(appIns.lastIndexOf("/")+1);%>
+    <% PosifUri = app.getMappedUri(AppBaseuri + appInst +"/posif"); %>
+    <% if ((PosifUri != null) && (PosifUri.trim() != "")) { %>
+      <% Posif_number = app.getUriSegment(PosifUri,4);%>
+    <%}%>   
+  /*assert POSIF peripheral */  
+  RESET001_AssertReset(PER0_POSIF<%=Posif_number%>);          
+  Status = POSQE001_lDeInit(&POSQE001_Handle<%=appInst%>);
+  <%}%>
+  Status &= (uint32_t)DAVEApp_SUCCESS; /*For misra*/
+}
+
+/*
+ * This function will start the Quadrature Decoder APP which in turn starts POSIF
+ * and CCU4x_CCy peripherals.
+ */
+status_t POSQE001_Start
+(
+  const POSQE001_HandleType* HandlePtr
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  uint8_t Index;
+
+  do
+  {
+    if(HandlePtr->DynamicHandlePtr->AppState != POSQE001_INITIALIZED)
+    {
+      DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+      break;
+    }
+  /**
+   * Now Program Each and Every slice consumed by the App
+   */
+    for(Index=0U;Index<5U;Index++)
+    {
+      POSQE001_lStartCCUSlice(HandlePtr->CCUSliceConfigPtr[Index]);
+    }
+    /**
+     * Finally Start the POSIF
+     */
+    HandlePtr->PosifModulePtr->PRUNS = POSIF_PRUNS_SRB_Msk;
+    HandlePtr->DynamicHandlePtr->AppState = POSQE001_START;
+    Status = (uint32_t)DAVEApp_SUCCESS;
+
+  }while(0);
+  return (Status);
+}
+
+/*
+ * This function will stop the Quadrature decoder APP which in turn will stop the
+ * POSIF and CCU4x_CCy peripherals.
+*/
+status_t POSQE001_Stop
+(
+    const POSQE001_HandleType* HandlePtr
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  uint8_t Index;
+
+  do
+  {
+    if(HandlePtr->DynamicHandlePtr->AppState != POSQE001_START)
+    {
+      DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+      break;
+    }
+    /**
+     * Stop the POSIF
+     */
+    HandlePtr->PosifModulePtr->PRUNC = (POSIF_PRUNC_CRB_Msk|
+         POSIF_PRUNC_CSM_Msk);
+
+   /**
+    * Now Program Each and Every slice consumed by the App
+    */
+    for(Index=0U;Index<5U;Index++)
+    {
+      POSQE001_lStopCCUSlice(HandlePtr->CCUSliceConfigPtr[Index]);
+    }
+    HandlePtr->DynamicHandlePtr->AppState = POSQE001_INITIALIZED;
+    Status = (uint32_t)DAVEApp_SUCCESS;
+
+  }while(0);
+  return (Status);
+}
+
+/*
+ * This function will return the current direction of rotation.
+ */
+
+status_t POSQE001_GetDirection
+(
+  const POSQE001_HandleType* HandlePtr,
+  POSQE001_DirectionType *Dir)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+
+  if(HandlePtr->DynamicHandlePtr->AppState != POSQE001_START)
+  {
+      DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    *Dir = (POSQE001_DirectionType)RD_REG(HandlePtr->PosifModulePtr->QDC, \
+                                          POSIF_QDC_DVAL_Msk,\
+                                          POSIF_QDC_DVAL_Pos);
+    Status = (uint32_t)DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+/*
+ * This function will return the number of Quadrature encoder revolutions.
+ */
+status_t POSQE001_GetRevolutions
+(
+  const POSQE001_HandleType* HandlePtr,
+  uint16_t *Revolutions,
+  POSQE001_ReadRegType ReadMethod
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  do
+  {
+    if(( HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||\
+      ((HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceInUse == 0U))
+       )
+    {
+      DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+      break;
+    }
+    if(ReadMethod == POSQE001_READ_CAPTURE)
+    {
+      *Revolutions = (uint16_t)(HandlePtr)->\
+                   CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->\
+                   SliceAddress->CV[1];
+    }
+    else
+    {
+      *Revolutions = (uint16_t)(HandlePtr)->\
+                   CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->\
+                   SliceAddress->TIMER;
+    }
+    Status = (uint32_t)DAVEApp_SUCCESS;
+  }while(0);
+
+  return (Status);
+
+}
+
+status_t POSQE001_GetPosition
+(
+  const POSQE001_HandleType* HandlePtr,
+  uint16_t* Position,
+  POSQE001_ReadRegType ReadMethod
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+
+  if(HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    *Position = (uint16_t)(*(HandlePtr->PosCounterRegPtr[ReadMethod]));
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+void POSQE001_GetPositionInterPolationProfile1
+(
+    void* HandlePtr,
+    void* PositionInterpolation,
+    uint32_t ReadMethod
+)
+{
+  POSQE001_HandleType* POSQE001_Handle;
+  POSQE001_PositionInterpolation* PosInterpolation;
+  uint16_t TempPosition;
+  POSQE001_Handle = (POSQE001_HandleType*)HandlePtr;
+  PosInterpolation = (POSQE001_PositionInterpolation*)PositionInterpolation;
+
+  PosInterpolation->PositionCount =\
+      (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[ReadMethod]);
+  PosInterpolation->LastTicksDelta = (uint16_t)0U;
+  PosInterpolation->SecondLastTickDelta = (uint16_t)0U;
+  PosInterpolation->TimesinceLastTick = \
+   (uint16_t)POSQE001_Handle->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceAddress->TIMER;
+  TempPosition = (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[1]);
+  if(TempPosition != PosInterpolation->PositionCount)
+  {
+    PosInterpolation->PositionCount =\
+        (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[1]);
+    PosInterpolation->TimesinceLastTick = \
+    (uint16_t)(POSQE001_Handle->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceAddress->TIMER);
+  }
+}
+
+void POSQE001_GetPositionInterPolationProfile3
+(
+    void* HandlePtr,
+    void* PositionInterpolation,
+    uint32_t ReadMethod
+)
+{
+  POSQE001_HandleType* POSQE001_Handle;
+  POSQE001_PositionInterpolation* PosInterpolation;
+  uint16_t TempPosition;
+  POSQE001_Handle = (POSQE001_HandleType*)HandlePtr;
+  PosInterpolation = (POSQE001_PositionInterpolation*)PositionInterpolation;
+
+  PosInterpolation->PositionCount =\
+      (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[ReadMethod]);
+  PosInterpolation->LastTicksDelta = \
+      (uint16_t)*(POSQE001_Handle->VelTimer0PtrRegPtr[0]);
+  PosInterpolation->SecondLastTickDelta = \
+      (uint16_t)*(POSQE001_Handle->VelTimer0PtrRegPtr[1]);
+  PosInterpolation->TimesinceLastTick = \
+      (uint16_t)*(POSQE001_Handle->VelTimer0PtrRegPtr[2]);
+
+  TempPosition = (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[1]);
+  if(TempPosition != PosInterpolation->PositionCount)
+  {
+    PosInterpolation->PositionCount =\
+        (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[1]);
+    PosInterpolation->LastTicksDelta = \
+        (uint16_t)*(POSQE001_Handle->VelTimer0PtrRegPtr[0]);
+    PosInterpolation->SecondLastTickDelta = \
+        (uint16_t)*(POSQE001_Handle->VelTimer0PtrRegPtr[1]);
+    PosInterpolation->TimesinceLastTick = \
+        (uint16_t)*(POSQE001_Handle->VelTimer0PtrRegPtr[2]);
+  }
+  if(PosInterpolation->TimesinceLastTick < PosInterpolation->LastTicksDelta)
+  {
+    PosInterpolation->TimesinceLastTick += \
+        (uint16_t)(POSQE001_Handle->DynamicHandlePtr->Time4TicksCapture+1U);
+  }
+  PosInterpolation->TimesinceLastTick -= PosInterpolation->LastTicksDelta;
+  if(PosInterpolation->LastTicksDelta < PosInterpolation->SecondLastTickDelta)
+  {
+    PosInterpolation->LastTicksDelta += \
+        (uint16_t)(POSQE001_Handle->DynamicHandlePtr->Time4TicksCapture+1U);
+  }
+  PosInterpolation->LastTicksDelta -= PosInterpolation->SecondLastTickDelta;
+  PosInterpolation->SecondLastTickDelta = 0U;
+
+}
+
+void POSQE001_GetPositionInterPolationProfile4PosCounter
+(
+    void* HandlePtr,
+    void* PositionInterpolation,
+    uint32_t ReadMethod
+)
+{
+  POSQE001_HandleType* POSQE001_Handle;
+  POSQE001_PositionInterpolation* PosInterpolation;
+  uint16_t TempPosition;
+  POSQE001_Handle = (POSQE001_HandleType*)HandlePtr;
+  PosInterpolation = (POSQE001_PositionInterpolation*)PositionInterpolation;
+
+  PosInterpolation->PositionCount =\
+      (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[ReadMethod]);
+  PosInterpolation->LastTicksDelta = \
+      (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[0]);
+  PosInterpolation->SecondLastTickDelta = \
+      (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[1]);
+  PosInterpolation->TimesinceLastTick = \
+      (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[3]);
+  TempPosition = (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[1]);
+  if(TempPosition != PosInterpolation->PositionCount)
+  {
+    PosInterpolation->PositionCount =\
+        (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[1]);
+    PosInterpolation->LastTicksDelta = \
+        (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[0]);
+    PosInterpolation->SecondLastTickDelta = \
+        (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[1]);
+    PosInterpolation->TimesinceLastTick = \
+        (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[3]);
+  }
+}
+
+void POSQE001_GetPositionInterPolationProfile4
+(
+    void* HandlePtr,
+    void* PositionInterpolation,
+    uint32_t ReadMethod
+)
+{
+  POSQE001_HandleType* POSQE001_Handle;
+  POSQE001_PositionInterpolation* PosInterpolation;
+  uint16_t TempPosition;
+  POSQE001_Handle = (POSQE001_HandleType*)HandlePtr;
+  PosInterpolation = (POSQE001_PositionInterpolation*)PositionInterpolation;
+
+  PosInterpolation->PositionCount =\
+      (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[ReadMethod]);
+  PosInterpolation->LastTicksDelta = \
+      (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[0]);
+  PosInterpolation->SecondLastTickDelta = \
+      (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[1]);
+  PosInterpolation->TimesinceLastTick = \
+      (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[2]);
+  TempPosition = (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[1]);
+  if(TempPosition != PosInterpolation->PositionCount)
+  {
+    PosInterpolation->PositionCount =\
+        (uint16_t)*(POSQE001_Handle->PosCounterRegPtr[1]);
+    PosInterpolation->LastTicksDelta = \
+        (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[0]);
+    PosInterpolation->SecondLastTickDelta = \
+        (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[1]);
+    PosInterpolation->TimesinceLastTick = \
+        (uint16_t)*(POSQE001_Handle->VelTimer1PtrRegPtr[3]);
+  }
+}
+status_t POSQE001_GetPositionInterPolation
+(
+    const POSQE001_HandleType* HandlePtr,
+    POSQE001_PositionInterpolation* PositionInterpolation,
+    POSQE001_ReadRegType ReadMethod
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  if(HandlePtr->PosInterpolationFuncPtr)
+  {
+    HandlePtr->PosInterpolationFuncPtr((void*)HandlePtr,\
+                                       (void*)PositionInterpolation,
+                                       (uint32_t)ReadMethod);
+  }
+  Status = (uint32_t)DAVEApp_SUCCESS;
+  return (Status);
+}
+
+status_t POSQE001_GetAngle
+(
+    const POSQE001_HandleType* HandlePtr,
+    float* Angle,
+    POSQE001_ReadRegType ReadMethod
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  uint16_t Position;
+
+  if(HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    Status = POSQE001_GetPosition(HandlePtr,&Position,ReadMethod);
+    if(Status == (uint32_t)DAVEApp_SUCCESS)
+    {
+      *Angle = ((float)Position*(float)360.0)/(float)(HandlePtr->NumTicksPerRevolution);
+    }
+  }
+  return (Status);
+}
+
+status_t POSQE001_GetAngleInterpolate
+(
+    const POSQE001_HandleType* HandlePtr,
+    float* AngleInterpolated,
+    POSQE001_ReadRegType ReadMethod
+)
+{
+  volatile status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  POSQE001_PositionInterpolation Position;
+  if(HandlePtr->ProfileInUse != 1U)
+  {
+    Status = POSQE001_GetPositionInterPolation(HandlePtr,&Position,ReadMethod);
+    if(Status == (uint32_t)DAVEApp_SUCCESS)
+    {
+      *AngleInterpolated = (float)(Position.PositionCount);
+      if(Position.TimesinceLastTick>Position.LastTicksDelta)
+      {
+        Position.TimesinceLastTick = Position.LastTicksDelta;
+      }
+      if((HandlePtr->CCUSliceConfigPtr[POSQE001_POSITION_COUNTER]->SliceAddress->TCST)&0x02U)
+      {
+        *AngleInterpolated -= ((float)(Position.TimesinceLastTick))/((float)(Position.LastTicksDelta));
+      }
+      else
+      {
+        *AngleInterpolated += ((float)(Position.TimesinceLastTick))/((float)(Position.LastTicksDelta));
+      }
+      *AngleInterpolated *=  (((float)360.0)/(float)(HandlePtr->NumTicksPerRevolution));
+      if(*AngleInterpolated>= (float)360.0)
+      {
+        *AngleInterpolated -=(float)360.0;
+      }
+    }
+  }
+  return (Status);
+}
+
+status_t POSQE001_GetVelocityInversed
+(
+    const POSQE001_HandleType* HandlePtr,
+    float* Velocity
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  uint16_t TimeCaptured = 0U;
+
+  if((HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||\
+     (HandlePtr->ProfileInUse != 0U)||\
+     (HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceInUse == 0U)
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    TimeCaptured = (uint16_t)HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]\
+                   ->SliceAddress->CV[1];
+    *Velocity = (((float)HandlePtr->DynamicHandlePtr->NumTicks4TimeCapture)*(float)60.0)\
+               /( ((float)TimeCaptured) * (float)HandlePtr->TimeMultiplier*(float)HandlePtr->\
+               NumTicksPerRevolution);
+
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+status_t POSQE001_GetVelocityInversedRAW
+(
+    const POSQE001_HandleType* HandlePtr,
+    uint16_t* Velocity
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+
+  if((HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||\
+     (HandlePtr->ProfileInUse != 0U)||\
+     (HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceInUse == 0U)
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    *Velocity = (uint16_t)HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]\
+                   ->SliceAddress->CV[1];
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+
+}
+
+status_t POSQE001_GetVelocity
+(
+    const POSQE001_HandleType* HandlePtr,
+    float* Velocity
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  uint16_t TickCapture=0U;
+
+  if((HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||\
+     (HandlePtr->ProfileInUse == 0U)||\
+     (HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceInUse == 0U)
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    TickCapture = (uint16_t)HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]\
+                   ->SliceAddress->CV[1];
+    *Velocity = (((float)TickCapture)*(float)60.0)\
+               /( ((float)HandlePtr->DynamicHandlePtr->Time4TicksCapture)\
+               * (float)HandlePtr->TimeMultiplier*(float)HandlePtr->NumTicksPerRevolution);
+
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+
+}
+
+status_t POSQE001_GetVelocityRAW
+(
+    const POSQE001_HandleType* HandlePtr,
+    uint16_t* Velocity
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  if((HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||\
+     (HandlePtr->ProfileInUse == 0U)||\
+     (HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceInUse == 0U)
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    *Velocity = (uint16_t)HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]\
+                   ->SliceAddress->CV[1];
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+
+}
+
+status_t POSQE001_SetLowSpeedLimit
+(
+  const POSQE001_HandleType * HandlePtr,
+  float Speed
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  uint32_t Period;
+  if((HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||\
+     (HandlePtr->LowSpeedLimitPossible != 1U)
+
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    Period = (uint32_t)(((float)60.0*((float)HandlePtr->DynamicHandlePtr\
+              ->NumTicks4TimeCapture) )/ ( ((float)Speed) * \
+                   ((float)HandlePtr->NumTicksPerRevolution) * \
+                   ((float)HandlePtr->TimeMultiplier)));
+    if((Period <= 65535U) && (Period!=0U))
+    {
+      HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceAddress->PRS\
+      = Period-1U;
+      WR_REG( HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceGlobalAddress->GCSS,
+          (uint32_t)((uint32_t)0x01U << ((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceNum)),
+          (uint32_t)((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceNum),
+          (uint32_t)1U);
+      HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceAddress->TC|=\
+          (uint32_t)CCU4_CC4_TC_CLST_Msk;
+      HandlePtr->DynamicHandlePtr->LowSpeedLimitRPM = Speed;
+      Status =(uint32_t) DAVEApp_SUCCESS;
+    }
+    else
+    {
+      Status =(uint32_t) POSQE001_INVALID_PARAM_ERROR;
+    }
+  }
+  return (Status);
+}
+
+status_t POSQE001_GetLowSpeedLimit
+(
+  const POSQE001_HandleType * HandlePtr,
+  float* Speed
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+
+  if((HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||\
+     (HandlePtr->LowSpeedLimitPossible != 1U)
+
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    *Speed = HandlePtr->DynamicHandlePtr->LowSpeedLimitRPM;
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+status_t POSQE001_SetHighSpeedLimit
+(
+  const POSQE001_HandleType * HandlePtr,
+  float Speed
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  float TimeWindow;
+  uint32_t CountValue;
+  if((HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||\
+     (HandlePtr->HighSpeedLimitPossible != 1U)
+
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    /**
+     * Convert Speed in RPS
+     */
+    TimeWindow = (float)HandlePtr->DynamicHandlePtr->Time4TicksCapture * (float)HandlePtr->TimeMultiplier;
+
+    CountValue = (uint32_t)( (TimeWindow * Speed * \
+                         ((float)HandlePtr->NumTicksPerRevolution))/(float)60.0 );
+    if((CountValue <= 65535U) &&(CountValue >= 2U))
+    {
+      HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceAddress->PRS\
+              = CountValue ;
+
+      WR_REG( HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceGlobalAddress->GCSS,
+              (uint32_t)((uint32_t)0x01U << ((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceNum)),
+              (uint32_t)((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceNum),
+              (uint32_t)1U);
+      HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceAddress->TC |=\
+          (uint32_t)(CCU4_CC4_TC_CLST_Msk);
+      HandlePtr->DynamicHandlePtr->HighSpeedLimitRPM = Speed;
+
+      Status =(uint32_t) DAVEApp_SUCCESS;
+    }
+    else
+    {
+      Status = (uint32_t)POSQE001_INVALID_PARAM_ERROR;
+    }
+
+  }
+  return (Status);
+
+}
+
+status_t POSQE001_GetHighSpeedLimit
+(
+  const POSQE001_HandleType * HandlePtr,
+  float* Speed
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  if((HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||\
+     (HandlePtr->HighSpeedLimitPossible != 1U)
+
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    *Speed  = HandlePtr->DynamicHandlePtr->HighSpeedLimitRPM;
+
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+
+}
+
+status_t POSQE001_SetPeriodCounterCM
+(
+  const POSQE001_HandleType * HandlePtr,
+  uint16_t CompareMatch
+
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  if(HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    HandlePtr->CCUSliceConfigPtr[POSQE001_POSITION_COUNTER]->SliceAddress->CRS=\
+        CompareMatch;
+    WR_REG( HandlePtr->CCUSliceConfigPtr[POSQE001_POSITION_COUNTER]->SliceGlobalAddress->GCSS,
+            (uint32_t)((uint32_t)0x01U << ((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_POSITION_COUNTER]->SliceNum)),
+            (uint32_t)((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_POSITION_COUNTER]->SliceNum),
+            (uint32_t)1U);
+
+    Status =(uint32_t)DAVEApp_SUCCESS;
+  }
+  return (Status);
+
+}
+status_t POSQE001_GetPeriodCounterCM
+(
+  const POSQE001_HandleType * HandlePtr,
+  uint16_t* CompareMatch
+
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  if(HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    *CompareMatch = (uint16_t)HandlePtr->CCUSliceConfigPtr[POSQE001_POSITION_COUNTER]\
+                    ->SliceAddress->CRS;
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+
+}
+
+status_t POSQE001_SetPeriodCounterPM
+(
+  const POSQE001_HandleType * HandlePtr,
+  uint16_t PeriodMatch
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  if(HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    HandlePtr->CCUSliceConfigPtr[POSQE001_POSITION_COUNTER]->SliceAddress->PRS=\
+        PeriodMatch;
+    WR_REG( HandlePtr->CCUSliceConfigPtr[POSQE001_POSITION_COUNTER]->SliceGlobalAddress->GCSS,
+            (uint32_t)((uint32_t)0x01U << ((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_POSITION_COUNTER]->SliceNum)),
+            (uint32_t)((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_POSITION_COUNTER]->SliceNum),
+            (uint32_t)1U);
+
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+status_t POSQE001_GetPeriodCounterPM
+(
+  const POSQE001_HandleType * HandlePtr,
+  uint16_t* PeriodMatch
+
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  if(HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    *PeriodMatch = (uint16_t)HandlePtr->CCUSliceConfigPtr[POSQE001_POSITION_COUNTER]\
+                    ->SliceAddress->PRS;
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+
+}
+
+
+status_t POSQE001_SetRevCounterCM
+(
+  const POSQE001_HandleType * HandlePtr,
+  uint16_t CompareMatch
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+
+  if( (HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||
+      (HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceInUse!= 1U)
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceAddress->CRS=\
+        CompareMatch;
+    WR_REG( HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceGlobalAddress->GCSS,
+            (uint32_t)((uint32_t)0x01U << ((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceNum)),
+            (uint32_t)((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceNum),
+            (uint32_t)1U);
+
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+
+status_t POSQE001_GetRevCounterCM
+(
+  const POSQE001_HandleType * HandlePtr,
+  uint16_t* CompareMatch
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  if( (HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||
+      (HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceInUse!= 1U)
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    *CompareMatch = (uint16_t)HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]\
+                    ->SliceAddress->CRS;
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+
+}
+
+
+status_t POSQE001_SetRevCounterPM
+(
+  const POSQE001_HandleType * HandlePtr,
+  uint16_t PeriodMatch
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  if( (HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||
+      (HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceInUse!= 1U)
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceAddress->PRS=\
+        PeriodMatch;
+    WR_REG( HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceGlobalAddress->GCSS,
+            (uint32_t)((uint32_t)0x01U << ((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceNum)),
+            (uint32_t)((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceNum),
+            (uint32_t)1U);
+
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+
+status_t POSQE001_GetRevCounterPM
+(
+  const POSQE001_HandleType * HandlePtr,
+  uint16_t* PeriodMatch
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  if( (HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)||
+      (HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]->SliceInUse!= 1U)
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    *PeriodMatch = (uint16_t)HandlePtr->CCUSliceConfigPtr[POSQE001_REVOLUTION_COUNTER]\
+                    ->SliceAddress->PRS;
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+
+}
+
+/*
+ * This function will get the time period for tick capture required for velocity
+ * measurement.
+*/
+status_t POSQE001_GetTimePeriod4TickCap
+(
+  const POSQE001_HandleType* HandlePtr,
+  float* Time
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  POSQE001_StateType State = HandlePtr->DynamicHandlePtr->AppState;
+
+  if( (State == POSQE001_UNINITIALIZED)||\
+      (HandlePtr->ProfileInUse == 1U)
+     )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    *Time = ((float)HandlePtr->DynamicHandlePtr->Time4TicksCapture)*\
+            HandlePtr->TimeMultiplier;
+    Status = (uint32_t)DAVEApp_SUCCESS;
+  }
+
+  return (Status);
+}
+
+/*
+ * This function will get the number of ticks of the period clock for time capture
+ * for velocity measurement.
+*/
+status_t POSQE001_GetNumTicks4TimCap
+(
+  const POSQE001_HandleType* HandlePtr,
+  uint16_t *Ticks
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  POSQE001_StateType State = HandlePtr->DynamicHandlePtr->AppState;
+/*<<<DD_POSQE001_API_10_1>>>*/
+  if((State == POSQE001_UNINITIALIZED) ||
+     (HandlePtr->ProfileInUse != 0x00U))
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  /*<<<DD_POSQE001_API_10_2>>>*/
+  else
+  {
+    *Ticks = HandlePtr->DynamicHandlePtr->Time4TicksCapture;
+    Status =(uint32_t) DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+/**
+ * This function will modify the time period for tick capture required for
+ * velocity measurement. Time is gven in terms of the resolution (period register value)
+ */
+
+status_t POSQE001_SetTimePeriod4TickCap
+(
+  const POSQE001_HandleType* HandlePtr,
+  float Time
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  POSQE001_StateType State = HandlePtr->DynamicHandlePtr->AppState;
+  uint32_t NewPeriod;
+  uint32_t OldPeriod;
+  if( (State == POSQE001_UNINITIALIZED)||\
+      (HandlePtr->ProfileInUse == 0U)
+     )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    NewPeriod = (uint32_t)(Time/HandlePtr->TimeMultiplier);
+    if((NewPeriod == 0U))
+    {
+      Status = (uint32_t)POSQE001_INVALID_PARAM_ERROR;
+      DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+    }
+    else
+    {
+      OldPeriod = HandlePtr->DynamicHandlePtr->Time4TicksCapture;
+      HandlePtr->DynamicHandlePtr->Time4TicksCapture = (uint16_t)NewPeriod;
+	  Status = (uint32_t)DAVEApp_SUCCESS;
+      if(HandlePtr->HighSpeedLimitPossible)
+      {
+        Status = POSQE001_SetHighSpeedLimit(HandlePtr,\
+                   HandlePtr->DynamicHandlePtr->HighSpeedLimitRPM);
+
+      }
+      if(Status != (uint32_t)DAVEApp_SUCCESS)
+      {
+        HandlePtr->DynamicHandlePtr->Time4TicksCapture = (uint16_t)OldPeriod;
+        Status = (uint32_t)POSQE001_INVALID_PARAM_ERROR;
+      }
+      else
+      {
+        HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceAddress->PRS =\
+            (NewPeriod-1U);
+        HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceAddress->CRS =\
+            (NewPeriod>>1U);
+        WR_REG( HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceGlobalAddress->GCSS,
+                (uint32_t)((uint32_t)0x01U << ((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceNum)),
+                (uint32_t)((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceNum),
+                (uint32_t)1U);
+        Status = (uint32_t)DAVEApp_SUCCESS;
+      }
+    }
+  }
+  return (Status);
+}
+
+
+/*
+ * This function will modify the number of ticks of the period clock for time
+ * capture for velocity measurement. Time elapsed between these number of ticks is
+ * captured.
+ */
+
+status_t POSQE001_SetNumTicks4TimCap
+(
+  const POSQE001_HandleType* HandlePtr,
+  uint16_t Ticks
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  POSQE001_StateType State = HandlePtr->DynamicHandlePtr->AppState;
+  uint16_t OldTicks;
+  if((State == POSQE001_UNINITIALIZED) ||\
+     (HandlePtr->ProfileInUse != 0U)
+    )
+  {
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    if((Ticks == 0U))
+    {
+      Status = (uint32_t)POSQE001_INVALID_PARAM_ERROR;
+    }
+    else
+    {
+      OldTicks = HandlePtr->DynamicHandlePtr->NumTicks4TimeCapture;
+      HandlePtr->DynamicHandlePtr->NumTicks4TimeCapture = Ticks;
+      Status = (uint32_t)DAVEApp_SUCCESS;
+	  if(HandlePtr->LowSpeedLimitPossible != 1U)
+	  {
+	    Status = POSQE001_SetLowSpeedLimit(HandlePtr,\
+             HandlePtr->DynamicHandlePtr->LowSpeedLimitRPM);
+	  }
+      if(Status != (uint32_t)DAVEApp_SUCCESS)
+      {
+        HandlePtr->DynamicHandlePtr->NumTicks4TimeCapture = OldTicks;
+      }
+      else
+      {
+        if(Ticks == 1U)
+        {
+          WR_REG( HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceAddress->INS,
+                  (uint32_t)CCU4_CC4_INS_EV0EM_Msk,
+                  (uint32_t)CCU4_CC4_INS_EV0EM_Pos,
+                  (uint32_t)3U);
+          HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceAddress->PRS =\
+                (uint32_t)1U;
+      
+        }
+        else
+        {
+          WR_REG( HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_TIMER0]->SliceAddress->INS,
+                  (uint32_t)CCU4_CC4_INS_EV0EM_Msk,
+                  (uint32_t)CCU4_CC4_INS_EV0EM_Pos,
+                  (uint32_t)2U);
+          HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceAddress->PRS =\
+              (uint32_t)((uint32_t)Ticks-(uint32_t)1U);
+      
+        }
+        WR_REG( HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceGlobalAddress->GCSS,
+                (uint32_t)((uint32_t)0x01U << ((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceNum)),
+                (uint32_t)((uint32_t)4U*HandlePtr->CCUSliceConfigPtr[POSQE001_VELOCITY_COUNTER0]->SliceNum),
+                (uint32_t)1U);
+        Status = (uint32_t)DAVEApp_SUCCESS;
+      }
+    }
+  }
+  return (Status);
+}
+
+/**
+ * This function sets the enable event bit for the event given in the argument.
+ */
+status_t POSQE001_EnableEvent
+(
+     const POSQE001_HandleType * HandlePtr,
+     const POSQE001_CCUSliceType SliceType,
+     const POSQE001_EventNameType Event
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  CCU4_CC4_TypeDef* CCUSliceRegPtr;
+  POSIF_GLOBAL_TypeDef* POSIFRegPtr;
+  if (HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+  {
+    Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    if (Event <= POSQE001_CCU_EVENT2)
+    {
+      CCUSliceRegPtr = HandlePtr->CCUSliceConfigPtr[SliceType]->SliceAddress;
+      CCUSliceRegPtr->INTE |= ((uint32_t)0x01U<<(uint32_t)Event);
+    }
+    else
+    {
+      POSIFRegPtr = HandlePtr->PosifModulePtr;
+      POSIFRegPtr->PFLGE |= ((uint32_t)0x01U<< (uint32_t)Event);
+    }
+    Status = (uint32_t)DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+ /**
+  * This function clears the enable event bit for the event given in the argument.
+  */
+status_t POSQE001_DisableEvent
+(
+    const POSQE001_HandleType * HandlePtr,
+    const POSQE001_CCUSliceType SliceType,
+    const POSQE001_EventNameType Event
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  CCU4_CC4_TypeDef* CCUSliceRegPtr;
+  POSIF_GLOBAL_TypeDef* POSIFRegPtr;
+  if (HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+  {
+    Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    if (Event <= POSQE001_CCU_EVENT2)
+    {
+      CCUSliceRegPtr = HandlePtr->CCUSliceConfigPtr[SliceType]->SliceAddress;
+      CCUSliceRegPtr->INTE &= ~((uint32_t)0x01U<<(uint32_t)Event);
+    }
+    else
+    {
+      POSIFRegPtr = HandlePtr->PosifModulePtr;
+      POSIFRegPtr->PFLGE &= ~((uint32_t)0x01U<< (uint32_t)Event);
+    }
+    Status = (uint32_t)DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+/**
+ * This function clears the interrupt by software.
+ */
+status_t POSQE001_ClearPendingEvent
+(
+    const POSQE001_HandleType* HandlePtr,
+    const POSQE001_CCUSliceType SliceType,
+    const POSQE001_EventNameType Event
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  CCU4_CC4_TypeDef* CCUSliceRegPtr;
+  POSIF_GLOBAL_TypeDef* POSIFRegPtr;
+  if (HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+  {
+    Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    if (Event <= POSQE001_CCU_EVENT2)
+    {
+      CCUSliceRegPtr = HandlePtr->CCUSliceConfigPtr[SliceType]->SliceAddress;
+      CCUSliceRegPtr->SWR |= ((uint32_t)0x01U<<(uint32_t)Event);
+    }
+    else
+    {
+      POSIFRegPtr = HandlePtr->PosifModulePtr;
+      POSIFRegPtr->RPFLG |= ((uint32_t)0x01U<< (uint32_t)Event);
+    }
+    Status = (uint32_t)DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+/**
+ * This function sets the interrupt by software Interrupt pulse is generated
+ * if source is enabled.
+ */
+status_t POSQE001_SetPendingEvent
+(
+    const POSQE001_HandleType * HandlePtr,
+    const POSQE001_CCUSliceType SliceType,
+    const POSQE001_EventNameType Event
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  CCU4_CC4_TypeDef* CCUSliceRegPtr;
+  POSIF_GLOBAL_TypeDef* POSIFRegPtr;
+  if (HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+  {
+    Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    if (Event <= POSQE001_CCU_EVENT2)
+    {
+      CCUSliceRegPtr = HandlePtr->CCUSliceConfigPtr[SliceType]->SliceAddress;
+      CCUSliceRegPtr->SWS |= ((uint32_t)0x01U<<(uint32_t)Event);
+    }
+    else
+    {
+      POSIFRegPtr = HandlePtr->PosifModulePtr;
+      POSIFRegPtr->SPFLG |= ((uint32_t)0x01U<< (uint32_t)Event);
+    }
+    Status = (uint32_t)DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+/**
+ * This function check whether given interrupt is set
+ */
+status_t POSQE001_GetPendingEvent
+(
+    const POSQE001_HandleType * HandlePtr,
+    const POSQE001_CCUSliceType SliceType,
+    const POSQE001_EventNameType Event,
+    uint8_t* EvtStatus
+)
+{
+  status_t Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+  CCU4_CC4_TypeDef* CCUSliceRegPtr;
+  POSIF_GLOBAL_TypeDef* POSIFRegPtr;
+  if (HandlePtr->DynamicHandlePtr->AppState == POSQE001_UNINITIALIZED)
+  {
+    Status = (uint32_t)POSQE001_OPER_NOT_ALLOWED_ERROR;
+    DBG002_ERROR(APP_GID, DBG002_MESSAGEID_LITERAL, sizeof(Status), &Status);
+  }
+  else
+  {
+    if (Event <= POSQE001_CCU_EVENT2)
+    {
+      CCUSliceRegPtr = HandlePtr->CCUSliceConfigPtr[SliceType]->SliceAddress;
+      *EvtStatus = (uint8_t)((CCUSliceRegPtr->INTS >>(uint32_t)Event) & (uint32_t)0x01U);
+    }
+    else
+    {
+      POSIFRegPtr = HandlePtr->PosifModulePtr;
+      *EvtStatus = (uint8_t)((POSIFRegPtr->PFLG >>(uint32_t)Event) & (uint32_t)0x01U);
+    }
+    Status = (uint32_t)DAVEApp_SUCCESS;
+  }
+  return (Status);
+}
+
+/*CODE_BLOCK_END*/
+
+/**
+ * @endcond
+ */

@@ -107,6 +107,12 @@ void DAVE_Init(void)
 	 
 	//  Initialization of app 'CAN001'		     
 	CAN001_Init();
+	 
+	//  Initialization of app 'CCU4GLOBAL'		     
+	CCU4GLOBAL_Init();
+	 
+	//  Initialization of app 'POSQE001'		     
+	POSQE001_Init();
 	
       
 	//  MUX configurations

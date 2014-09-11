@@ -26,7 +26,7 @@
 							<option id="com.ifx.xmc4000.option.targetName.280819396" name="Target Name" superClass="com.ifx.xmc4000.option.targetName" value="XMC4500-F100x1024-AC" valueType="string"/>
 							<option id="com.ifx.xmc4000.option.startupFilePrefrence.851979062" name="Startup File Preference" superClass="com.ifx.xmc4000.option.startupFilePrefrence" value="true" valueType="boolean"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.GNU_ELF" id="com.ifx.xmc4000.targetPlatform.362719725" isAbstract="false" name="Windows Platform" osList="win32" superClass="com.ifx.xmc4000.targetPlatform"/>
-							<builder buildPath="${workspace_loc:/DAVE4500/Release}" id="com.ifx.XMC4000.toolchainBuilder.336810957" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="XMC Builder" superClass="com.ifx.XMC4000.toolchainBuilder"/>
+							<builder buildPath="${workspace_loc:/DAVE4500/Release}" id="com.ifx.XMC4000.toolchainBuilder.336810957" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="XMC Builder" parallelBuildOn="true" parallelizationNumber="-3" superClass="com.ifx.XMC4000.toolchainBuilder"/>
 							<tool id="com.ifx.xmc4000.appRelease.compiler.1787993247" name="ARM-GCC C Compiler" superClass="com.ifx.xmc4000.appRelease.compiler">
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level.114977982" name="Optimization level" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level" value="org.eclipse.cdt.cross.arm.gnu.base.option.optimization.level.size" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.compiler.option.include.paths.1738777423" name="Include paths (-I)" superClass="com.ifx.xmc4000.compiler.option.include.paths" valueType="includePath">
@@ -106,7 +106,7 @@
 							<option id="com.ifx.xmc4000.option.targetName.1771106477" name="Target Name" superClass="com.ifx.xmc4000.option.targetName" value="XMC4500-F100x1024-AC" valueType="string"/>
 							<option id="com.ifx.xmc4000.option.startupFilePrefrence.1029022504" name="Startup File Preference" superClass="com.ifx.xmc4000.option.startupFilePrefrence" value="true" valueType="boolean"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.GNU_ELF" id="com.ifx.xmc4000.targetPlatform.1194400643" isAbstract="false" name="Windows Platform" osList="win32" superClass="com.ifx.xmc4000.targetPlatform"/>
-							<builder buildPath="${workspace_loc:/DAVE4500/Debug}" id="com.ifx.XMC4000.toolchainBuilder.1290617465" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="XMC Builder" superClass="com.ifx.XMC4000.toolchainBuilder"/>
+							<builder buildPath="${workspace_loc:/DAVE4500/Debug}" id="com.ifx.XMC4000.toolchainBuilder.1290617465" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="XMC Builder" parallelBuildOn="true" parallelizationNumber="8" superClass="com.ifx.XMC4000.toolchainBuilder"/>
 							<tool id="com.ifx.xmc4000.appDebug.compiler.2117764697" name="ARM-GCC C Compiler" superClass="com.ifx.xmc4000.appDebug.compiler">
 								<option id="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level.1492444183" name="Optimization level" superClass="org.eclipse.cdt.cross.arm.gnu.c.compiler.option.optimization.level" value="org.eclipse.cdt.cross.arm.gnu.base.option.optimization.level.none" valueType="enumerated"/>
 								<option id="com.ifx.xmc4000.compiler.option.include.paths.2058752917" name="Include paths (-I)" superClass="com.ifx.xmc4000.compiler.option.include.paths" valueType="includePath">

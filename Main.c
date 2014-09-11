@@ -8,9 +8,12 @@
 
 #include <DAVE3.h>			//Declarations from DAVE3 Code Generation (includes SFR declaration)
 #include <string.h>
+#include <stdio.h>
+#include <string.h>
 #include "myGlobe.h"
 #include "myUART.h"
 #include "myCAN.h"
+#include "myQEP.h"
 
 
 
@@ -57,7 +60,7 @@ osThreadId thread_uart2_rx_id;
 osThreadDef(thread_uart2_rx, osPriorityNormal, 1, 0);
 
 
-
+extern uint32_t depth;
 
 void thread_uart0_rx(void const *argument)
 {
@@ -124,16 +127,30 @@ void thread_uart2_rx(void const *argument)
     }
 }
 
+char cbuf[32]={'g','o','o','d','\n',0x00};
 void thread_idle(void const *argument)
 {
 	uint8_t buf[32]={'a','b','c','d','e','f','a','b','c','d','e','f','\r','\n'};
+	status_t Status;
+
 	while(1)
 	{
 		osDelay(100);
-		myUART0_Send(buf,14);
+		//Status=POSQE001_GetPosition(&POSQE001_Handle0,&pos,POSQE001_READ_TIMER);
+		//POSQE001_GetDirection(&POSQE001_Handle0, &Dir);
+		//POSQE001_GetVelocityRAW(&POSQE001_Handle0, &Velocity);
+
+		buf[0]=0xaa;
+		buf[1]=depth>>16;
+		buf[2]=depth>>8;
+		buf[3]=depth;
+		myUART0_Send(buf,4);
+		//myUART0_Send((uint8_t*)cbuf,strlen(cbuf));
+
+
 
 		IO004_ResetPin(LED0);
-		IO004_ResetPin(LED1);
+		//IO004_ResetPin(LED1);
 		osDelay(10);
 		IO004_SetPin(LED0);
 		osDelay(1);
@@ -159,7 +176,7 @@ void thread_can0_rx(void const *argument)
 	while(1)
 	{
 		myCAN0_Get();
-		IO004_TogglePin(LED1);
+		//IO004_TogglePin(LED1);
     }
 }
 
@@ -170,7 +187,7 @@ void thread_can1_rx(void const *argument)
 	while(1)
 	{
 		myCAN1_Get();
-		IO004_TogglePin(LED1);
+		//IO004_TogglePin(LED1);
     }
 }
 
@@ -198,9 +215,11 @@ int main(void)
 	myCANinit();
 
 
+
 //	status_t status;		// Declaration of return variable for DAVE3 APIs (toggle comment if required)
 	DAVE_Init();			// Initialization of DAVE Apps
 
+	myQEPinit();
 
 	thread_idle_id = osThreadCreate(osThread(thread_idle), NULL);
 	thread_can0_rx_id = osThreadCreate(osThread(thread_can0_rx), NULL);

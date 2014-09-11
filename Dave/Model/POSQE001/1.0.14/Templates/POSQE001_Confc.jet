@@ -1,0 +1,728 @@
+<%@ jet package="CodeGenerator" class="posqe001_confc_template"
+imports="java.util.* com.ifx.davex.appjetinteract.App2JetInterface" %>
+<% App2JetInterface app = (App2JetInterface) argument; %>
+
+/*CODE_BLOCK_BEGIN[POSQE001_Conf.c]*/
+
+/*******************************************************************************
+ Copyright (c) 2014, Infineon Technologies AG                                 **
+ All rights reserved.                                                         **
+                                                                              **
+ Redistribution and use in source and binary forms, with or without           **
+ modification,are permitted provided that the following conditions are met:   **
+                                                                              **
+ *Redistributions of source code must retain the above copyright notice,      **
+ this list of conditions and the following disclaimer.                        **
+ *Redistributions in binary form must reproduce the above copyright notice,   **
+ this list of conditions and the following disclaimer in the documentation    **
+ and/or other materials provided with the distribution.                       **
+ *Neither the name of the copyright holders nor the names of its contributors **
+ may be used to endorse or promote products derived from this software without**
+ specific prior written permission.                                           **
+                                                                              **
+ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"  **
+ AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    **
+ IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   **
+ ARE  DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE   **
+ LIABLE  FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR         **
+ CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         **
+ SUBSTITUTE GOODS OR  SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS    **
+ INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      **
+ CONTRACT, STRICT LIABILITY,OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)       **
+ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   **
+ POSSIBILITY OF SUCH DAMAGE.                                                  **
+                                                                              **
+ To improve the quality of the software, users are encouraged to share        **
+ modifications, enhancements or bug fixes with Infineon Technologies AG       **
+ dave@infineon.com).                                                          **
+                                                                              **
+********************************************************************************
+**                                                                            **
+**                                                                            **
+** PLATFORM : Infineon XMC4000 Series                                         **
+**                                                                            **
+** COMPILER : Compiler Independent                                            **
+**                                                                            **
+** AUTHOR   : App Developer                                                   **
+**                                                                            **
+** MAY BE CHANGED BY USER [yes/no]: Yes                                       **
+**                                                                            **
+** MODIFICATION DATE : Oct 06, 2013                                            **
+**                                                                            **
+*******************************************************************************/
+/******************************************************************************
+**                      Author(s) Identity                                   **
+*******************************************************************************
+**                                                                           **
+** Initials     Name                                                         **
+** PM           App Developer
+** RG           App Developer
+** --------------------------------------------------------------------------**/
+<% String AppBaseuri = "app/posqe001/"; %>
+/**
+ * @file  POSQE001_Conf.c
+ * @App Version POSQE001 <<%=app.getAppVersion(AppBaseuri) %>>
+ * @brief This file contains App parameter data as per GUI configurations
+ *
+ * 
+ * Revision History
+ * 06 Oct 2013 v1.0.14 Initial Version
+ *
+ */
+#include <Dave3.h>
+
+extern void POSQE001_GetPositionInterPolationProfile1
+(
+    void* HandlePtr,
+    void* PositionInterpolation,
+    uint32_t ReadMethod
+);
+extern void POSQE001_GetPositionInterPolationProfile3
+(
+    void* HandlePtr,
+    void* PositionInterpolation,
+    uint32_t ReadMethod
+);
+extern void POSQE001_GetPositionInterPolationProfile4
+(
+    void* HandlePtr,
+    void* PositionInterpolation,
+    uint32_t ReadMethod
+);
+extern void POSQE001_GetPositionInterPolationProfile4PosCounter
+(
+    void* HandlePtr,
+    void* PositionInterpolation,
+    uint32_t ReadMethod
+);
+
+<% String PosifUri = null; %>
+<% String SliceUri = null; %>
+<% String kernelNo = null; %>
+<% String SliceNo = null; %>
+<% String Posif_number = null; %>
+<% String appInst  = null; %>
+<% int ProfileInUse  = 0; %>
+
+<% ArrayList<String> appsList = (ArrayList<String>)(app.getApps("app/posqe001/")); %> 
+<% for (String appIns : appsList ) %>
+<% { %>
+
+  <% appInst = appIns.substring(appIns.lastIndexOf("/")+1); %>
+  <% ProfileInUse = app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempprofiles");%>
+  <% PosifUri = app.getMappedUri(AppBaseuri + appInst +"/posif"); %>
+  <% if ((PosifUri != null) && (PosifUri.trim() != "")) %>
+  <% { %>
+  <% Posif_number = app.getUriSegment(PosifUri,4);%>
+  <% } %>
+
+
+  <% SliceUri = app.getMappedUri(AppBaseuri + appInst +"/positioncounter"); %>
+  <% if ((SliceUri != null) && (SliceUri.trim() != "")) %>
+  <% { %>
+    <% kernelNo = app.getUriSegment(SliceUri,4); %>
+    <% SliceNo = app.getUriSegment(SliceUri,6); %>
+   <% } %>
+
+<% 
+double Clock = app.getDoubleValue(AppBaseuri + appInst + "/ccu4globalapp/ccu4global_irclock");
+double tempvalue = app.getDoubleValue(AppBaseuri + appInst + "/posqe001_irwtimerresolution");
+double Divider1 = (tempvalue* Clock)/1000;
+int Prescalar = (int)Math.floor( Math.log(Divider1) / Math.log( 2 ) );
+%>
+<%
+int InterruptMask = 0;
+%>
+const POSQE001_EventConfigType PosCntEvt0_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_COUNT,
+  .ActiveEdge = POSQE001_EVT_RISING,
+};
+const POSQE001_EventConfigType PosCntEvt1_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_UP_DOWN,
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempencodertype") !=3 )%>
+  <% { %>
+  .ActiveEdge = POSQE001_EVT_RISING,
+  <% } else { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } %>
+};
+const POSQE001_EventConfigType PosCntEvt2_Inst<%=appInst %> =
+{
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwpositioncounterforcounterzero/0") == 1)%>
+  <%{%>
+    .EventType = POSQE001_EXT_CAP0,
+  <%}else{%>
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwpositioncounter/1") == 1)%>
+  <% { %>
+  .EventType = POSQE001_EXT_CAP0,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwpositioncounter/2") == 1){ %>
+  .EventType = POSQE001_EXT_START,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwpositioncounter/3") == 1){ %>
+  .EventType = POSQE001_EXT_STOP,
+  <% } else { %>
+  .EventType = POSQE001_EXT_START,
+  <% } %>
+  <%}%>
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwpositioncounterforcounterzero/0") == 1)%>
+  <%{%>
+    .ActiveEdge = POSQE001_EVT_BOTH,
+  <%}else{%>
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwpositioncounter/0") == 1)%>
+  <% { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } else { %>  
+  <%if( (app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwPosCounterEvent2edgeselection/0") == 1)
+      )
+  %>
+  <% { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwPosCounterEvent2edgeselection/1") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_RISING,
+  <% }else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwPosCounterEvent2edgeselection/2") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_FALLING,
+  <% } %>
+  <% else { %>
+  .ActiveEdge =POSQE001_EVT_BOTH,
+  <% } %>
+  <%}%>
+  <%}%>
+};
+
+const POSQE001_SliceConfigType   PosCnt_Inst<%=appInst %> = 
+{
+  .SliceInUse = 1U,
+  .PrescalarVal = <%= Prescalar%>U,
+  .SliceNum = <%= SliceNo %>U,
+  .ClearOnCapture = 0U,
+  .CompareVal = 1U,
+  .PeriodVal = <%= app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwcounteroverflowvalue")-1%>U,
+  .SliceAddress = CCU4<%= kernelNo%>_CC4<%= SliceNo%>,
+  .SliceGlobalAddress = (CCU4_GLOBAL_TypeDef*) CCU4<%= kernelNo%>_BASE,
+  .Event0Cfg = &PosCntEvt0_Inst<%=appInst %>,
+  .Event1Cfg = &PosCntEvt1_Inst<%=appInst %>,
+  .Event2Cfg = &PosCntEvt2_Inst<%=appInst %>,
+<%
+InterruptMask = 0;
+if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwpositioncounteroverflow/0")==1)
+{
+InterruptMask = 1;
+}
+if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwdirectionchangeevent/0")==1)
+{
+InterruptMask = InterruptMask + 256;
+}
+%>
+  .InterruptMask = <%= InterruptMask%>U,
+};
+
+  <% SliceUri = app.getMappedUri(AppBaseuri + appInst +"/revolutioncounter"); %>
+  <% if ((SliceUri != null) && (SliceUri.trim() != "")) %>
+  <% { %>
+  <% kernelNo = app.getUriSegment(SliceUri,4); %>
+  <% SliceNo = app.getUriSegment(SliceUri,6); %>
+const POSQE001_EventConfigType RevCntEvt0_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_COUNT,
+  .ActiveEdge = POSQE001_EVT_RISING,
+};
+const POSQE001_EventConfigType RevCntEvt1_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_CAP0,
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwrevcounterevent1edgesel/0") == 1) %>
+  <% { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwrevcounterevent1edgesel/1") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_RISING,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwrevcounterevent1edgesel/2") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_FALLING,
+  <% } else { %>
+  .ActiveEdge =POSQE001_EVT_BOTH,
+  <% } %>
+
+};
+const POSQE001_EventConfigType RevCntEvt2_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_START,
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwrevcounterevent1edgesel/0") == 1) %>
+  <% { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwrevcounterevent1edgesel/1") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_RISING,
+  <% }else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwrevcounterevent1edgesel/2") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_FALLING,
+  <% } else { %>
+  .ActiveEdge =POSQE001_EVT_BOTH,
+  <% } %>
+};
+const POSQE001_SliceConfigType   RevCnt_Inst<%=appInst %> = 
+{
+  .SliceInUse = <%= app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwuserevolutioncounter/0")%>U,
+  .PrescalarVal = <%= Prescalar%>U,
+  .SliceNum = <%= SliceNo %>U,
+  .ClearOnCapture = 0U,
+  .CompareVal = 1U,
+  .PeriodVal = <%= app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwrevolutioncounteroverflowvalue")-1%>U,
+  .SliceAddress = CCU4<%= kernelNo%>_CC4<%= SliceNo%>,
+  .SliceGlobalAddress = (CCU4_GLOBAL_TypeDef*) CCU4<%= kernelNo%>_BASE,
+  .Event0Cfg = &RevCntEvt0_Inst<%=appInst %>,
+  .Event1Cfg = &RevCntEvt1_Inst<%=appInst %>,
+  .Event2Cfg = &RevCntEvt2_Inst<%=appInst %>,
+  .InterruptMask = 0U,
+};
+  <% } else { %>
+const POSQE001_SliceConfigType   RevCnt_Inst<%=appInst %> = 
+{
+  .SliceInUse=0U,
+};
+    <%}%>
+
+  <% SliceUri = app.getMappedUri(AppBaseuri + appInst +"/velocitycounter0"); %>
+  <% if ((SliceUri != null) && (SliceUri.trim() != "")) %>
+  <% { %>
+  <% kernelNo = app.getUriSegment(SliceUri,4); %>
+  <% SliceNo = app.getUriSegment(SliceUri,6); %>
+const POSQE001_EventConfigType VelCnt0Evt0_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_COUNT,
+  .ActiveEdge = POSQE001_EVT_RISING,
+};
+const POSQE001_EventConfigType VelCnt0Evt1_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_CAP0,
+<%if(ProfileInUse == 0)%>
+<% { %>
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelcounter0event1edgesel/0") == 1) %>
+  <% { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelcounter0event1edgesel/1") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_RISING,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelcounter0event1edgesel/2") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_FALLING,
+  <% } else { %>
+  .ActiveEdge =POSQE001_EVT_BOTH,
+  <% } %>
+<% } else { %>
+  .ActiveEdge = POSQE001_EVT_FALLING,
+<% } %>
+};
+const POSQE001_EventConfigType VelCnt0Evt2_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_START,
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelcounter0event2edgesel/0") == 1) %>
+  <% { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelcounter0event2edgesel/1") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_RISING,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelcounter0event2edgesel/2") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_FALLING,
+  <% } else { %>
+  .ActiveEdge =POSQE001_EVT_BOTH,
+  <% } %>
+};
+const POSQE001_SliceConfigType   VelCnt0_Inst<%=appInst %> = 
+{
+  .SliceInUse = 1U,
+  .PrescalarVal = <%= Prescalar%>U,
+  .SliceNum = <%= SliceNo %>U,
+  .ClearOnCapture = 2U,
+  .CompareVal = 1U,
+  <%if (app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempprofiles")==0) %>
+  <% { %>
+   <%if (app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwmeasuretimebetweenticks")==1) %>
+   <% { %>
+  .PeriodVal = 1U,
+   <% } else { %>
+ .PeriodVal = <%= app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwmeasuretimebetweenticks")-1%>U,	
+   <% } %>
+  <% } else { %>
+      <%if (app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwhighspeedindication/0")==1) %>
+    <% { %>
+<%
+double tempvalue1 = app.getIntegerValue("posqe001_irwhighspeedlimit");
+int Tick_value= app.getIntegerValue("posqe001_irwtickperrevolutionforindex");
+double Timewindow_value= app.getDoubleValue("posqe001_irwactualtimewindow");
+int Speed_count = (int)Math.floor((((double)Timewindow_value)*((double)tempvalue1)*((double)Tick_value))/(1000000000.0*60.0));
+if(Speed_count < 2 )
+{
+	Speed_count = 2;
+}
+%>
+  .PeriodVal = <%= Speed_count-1%>U,
+    <% } else { %>
+  .PeriodVal = 0xFFFFU,	
+    <% }%>
+  <% } %>
+  
+  .SliceAddress = CCU4<%= kernelNo%>_CC4<%= SliceNo%>,
+  .SliceGlobalAddress = (CCU4_GLOBAL_TypeDef*) CCU4<%= kernelNo%>_BASE,
+  .Event0Cfg = &VelCnt0Evt0_Inst<%=appInst %>,
+  .Event1Cfg = &VelCnt0Evt1_Inst<%=appInst %>,
+  .Event2Cfg = &VelCnt0Evt2_Inst<%=appInst %>,
+<%
+InterruptMask = 0;
+if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwhighspeedindication/0")==1)
+{
+InterruptMask = 1;
+}
+%>
+  .InterruptMask = <%= InterruptMask%>U,
+};
+  <% } else { %>
+const POSQE001_SliceConfigType   VelCnt0_Inst<%=appInst %> = 
+{
+  .SliceInUse=0U,
+};
+    <%}%>
+
+  <% SliceUri = app.getMappedUri(AppBaseuri + appInst +"/velocitytimer0"); %>
+  <% if ((SliceUri != null) && (SliceUri.trim() != "")) %>
+  <% { %>
+  <% kernelNo = app.getUriSegment(SliceUri,4); %>
+  <% SliceNo = app.getUriSegment(SliceUri,6); %>
+const POSQE001_EventConfigType VelTim0Evt0_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_CAP0,
+  <%if(ProfileInUse == 0)%>
+  <% { %>
+    <%if (app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwmeasuretimebetweenticks")==1) %>
+    <% { %>
+  .ActiveEdge = POSQE001_EVT_BOTH,
+    <% } else { %>
+  .ActiveEdge = POSQE001_EVT_FALLING,
+    <% } %>
+  <% } else if(ProfileInUse == 1) { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } else if(ProfileInUse == 2) { %>
+  .ActiveEdge = POSQE001_EVT_RISING,
+  <% } else { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } %>
+};
+const POSQE001_EventConfigType VelTim0Evt1_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_CAP1,
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelTimer0event1edgesel/0") == 1) %>
+  <% { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelTimer0event1edgesel/1") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_RISING,
+  <% }else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelTimer0event1edgesel/2") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_FALLING,
+  <% } else { %>
+  .ActiveEdge =POSQE001_EVT_BOTH,
+  <% } %>
+};
+const POSQE001_EventConfigType VelTim0Evt2_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_START,
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelTimer0event2edgesel/0") == 1) %>
+  <% { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelTimer0event2edgesel/1") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_RISING,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelTimer0event2edgesel/2") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_FALLING,
+  <% } else { %>
+  .ActiveEdge =POSQE001_EVT_BOTH,
+  <% } %>
+};
+const POSQE001_SliceConfigType   VelTim0_Inst<%=appInst %> = 
+{
+  .SliceInUse = 1U,
+  .PrescalarVal = <%= Prescalar%>U,
+  .SliceNum = <%= SliceNo %>U,
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempprofiles")==0)%>
+  <%{%>
+  .ClearOnCapture = 2U,
+  <%}else{%>
+  .ClearOnCapture = 0U,
+  <% } %>
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempprofiles")==0)%>
+  <%{%>
+  .CompareVal = 1U,
+  <%}else{%>
+  <%
+int TimeWindow8 = app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwtimewindow");
+double ActualClock8 = app.getDoubleValue(AppBaseuri + appInst + "/posqe001_irwactualtimerresolution");
+int Period8 = (int)Math.floor(TimeWindow8/ActualClock8);
+if(Period8 <= 1)
+{
+  Period8 = 2;
+}
+if(Period8 > 65535)
+{
+  Period8 = 65536;
+}
+%>
+  .CompareVal = <%= (Period8)/2%>U,
+  <% } %>
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempprofiles")==0)%>
+  <%{%>
+    <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwlowspeedindication/0")==1){%>
+<% 
+double ActualClock5 = app.getDoubleValue(AppBaseuri + appInst + "/posqe001_irwactualtimerresolution");
+int tempvalue6 = app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwlowspeedlimit");
+int Tick_value5 = app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwtickperrevolutionforindex"); 
+int Time_value5 = app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwmeasuretimebetweenticks"); 
+int Count5 = (int)Math.floor((((1000000*60)/(tempvalue6*Tick_value5))*1000*Time_value5)/ActualClock5);
+if(Count5>65536)
+{
+  Count5 = 65536;
+}
+%>
+  .PeriodVal = <%= Count5-1%>U,
+	<%}else{%>
+  .PeriodVal = 0xFFFFU,
+    <%}%>
+  <% }else{ %>
+  <%
+int TimeWindow7 = app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwtimewindow");
+double ActualClock7 = app.getDoubleValue(AppBaseuri + appInst + "/posqe001_irwactualtimerresolution");
+int Period7 = (int)Math.floor(TimeWindow7/ActualClock7);
+if(Period7 <= 1)
+{
+  Period7 = 2;
+}
+if(Period7 > 65535)
+{
+  Period7 = 65536;
+}
+%>
+  .PeriodVal = <%= (Period7)-1%>U,
+  <% } %>
+  .SliceAddress = CCU4<%= kernelNo%>_CC4<%= SliceNo%>,
+  .SliceGlobalAddress = (CCU4_GLOBAL_TypeDef*) CCU4<%= kernelNo%>_BASE,
+  .Event0Cfg = &VelTim0Evt0_Inst<%=appInst %>,
+  .Event1Cfg = &VelTim0Evt1_Inst<%=appInst %>,
+  .Event2Cfg = &VelTim0Evt2_Inst<%=appInst %>,
+<%
+InterruptMask = 0;
+if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwlowspeedindication/0")==1)
+{
+InterruptMask = 1;
+}
+%>
+  .InterruptMask = <%= InterruptMask%>U,
+};
+  <% } else { %>
+const POSQE001_SliceConfigType   VelTim0_Inst<%=appInst %> = 
+{
+  .SliceInUse=0U,
+};
+    <%}%>
+  <% SliceUri = app.getMappedUri(AppBaseuri + appInst +"/velocitytimer1"); %>
+  <% if ((SliceUri != null) && (SliceUri.trim() != "")) %>
+  <% { %>
+  <% kernelNo = app.getUriSegment(SliceUri,4); %>
+  <% SliceNo = app.getUriSegment(SliceUri,6); %>
+const POSQE001_EventConfigType VelTim1Evt0_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_CAP0,
+  .ActiveEdge = POSQE001_EVT_RISING,
+};
+const POSQE001_EventConfigType VelTim1Evt1_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_CAP1,
+  .ActiveEdge = POSQE001_EVT_FALLING,
+
+};
+POSQE001_EventConfigType VelTim1Evt2_Inst<%=appInst %> =
+{
+  .EventType = POSQE001_EXT_START,
+  <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelTimer1event2edgesel/0") == 1) %>
+  <% { %>
+  .ActiveEdge = POSQE001_EVT_NONE,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelTimer1event2edgesel/1") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_RISING,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwvelTimer1event2edgesel/2") == 1){ %>
+  .ActiveEdge = POSQE001_EVT_FALLING,
+  <% } else { %>
+  .ActiveEdge =POSQE001_EVT_BOTH,
+  <% } %>
+};
+const POSQE001_SliceConfigType VelTim1_Inst<%=appInst %> = 
+{
+  .SliceInUse = 1U,
+  .PrescalarVal = <%= Prescalar%>U,
+  .SliceNum = <%= SliceNo %>U,
+  .ClearOnCapture = 2U,
+  .CompareVal = 1U,
+  .PeriodVal = 0xFFFFU,
+  .SliceAddress = CCU4<%= kernelNo%>_CC4<%= SliceNo%>,
+  .SliceGlobalAddress = (CCU4_GLOBAL_TypeDef*) CCU4<%= kernelNo%>_BASE,
+  .Event0Cfg = &VelTim1Evt0_Inst<%=appInst %>,
+  .Event1Cfg = &VelTim1Evt1_Inst<%=appInst %>,
+  .Event2Cfg = &VelTim1Evt2_Inst<%=appInst %>,
+  .InterruptMask = 0U,
+};
+  <% } else { %>
+const POSQE001_SliceConfigType   VelTim1_Inst<%=appInst %> = 
+{
+  .SliceInUse=0U,
+};
+    <%}%>
+
+POSQE001_DynamicDataType POSQE001_DynamicHandle<%=appInst %> =
+{
+  .NumTicks4TimeCapture = <%= app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwmeasuretimebetweenticks")%>U,
+<%
+double Clock2 = app.getDoubleValue("ccu4globalapp/ccu4global_irclock");
+double tempvalue2 = app.getDoubleValue("posqe001_temptimerresolution");
+double TimeWindow2 = app.getDoubleValue("posqe001_temptimewindow");
+if(Clock2 == -1)
+{
+  Clock2 = 120;
+}
+double Divider2 = (tempvalue2* Clock2)/1000;
+int Prescalar2 = (int)Math.floor( Math.log(Divider2) / Math.log( 2 ) );
+double ActualClock2;
+if(Prescalar2 > 15) 
+{
+  Prescalar2 = 15;
+}
+if(Prescalar2 < 0)
+{
+  Prescalar2 =0; 
+}
+ActualClock2 = ((1<<Prescalar2)*1000)/(Clock2);
+int Period2 = (int)Math.floor(TimeWindow2/ActualClock2);
+if(Period2 <= 1)
+{
+  Period2 = 2;
+}
+if(Period2 > 65535)
+{
+  Period2 = 65536;
+}
+%>
+  .Time4TicksCapture = <%= Period2%>U,
+  .LowSpeedLimit = 0U,
+  .HighSpeedLimit = 0U,
+  .LowSpeedLimitRPM = (float)<%= app.getDoubleValue(AppBaseuri + appInst + "/posqe001_irwlowspeedlimit")%>,
+  .HighSpeedLimitRPM = (float)<%= app.getDoubleValue(AppBaseuri + appInst + "/posqe001_irwhighspeedlimit")%>,
+  .AppState = POSQE001_UNINITIALIZED
+};
+
+const POSQE001_HandleType POSQE001_Handle<%=appInst %> =
+{
+  .ProfileInUse = <%= app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempprofiles")%>U,
+  .kLPF = <%= app.getIntegerValue(AppBaseuri + appInst + "/posif/pconf/lpc")%>U,
+  <% if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwpositioncounter/2")==0) %>
+  <% { %>
+  .IndexGenMode = 0U,
+  <% } %>
+  <% else %>
+  <% { %>
+    <% if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwindexsignal/0")==1) %>
+    <% { %>
+  .IndexGenMode = 1U,
+    <% } else { %>
+  .IndexGenMode = 2U,
+    <% } %>  
+  <% } %>
+  <% if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempencodertype") == 0) %>
+  <% { %>
+  .DecoderType = POSQE001_SIGNALS_AB_INDEX,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempencodertype") == 1){ %>
+  .DecoderType = POSQE001_SIGNALS_AB,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempencodertype") == 2){ %>
+  .DecoderType = POSQE001_SIGNALS_CLOCK_DIR,
+  <% } else { %>
+  .DecoderType = POSQE001_SIGNALS_CLOCK,
+  <% } %>
+  <% if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempencodertype")<=1) %>
+  <% { %>
+  .PosifDecoderType = 0U,
+  <% } else { %>
+  .PosifDecoderType = 1U,
+  <% } %>  
+  <% if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwdirection/1")== 0) %>
+  <% { %>
+  .LeadingEdge = POSQE001_PHASE_A,
+  <% } else { %>
+  .LeadingEdge = POSQE001_PHASE_B,  
+  <% } %>  
+  .NumTicksPerRevolution = <%= app.getIntegerValue(AppBaseuri + appInst + "/posqe001_irwtickperrevolutionforindex")%>U,
+  .PosifModulePtr = POSIF<%=Posif_number%>,
+  .CCUSliceConfigPtr = 
+  {
+    &PosCnt_Inst<%=appInst %>,
+    &RevCnt_Inst<%=appInst %>,
+    &VelCnt0_Inst<%=appInst %>,
+    &VelTim0_Inst<%=appInst %>,
+    &VelTim1_Inst<%=appInst %>
+  },
+  .DynamicHandlePtr = &POSQE001_DynamicHandle<%=appInst %>,
+  <% if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempprofiles") == 0) %>
+  <% { %>
+  .PosInterpolationFuncPtr = &POSQE001_GetPositionInterPolationProfile1,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempprofiles") == 2) { %>
+  .PosInterpolationFuncPtr = &POSQE001_GetPositionInterPolationProfile3,
+  <% } else if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_tempprofiles") == 3) { %>
+    <%if(app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwpositioncounterforcounterzero/0") == 1){%>
+  .PosInterpolationFuncPtr = &POSQE001_GetPositionInterPolationProfile4,
+    <%}else{%>
+  .PosInterpolationFuncPtr = &POSQE001_GetPositionInterPolationProfile4PosCounter,
+	<%}%>
+  <% } else { %>
+  .PosInterpolationFuncPtr = NULL,
+  <% } %>  
+  .LowSpeedLimit = (float)<%= app.getDoubleValue(AppBaseuri + appInst + "/posqe001_irwlowspeedlimit")%>,
+  .HighSpeedLimit = (float)<%= app.getDoubleValue(AppBaseuri + appInst + "/posqe001_irwhighspeedlimit")%>,
+  .TimeMultiplier = (float)<%= app.getDoubleValue(AppBaseuri + appInst + "/posqe001_irwactualtimerresolution")/1000000000%>,
+  .LowSpeedLimitPossible = <%= app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwlowspeedindication/0")%>U,
+  .HighSpeedLimitPossible = <%= app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwhighspeedindication/0")%>U,
+  .StartDuringInit = <%= app.getIntegerValue(AppBaseuri + appInst + "/posqe001_erwinitpositioncounter/0")%>U,
+  <% SliceUri = app.getMappedUri(AppBaseuri + appInst +"/positioncounter"); %>
+  <% if ((SliceUri != null) && (SliceUri.trim() != "")) %>
+  <% { %>
+  <% kernelNo = app.getUriSegment(SliceUri,4); %>
+  <% SliceNo = app.getUriSegment(SliceUri,6); %>
+  .PosCounterRegPtr  = 
+  {
+    &(CCU4<%=kernelNo%>_CC4<%=SliceNo%>->CV[1]),
+    &(CCU4<%=kernelNo%>_CC4<%=SliceNo%>->TIMER)
+  },
+   <% } else {%>
+   .PosCounterRegPtr  = {0},
+   <% } %>
+   
+  <% SliceUri = app.getMappedUri(AppBaseuri + appInst +"/velocitytimer1"); %>
+  <% if ((SliceUri != null) && (SliceUri.trim() != "")) %>
+  <% { %>
+  <% kernelNo = app.getUriSegment(SliceUri,4); %>
+  <% SliceNo = app.getUriSegment(SliceUri,6); %>
+  .VelTimer1PtrRegPtr =
+  {  
+  &(CCU4<%=kernelNo%>_CC4<%=SliceNo%>->CV[1]),
+  &(CCU4<%=kernelNo%>_CC4<%=SliceNo%>->CV[0]),
+  &(CCU4<%=kernelNo%>_CC4<%=SliceNo%>->CV[3]),
+  &(CCU4<%=kernelNo%>_CC4<%=SliceNo%>->TIMER)
+  },
+  <% } else { %>
+  .VelTimer1PtrRegPtr = {0},
+  <% }%>
+  
+  <% SliceUri = app.getMappedUri(AppBaseuri + appInst +"/velocitytimer0"); %>
+  <% if ((SliceUri != null) && (SliceUri.trim() != "")) %>
+  <% { %>
+  <% kernelNo = app.getUriSegment(SliceUri,4); %>
+  <% SliceNo = app.getUriSegment(SliceUri,6); %>
+  .VelTimer0PtrRegPtr = 
+  {
+    &(CCU4<%=kernelNo%>_CC4<%=SliceNo%>->CV[1]),
+    &(CCU4<%=kernelNo%>_CC4<%=SliceNo%>->CV[0]),
+    &(CCU4<%=kernelNo%>_CC4<%=SliceNo%>->TIMER),
+  },
+  <% } else { %>
+  .VelTimer0PtrRegPtr = {0},
+  <% }%>
+  
+};
+
+<%}%>
+
+/*CODE_BLOCK_END*/
+

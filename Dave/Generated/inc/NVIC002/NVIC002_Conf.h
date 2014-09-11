@@ -94,12 +94,18 @@ extern "C" {
 /* User defined function mapped to IRQ_Hdlr_76 */
 #define EventHandlerCAN1    IRQ_Hdlr_76 
 
+/* User defined function mapped to IRQ_Hdlr_64 */
+#define QEP_Period_Event_Handler    IRQ_Hdlr_64 
+
+/* User defined function mapped to IRQ_Hdlr_46 */
+#define QEP_Compare_Event_Handler    IRQ_Hdlr_46 
+
 
 /**
  * @ingroup NVIC002_constants
  * @{
  */
-#define NVIC002_NUM_INSTANCES 8U
+#define NVIC002_NUM_INSTANCES 10U
 /**
   * @}
   */

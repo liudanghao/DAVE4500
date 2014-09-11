@@ -329,8 +329,8 @@
   <provided xsi:type="ResourceModel:BitField" name="CCUCEN" URI="http://www.infineon.com/0.1.33/peripheral/scu/0/clkctrl/0/ccu/clkset_ccucen" maxValue="1" minValue="0" startPos="4" stopPos="4" accessPermission="w">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../CLK001/1.0.42/clk001_0.app#//@consumed.43"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
     <toolTipHelpDescription>CCU Clock Enable</toolTipHelpDescription>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0" description="no effect"/>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1" description="enable clock"/>
