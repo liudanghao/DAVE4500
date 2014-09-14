@@ -94,8 +94,8 @@ extern "C" {
 /* User defined function mapped to IRQ_Hdlr_76 */
 #define EventHandlerCAN1    IRQ_Hdlr_76 
 
-/* User defined function mapped to IRQ_Hdlr_64 */
-#define QEP_Period_Event_Handler    IRQ_Hdlr_64 
+/* User defined function mapped to IRQ_Hdlr_45 */
+#define QEP_Speed_Event_Handler    IRQ_Hdlr_45 
 
 /* User defined function mapped to IRQ_Hdlr_46 */
 #define QEP_Compare_Event_Handler    IRQ_Hdlr_46 

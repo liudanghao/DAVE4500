@@ -21,8 +21,8 @@
   </provided>
   <provided xsi:type="ResourceModel:IntegerParameter" name="Default Thread stack size [bytes]" evalFunction="&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;function ForwardMapping()&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;{&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var Res0 = SCM.getResource(&quot;dummystksize&quot;);&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var value0 = SCM.getIntValue(currentResource);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;SCM.setIntValue(Res0,value0);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;function BackwardMapping()&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;{&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var Res0 = SCM.getResource(&quot;dummystksize&quot;);&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;var value0 = SCM.getIntValue(Res0);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;SCM.setIntValue(currentResource,value0);&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;" URI="http://www.infineon.com/1.0.24/app/rtos001/0/rtos001_irwstksize" downWardmappedList="//@consumed.14" maxValue="1000" minValue="40">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="C8"/>
-    <localValue xsi:type="ResourceModel:StringValue" value="C8"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="c8"/>
+    <localValue xsi:type="ResourceModel:StringValue" value="800"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="800"/>
     <toolTipHelpDescription>Defines default stack size for threads with osThreadDef stacksz = 0.</toolTipHelpDescription>
   </provided>
   <provided xsi:type="ResourceModel:IntegerParameter" name="Total stack size for threads with user-provided stack size [bytes]" evalFunction="&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;function ForwardMapping()&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;{&#x9;&#xD;&#xA;         &#x9;&#x9;  var Res3 = SCM.getResource(&quot;dummyprivstksize&quot;);&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;  var value3 = SCM.getIntValue(currentResource);&#xD;&#xA;                  var Res4 = SCM.getResource(&quot;dummypricnt&quot;);&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;  var value4 = SCM.getIntValue(Res4);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;  SCM.setIntValue(Res3,value3);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;function BackwardMapping()&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;{&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;  var Res0 = SCM.getResource(&quot;dummyprivstksize&quot;);&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;  var value0 = SCM.getIntValue(Res0);&#xD;&#xA;                  var Res4 = SCM.getResource(&quot;dummypricnt&quot;);&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;  var value4 = SCM.getIntValue(Res4);&#xD;&#xA;                  SCM.setIntValue(currentResource,value0);&#xD;&#xA;                  if (value4 == 0)&#xD;&#xA;                  {&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;SCM.setIntValue(currentResource,0);&#x9;&#xD;&#xA;                  }       &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;" URI="http://www.infineon.com/1.0.24/app/rtos001/0/rtos001_irwprivstksize" downWardmappedList="//@consumed.12" maxValue="40000" minValue="0">
@@ -315,8 +315,8 @@ Parameter 'error_code' holds the runtime error code.
     <requiredResource uriString="" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.24/app/rtos001/0/dummystksize" upWardMappingList="//@provided.3" isSystemDefined="true">
-    <localValue xsi:type="ResourceModel:IntegerValue" value="c8"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="c8"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="800"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="800"/>
     <requiredResource uriString="" uriType="LOCALTYPE"/>
   </consumed>
   <consumed xsi:type="ResourceModel:ProxyResource" URI="http://www.infineon.com/1.0.24/app/rtos001/0/dummypricnt" upWardMappingList="//@provided.0 //@provided.2 //@provided.4" isSystemDefined="true">

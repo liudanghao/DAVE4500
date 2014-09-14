@@ -120,6 +120,100 @@
   <provided xsi:type="ResourceModel:SignalDeclaration" name="cc41_cmds_cmus" description="cc41_cmds_cmus" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cmds_cmus" signalType="INTERRUPT" direction="OUT" isVisible="true">
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.103"/>
   </provided>
+  <provided xsi:type="ResourceModel:BitField" name="PCIS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/global/gctrl_pcis" maxValue="3" minValue="0" startPos="4" stopPos="5" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Prescaler Input Clock Selection</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Module clock"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="CCU4xECLK[A]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="CCU4xECLK[B]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="CCU4xECLK[C]"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV1IS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41ins_ev1is" maxValue="15" minValue="0" startPos="4" stopPos="7" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="5"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="5"/>
+    <toolTipHelpDescription>Event 1 signal selection</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV2S" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41ins_ev2is" maxValue="15" minValue="0" startPos="8" stopPos="11" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 2 signal selection</toolTipHelpDescription>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="EV0IS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41ins_ev0is" maxValue="15" minValue="0" startPos="0" stopPos="3" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="4"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="4"/>
+    <toolTipHelpDescription>Event 0 signal selection</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0000" description="CCU4xINy[A]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0001" description="CCU4xINy[B]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0010" description="CCU4xINy[C]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0011" description="CCU4xINy[D]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0100" description="CCU4xINy[E]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0101" description="CCU4xINy[F]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0110" description="CCU4xINy[G]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0111" description="CCU4xINy[H]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1000" description="CCU4xINy[I]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1001" description="CCU4xINy[J]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1010" description="CCU4xINy[K]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1011" description="CCU4xINy[L]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1100" description="CCU4xINy[M]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1101" description="CCU4xINy[N]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1110" description="CCU4xINy[O]"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1111" description="CCU4xINy[P]"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="POSR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_posr" maxValue="3" minValue="0" startPos="0" stopPos="1" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Period/One match Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E1SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_e1sr" maxValue="3" minValue="0" startPos="10" stopPos="11" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 1 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E0SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_e0sr" maxValue="3" minValue="0" startPos="8" stopPos="9" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 0 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="CMSR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_cmsr" maxValue="3" minValue="0" startPos="2" stopPos="3" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="2"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="2"/>
+    <toolTipHelpDescription>Compare match Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
+  <provided xsi:type="ResourceModel:BitField" name="E2SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_e2sr" maxValue="3" minValue="0" startPos="12" stopPos="13" accessPermission="rw">
+    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <toolTipHelpDescription>Event 2 Service request selector</toolTipHelpDescription>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
+    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
+  </provided>
   <provided xsi:type="ResourceModel:ResourceGroup" name="2" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/2">
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.31"/>
     <resourcesList name="ins" requiredResourceUri="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc42ins" isResolved="true"/>
@@ -322,100 +416,6 @@
   <provided xsi:type="ResourceModel:SignalDeclaration" name="gp01_unsync" description="gp01_unsync" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/gp1_unsync" signalType="SINGAL" direction="IN" isVisible="true">
     <upWardMappingList xsi:type="ResourceModel:ProxyResource" href="../POSQE001/1.0.14/posqe001_0.app#//@consumed.104"/>
   </provided>
-  <provided xsi:type="ResourceModel:BitField" name="PCIS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/global/gctrl_pcis" maxValue="3" minValue="0" startPos="4" stopPos="5" accessPermission="rw">
-    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <toolTipHelpDescription>Prescaler Input Clock Selection</toolTipHelpDescription>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Module clock"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="CCU4xECLK[A]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="CCU4xECLK[B]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="CCU4xECLK[C]"/>
-  </provided>
-  <provided xsi:type="ResourceModel:BitField" name="EV1IS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41ins_ev1is" maxValue="15" minValue="0" startPos="4" stopPos="7" accessPermission="rw">
-    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="5"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="5"/>
-    <toolTipHelpDescription>Event 1 signal selection</toolTipHelpDescription>
-  </provided>
-  <provided xsi:type="ResourceModel:BitField" name="EV2S" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41ins_ev2is" maxValue="15" minValue="0" startPos="8" stopPos="11" accessPermission="rw">
-    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <toolTipHelpDescription>Event 2 signal selection</toolTipHelpDescription>
-  </provided>
-  <provided xsi:type="ResourceModel:BitField" name="EV0IS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41ins_ev0is" maxValue="15" minValue="0" startPos="0" stopPos="3" accessPermission="rw">
-    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="4"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="4"/>
-    <toolTipHelpDescription>Event 0 signal selection</toolTipHelpDescription>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0000" description="CCU4xINy[A]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0001" description="CCU4xINy[B]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0010" description="CCU4xINy[C]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0011" description="CCU4xINy[D]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0100" description="CCU4xINy[E]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0101" description="CCU4xINy[F]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0110" description="CCU4xINy[G]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b0111" description="CCU4xINy[H]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1000" description="CCU4xINy[I]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1001" description="CCU4xINy[J]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1010" description="CCU4xINy[K]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1011" description="CCU4xINy[L]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1100" description="CCU4xINy[M]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1101" description="CCU4xINy[N]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1110" description="CCU4xINy[O]"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b1111" description="CCU4xINy[P]"/>
-  </provided>
-  <provided xsi:type="ResourceModel:BitField" name="POSR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_posr" maxValue="3" minValue="0" startPos="0" stopPos="1" accessPermission="rw">
-    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <toolTipHelpDescription>Period/One match Service request selector</toolTipHelpDescription>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
-  </provided>
-  <provided xsi:type="ResourceModel:BitField" name="E1SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_e1sr" maxValue="3" minValue="0" startPos="10" stopPos="11" accessPermission="rw">
-    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <toolTipHelpDescription>Event 1 Service request selector</toolTipHelpDescription>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
-  </provided>
-  <provided xsi:type="ResourceModel:BitField" name="E0SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_e0sr" maxValue="3" minValue="0" startPos="8" stopPos="9" accessPermission="rw">
-    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <toolTipHelpDescription>Event 0 Service request selector</toolTipHelpDescription>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
-  </provided>
-  <provided xsi:type="ResourceModel:BitField" name="CMSR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_cmsr" maxValue="3" minValue="0" startPos="2" stopPos="3" accessPermission="rw">
-    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="2"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="2"/>
-    <toolTipHelpDescription>Compare match Service request selector</toolTipHelpDescription>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
-  </provided>
-  <provided xsi:type="ResourceModel:BitField" name="E2SR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/1/cc41srs_e2sr" maxValue="3" minValue="0" startPos="12" stopPos="13" accessPermission="rw">
-    <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <toolTipHelpDescription>Event 2 Service request selector</toolTipHelpDescription>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b10" description="Forward to CC4ySR2"/>
-    <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b11" description="Forward to CC4ySR3"/>
-  </provided>
   <provided xsi:type="ResourceModel:BitField" name="EV0IS" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/cc40ins_ev0is" maxValue="15" minValue="0" startPos="0" stopPos="3" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
     <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
@@ -482,8 +482,8 @@
   </provided>
   <provided xsi:type="ResourceModel:BitField" name="POSR" URI="http://www.infineon.com/0.1.28/peripheral/ccu4/0/cc4/0/cc40srs_posr" maxValue="3" minValue="0" startPos="0" stopPos="1" accessPermission="rw">
     <defaultValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <localValue xsi:type="ResourceModel:IntegerValue" value="0"/>
-    <globalValue xsi:type="ResourceModel:IntegerValue" value="0"/>
+    <localValue xsi:type="ResourceModel:IntegerValue" value="1"/>
+    <globalValue xsi:type="ResourceModel:IntegerValue" value="1"/>
     <toolTipHelpDescription>Period/One match Service request selector</toolTipHelpDescription>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b00" description="Forward to CC4ySR0"/>
     <enumValues xsi:type="ResourceModel:RegEnumValue" value="0b01" description="Forward to CC4ySR1"/>

@@ -671,13 +671,13 @@ void POSQE001_Init(void)
   WR_REG( PORT14->IOCR4,
           (uint32_t)PORT14_IOCR4_PC7_Msk,
           (uint32_t)PORT14_IOCR4_PC7_Pos,
-          (uint32_t)4);     
+          (uint32_t)0);     
   
   /* Configuration of QE Phase B Pin 14.6 based on User configuration */
   WR_REG( PORT14->IOCR4,
           (uint32_t)PORT14_IOCR4_PC6_Msk,
           (uint32_t)PORT14_IOCR4_PC6_Pos,
-          (uint32_t)4);     
+          (uint32_t)0);     
  
   /* Quadrature Encoder Index Pin instance (no.0) is not mapped to any port pin. */  
 }

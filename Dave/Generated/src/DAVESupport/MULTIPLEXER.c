@@ -256,6 +256,10 @@ void DAVE_MUX_Init(void)
 
     WR_REG(CCU40_CC42->INS, CCU4_CC4_INS_EV1IS_Msk, CCU4_CC4_INS_EV1IS_Pos, CCU4xINyM);                   
                        
+    // Configuring CCU40_CC40SRS  =  Service Request Selector
+
+    WR_REG(CCU40_CC40->SRS, CCU4_CC4_SRS_POSR_Msk, CCU4_CC4_SRS_POSR_Pos, CCU_SR1);    
+                       
     // Configuring CCU40_CC41SRS  =  Service Request Selector
 
     WR_REG(CCU40_CC41->SRS, CCU4_CC4_SRS_CMSR_Msk, CCU4_CC4_SRS_CMSR_Pos, CCU_SR2);    

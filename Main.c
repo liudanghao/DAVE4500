@@ -29,7 +29,6 @@ myFrameDef uartRx2Frame;
 
 
 
-
 //thread_idle define
 void thread_idle (void const *argument);
 osThreadId thread_idle_id;
@@ -59,6 +58,16 @@ osThreadDef(thread_uart1_rx, osPriorityNormal, 1, 0);
 void thread_uart2_rx (void const *argument);
 osThreadId thread_uart2_rx_id;
 osThreadDef(thread_uart2_rx, osPriorityNormal, 1, 0);
+
+//thread_depth define
+void thread_depth (void const *argument);
+osThreadId thread_depth_id;
+osThreadDef(thread_depth, osPriorityNormal, 1, 0);
+
+//thread_speed define
+void thread_speed (void const *argument);
+osThreadId thread_speed_id;
+osThreadDef(thread_speed, osPriorityNormal, 1, 0);
 
 
 extern uint32_t depth;
@@ -132,24 +141,9 @@ char cbuf[32]={'g','o','o','d','\n',0x00};
 void thread_idle(void const *argument)
 {
 	uint8_t buf[32]={'a','b','c','d','e','f','a','b','c','d','e','f','\r','\n'};
-	status_t Status;
-
 	while(1)
 	{
-		osDelay(100);
-		//Status=POSQE001_GetPosition(&POSQE001_Handle0,&pos,POSQE001_READ_TIMER);
-		//POSQE001_GetDirection(&POSQE001_Handle0, &Dir);
-		//POSQE001_GetVelocityRAW(&POSQE001_Handle0, &Velocity);
-
-		buf[0]=0xaa;
-		buf[1]=depth>>16;
-		buf[2]=depth>>8;
-		buf[3]=depth;
-		myUART0_Send(buf,4);
-		//myUART0_Send((uint8_t*)cbuf,strlen(cbuf));
-
-
-
+		osDelay(200);
 		IO004_ResetPin(LED0);
 		//IO004_ResetPin(LED1);
 		osDelay(10);
@@ -168,6 +162,33 @@ void thread_idle(void const *argument)
 
 
 
+    }
+}
+
+
+void thread_depth(void const *argument)
+{
+	char buf[16];
+	int32_t depth;
+	while(1)
+	{
+		depth=GetDepth();
+		sprintf(buf,"----%ld\r\n",depth);
+		myUART0_Send((uint8_t*)buf,strlen(buf));
+		//IO004_TogglePin(LED1);
+    }
+}
+
+void thread_speed(void const *argument)
+{
+	char buf[16];
+	uint16_t speed;
+	while(1)
+	{
+		speed=GetSpeed();
+		sprintf(buf,"%d\r\n",speed);
+		myUART0_Send((uint8_t*)buf,strlen(buf));
+		//IO004_TogglePin(LED1);
     }
 }
 
@@ -228,6 +249,8 @@ int main(void)
 	thread_uart0_rx_id = osThreadCreate(osThread(thread_uart0_rx), NULL);
 	thread_uart1_rx_id = osThreadCreate(osThread(thread_uart1_rx), NULL);
 	thread_uart2_rx_id = osThreadCreate(osThread(thread_uart2_rx), NULL);
+	thread_depth_id = osThreadCreate(osThread(thread_depth), NULL);
+	thread_speed_id = osThreadCreate(osThread(thread_speed), NULL);
 	osKernelStart();
 
 	//if something error!!!

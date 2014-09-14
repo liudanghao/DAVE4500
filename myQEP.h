@@ -9,5 +9,7 @@
 #define MYQEP_H_
 
 void myQEPinit();
+int32_t GetDepth();
+uint16_t GetSpeed();
 
 #endif /* MYQEP_H_ */

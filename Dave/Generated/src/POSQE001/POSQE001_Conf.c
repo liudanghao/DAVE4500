@@ -122,11 +122,11 @@ const POSQE001_EventConfigType PosCntEvt2_Inst0 =
 const POSQE001_SliceConfigType   PosCnt_Inst0 = 
 {
   .SliceInUse = 1U,
-  .PrescalarVal = 1U,
+  .PrescalarVal = 10U,
   .SliceNum = 1U,
   .ClearOnCapture = 0U,
   .CompareVal = 1U,
-  .PeriodVal = 319U,
+  .PeriodVal = 31U,
   .SliceAddress = CCU40_CC41,
   .SliceGlobalAddress = (CCU4_GLOBAL_TypeDef*) CCU40_BASE,
   .Event0Cfg = &PosCntEvt0_Inst0,
@@ -158,7 +158,7 @@ const POSQE001_EventConfigType VelCnt0Evt2_Inst0 =
 const POSQE001_SliceConfigType   VelCnt0_Inst0 = 
 {
   .SliceInUse = 1U,
-  .PrescalarVal = 1U,
+  .PrescalarVal = 10U,
   .SliceNum = 2U,
   .ClearOnCapture = 2U,
   .CompareVal = 1U,
@@ -190,11 +190,11 @@ const POSQE001_EventConfigType VelTim0Evt2_Inst0 =
 const POSQE001_SliceConfigType   VelTim0_Inst0 = 
 {
   .SliceInUse = 1U,
-  .PrescalarVal = 1U,
+  .PrescalarVal = 10U,
   .SliceNum = 0U,
   .ClearOnCapture = 0U,
-  .CompareVal = 1500U,
-  .PeriodVal = 2999U,
+  .CompareVal = 5859U,
+  .PeriodVal = 11717U,
   .SliceAddress = CCU40_CC40,
   .SliceGlobalAddress = (CCU4_GLOBAL_TypeDef*) CCU40_BASE,
   .Event0Cfg = &VelTim0Evt0_Inst0,
@@ -209,8 +209,8 @@ const POSQE001_SliceConfigType   VelTim1_Inst0 =
 
 POSQE001_DynamicDataType POSQE001_DynamicHandle0 =
 {
-  .NumTicks4TimeCapture = 4U,
-  .Time4TicksCapture = 3000U,
+  .NumTicks4TimeCapture = 2U,
+  .Time4TicksCapture = 11718U,
   .LowSpeedLimit = 0U,
   .HighSpeedLimit = 0U,
   .LowSpeedLimitRPM = (float)500.0,
@@ -221,7 +221,7 @@ POSQE001_DynamicDataType POSQE001_DynamicHandle0 =
 const POSQE001_HandleType POSQE001_Handle0 =
 {
   .ProfileInUse = 1U,
-  .kLPF = 0U,
+  .kLPF = 7U,
   .IndexGenMode = 0U,
   .DecoderType = POSQE001_SIGNALS_AB,
   .PosifDecoderType = 0U,  
@@ -240,7 +240,7 @@ const POSQE001_HandleType POSQE001_Handle0 =
   .PosInterpolationFuncPtr = NULL,  
   .LowSpeedLimit = (float)500.0,
   .HighSpeedLimit = (float)6000.0,
-  .TimeMultiplier = (float)1.6666666666666667E-8,
+  .TimeMultiplier = (float)8.533333333333334E-6,
   .LowSpeedLimitPossible = 0U,
   .HighSpeedLimitPossible = 0U,
   .StartDuringInit = 1U,
