@@ -29,6 +29,7 @@ myFrameDef uartRx2Frame;
 
 
 
+
 //thread_idle define
 void thread_idle (void const *argument);
 osThreadId thread_idle_id;
